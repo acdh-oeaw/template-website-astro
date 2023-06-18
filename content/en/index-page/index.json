@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "title": "Astro website template",
+    "image": "/assets/content/en/index-page/hero/image.jpg",
+    "leadIn": "This is a template for project websites. It includes internationalisation, end-to-end-tests and more.",
+    "links": [
+      {
+        "discriminant": "page",
+        "value": {
+          "label": "About the project",
+          "reference": "about"
+        }
+      }
+    ]
+  },
+  "main": {
+    "sections": [
+      {
+        "discriminant": "cardsSection",
+        "value": {
+          "title": "About the project",
+          "variant": "fluid",
+          "cards": [
+            {
+              "discriminant": "page",
+              "value": {
+                "title": "About the project",
+                "reference": "about",
+                "link": {
+                  "label": "Read more"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
