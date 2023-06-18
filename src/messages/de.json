@@ -1,0 +1,53 @@
+{
+	"metadata": {
+		"title": "ACDH-CH Website",
+		"shortTitle": "ACDH-CH Website",
+		"description": "Eine Projekt-Website.",
+		"twitter": "@acdh_oeaw"
+	},
+	"ColorSchemeSwitcher": {
+		"color-schemes": {
+			"dark": "Dunkel",
+			"light": "Hell",
+			"system": "System"
+		},
+		"change": "Farbschema ändern"
+	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Impressum"
+		},
+		"title": "Impressum"
+	},
+	"IndexPage": {
+		"meta": {
+			"title": "Startseite"
+		},
+		"title": "Hallo Welt!"
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Aktuelle Sprache: {{locale}}",
+		"switch-locale": "Sprache wechseln",
+		"switch-locale-to": "Zu {{locale}} wechseln"
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Seite nicht gefunden"
+		},
+		"title": "Seite nicht gefunden"
+	},
+	"SkipLink": {
+		"skip-to-main-content": "Zum Hauptinhalt springen"
+	},
+	"WebsiteFooter": {
+		"links": {
+			"imprint": "Impressum"
+		}
+	},
+	"WebsiteHeader": {
+		"links": {
+			"home": "Startseite"
+		},
+		"navigation-primary": "Primär"
+	}
+}

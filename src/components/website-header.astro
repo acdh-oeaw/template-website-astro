@@ -1,0 +1,46 @@
+---
+import ColorSchemeSwitcher from "@/components/color-scheme-switcher.astro";
+import Link from "@/components/link.astro";
+import LocaleSwitcher from "@/components/locale-switcher.astro";
+import type { Locale } from "@/config/i18n.config";
+import { createI18n } from "@/lib/i18n";
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const { t } = await createI18n(locale);
+
+const home = t("WebsiteHeader.links.home");
+---
+
+<header class="border-b">
+	<div class="mx-auto flex w-full max-w-screen-lg items-center justify-between px-4 py-6 text-sm">
+		<nav aria-label={t("WebsiteHeader.navigation-primary")}>
+			<ul class="flex flex-wrap items-center gap-x-6 gap-y-1" role="list">
+				<li>
+					<Link class="inline-flex items-center gap-x-2" href="/">
+						<img
+							alt=""
+							class="block size-8 dark:hidden"
+							src="/assets/images/acdh-ch-logo-light.svg"
+						/>
+						<img
+							alt=""
+							class="hidden size-8 dark:block"
+							src="/assets/images/acdh-ch-logo-dark.svg"
+						/>
+						{home}
+					</Link>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="flex items-center gap-x-4">
+			<ColorSchemeSwitcher locale={locale} />
+			<LocaleSwitcher locale={locale} />
+		</div>
+	</div>
+</header>

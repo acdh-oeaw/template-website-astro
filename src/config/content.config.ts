@@ -1,0 +1,14 @@
+export function createAssetPaths(segment: `/${string}/`) {
+	return {
+		directory: `./public/assets${segment}`,
+		publicPath: `/assets${segment}`,
+	};
+}
+
+export function createPreviewUrl(previewUrl: string) {
+	if (process.env.PUBLIC_KEYSTATIC_MODE === "github") {
+		return `/api/preview/start?branch={branch}&to=${previewUrl}`;
+	}
+
+	return previewUrl;
+}

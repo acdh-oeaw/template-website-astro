@@ -1,0 +1,18 @@
+---
+import type { Locale } from "@/config/i18n.config";
+import { createI18n } from "@/lib/i18n";
+
+interface Props {
+	locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const { t } = await createI18n(locale);
+
+const label = t("SkipLink.skip-to-main-content");
+---
+
+<a class="absolute -translate-y-full px-3 py-1.5 focus:translate-y-0" href="#main-content">
+	{label}
+</a>

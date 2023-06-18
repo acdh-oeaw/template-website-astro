@@ -1,0 +1,33 @@
+---
+import MainContent from "@/components/main-content.astro";
+import PageSection from "@/components/page-section.astro";
+import PageTitle from "@/components/page-title.astro";
+import { locales } from "@/config/i18n.config";
+import PageLayout from "@/layouts/page-layout.astro";
+import { createI18n } from "@/lib/i18n";
+
+export function getStaticPaths() {
+	const ids = [];
+
+	return ids.flatMap((id) => {
+		return locales.map((locale) => {
+			return { params: { id, locale } };
+		});
+	});
+}
+
+const { id, locale } = Astro.params;
+
+const { t } = await createI18n(locale);
+
+const documentTitle = t("IndexPage.meta.title");
+const title = t("IndexPage.title");
+---
+
+<PageLayout locale={locale} title={documentTitle}>
+	<MainContent>
+		<PageSection>
+			<PageTitle>{title}</PageTitle>
+		</PageSection>
+	</MainContent>
+</PageLayout>

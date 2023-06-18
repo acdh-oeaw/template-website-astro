@@ -1,0 +1,53 @@
+{
+	"metadata": {
+		"title": "ACDH-CH Website",
+		"shortTitle": "ACDH-CH Website",
+		"description": "A project website.",
+		"twitter": "@acdh_oeaw"
+	},
+	"ColorSchemeSwitcher": {
+		"color-schemes": {
+			"dark": "Dark",
+			"light": "Light",
+			"system": "System"
+		},
+		"change": "Change color scheme"
+	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Imprint"
+		},
+		"title": "Imprint"
+	},
+	"IndexPage": {
+		"meta": {
+			"title": "Home"
+		},
+		"title": "Hello world!"
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Current locale: {{locale}}",
+		"switch-locale": "Switch locale",
+		"switch-locale-to": "Switch to {{locale}}"
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Page not found"
+		},
+		"title": "Page not found"
+	},
+	"SkipLink": {
+		"skip-to-main-content": "Skip to main content"
+	},
+	"WebsiteFooter": {
+		"links": {
+			"imprint": "Imprint"
+		}
+	},
+	"WebsiteHeader": {
+		"links": {
+			"home": "Home"
+		},
+		"navigation-primary": "Primary"
+	}
+}
