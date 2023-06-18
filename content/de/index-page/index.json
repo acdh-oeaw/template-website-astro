@@ -1,0 +1,39 @@
+{
+  "hero": {
+    "title": "Astro website template",
+    "image": "/assets/content/de/index-page/hero/image.jpg",
+    "leadIn": "Dies ist eine Vorlage für Projektwebsites. Sie umfasst Internationalisierung, End-to-End-Tests und mehr.",
+    "links": [
+      {
+        "discriminant": "page",
+        "value": {
+          "label": "Über das Projekt",
+          "reference": "about"
+        }
+      }
+    ]
+  },
+  "main": {
+    "sections": [
+      {
+        "discriminant": "cardsSection",
+        "value": {
+          "title": "Über das Projekt",
+          "variant": "fluid",
+          "cards": [
+            {
+              "discriminant": "page",
+              "value": {
+                "title": "Über das Projekt",
+                "reference": "about",
+                "link": {
+                  "label": "Weiterlesen"
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
