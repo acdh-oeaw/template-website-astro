@@ -1,0 +1,35 @@
+---
+import { createUrl, createUrlSearchParams } from "@acdh-oeaw/lib";
+
+interface Props {
+	provider: "youtube";
+	id: string;
+	startTime?: number;
+	title?: string;
+}
+
+const { id, startTime, title } = Astro.props;
+
+const href = String(
+	createUrl({
+		baseUrl: "https://www.youtube-nocookie.com",
+		pathname: `/embed/${id}`,
+		searchParams: startTime ? createUrlSearchParams({ t: startTime }) : undefined,
+	}),
+);
+---
+
+<figure>
+	<iframe
+		allowfullscreen
+		class="aspect-video w-full overflow-hidden rounded-md"
+		src={href}
+		title={title ?? "Video"}></iframe>
+	{
+		Astro.slots.has("default") ? (
+			<figcaption>
+				<slot />
+			</figcaption>
+		) : null
+	}
+</figure>

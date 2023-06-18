@@ -1,0 +1,43 @@
+---
+import { Image } from "astro:assets";
+
+import MainContent from "@/components/main-content.astro";
+import PageSection from "@/components/page-section.astro";
+import PageTitle from "@/components/page-title.astro";
+import { locales } from "@/config/i18n.config";
+import PageLayout from "@/layouts/page-layout.astro";
+import { createSingletonResource } from "@/lib/content/create-resource";
+import { getImageImport } from "@/lib/get-image-import";
+import { createI18n } from "@/lib/i18n";
+
+export function getStaticPaths() {
+	return Promise.all(
+		locales.map(async (locale) => {
+			const page = await createSingletonResource("indexPage", locale).read();
+
+			return { params: { locale }, props: { page } };
+		}),
+	);
+}
+
+const { locale } = Astro.params;
+
+const { page } = Astro.props;
+
+const { t } = await createI18n(locale);
+
+const documentTitle = t("IndexPage.meta.title");
+const { hero } = page.data;
+---
+
+<PageLayout locale={locale} title={documentTitle}>
+	<MainContent>
+		<PageSection>
+			<div>
+				<Image alt="" fetchpriority="high" loading="eager" src={getImageImport(hero.image)} />
+				<PageTitle>{hero.title}</PageTitle>
+				<p>{hero.lead}</p>
+			</div>
+		</PageSection>
+	</MainContent>
+</PageLayout>

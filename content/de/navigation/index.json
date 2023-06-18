@@ -1,0 +1,11 @@
+{
+  "links": [
+    {
+      "discriminant": "page",
+      "value": {
+        "label": "Demo",
+        "id": "kitchen-sink"
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+---
+import Img from "@/components/content/img.astro";
+import type { figureAlignments } from "@/lib/content/create-components";
+
+type FigureAlignment = (typeof figureAlignments)[number]["value"];
+
+interface Props {
+	/** @default "stretch" */
+	alignment?: FigureAlignment;
+	alt?: string;
+	src: string;
+}
+
+const { alignment = "stretch", alt = "", src } = Astro.props;
+---
+
+<figure>
+	<Img alt={alt} src={src} />
+	{
+		Astro.slots.has("default") ? (
+			<figcaption>
+				<slot />
+			</figcaption>
+		) : null
+	}
+</figure>

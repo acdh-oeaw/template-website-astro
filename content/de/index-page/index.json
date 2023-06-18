@@ -1,0 +1,10 @@
+{
+  "hero": {
+    "title": "ACDH-CH Website",
+    "lead": "Eine Projekt-Website.",
+    "image": "/assets/content/de/index-page/hero/image.svg"
+  },
+  "main": {
+    "sections": []
+  }
+}

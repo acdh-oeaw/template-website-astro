@@ -1,0 +1,122 @@
+---
+import { Icon } from "astro-icon/components";
+
+import Link from "@/components/link.astro";
+import LocaleSwitcher from "@/components/locale-switcher.astro";
+import { mobileNavId } from "@/components/navigation/constants";
+import Search from "@/components/search.astro";
+import { defaultLocale, type Locale } from "@/config/i18n.config";
+import { createSingletonResource } from "@/lib/content/create-resource";
+
+const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
+const navigation = await createSingletonResource("navigation", locale).read();
+---
+
+<div id={mobileNavId} hidden class="px-4 pb-6 lg:hidden" data-mobile-nav>
+	<ul class="grid gap-y-2 text-neutral-700 dark:text-neutral-300" role="list">
+		{
+			navigation.data.links.map((item) => {
+				switch (item.discriminant) {
+					case "link": {
+						const { label, href } = item.value;
+
+						return (
+							<li>
+								<Link
+									class="transition hover:text-neutral-950 dark:hover:text-neutral-0"
+									href={href}
+								>
+									{label}
+								</Link>
+							</li>
+						);
+					}
+
+					case "page": {
+						const { id, label } = item.value;
+
+						return (
+							<li>
+								<Link
+									class="transition hover:text-neutral-950 dark:hover:text-neutral-0"
+									href={`/${id}`}
+								>
+									{label}
+								</Link>
+							</li>
+						);
+					}
+
+					case "menu": {
+						const { label, links } = item.value;
+
+						return (
+							<li>
+								<details class="group">
+									<summary class="inline-flex cursor-pointer items-center gap-x-1.5">
+										{label}
+										<Icon
+											aria-hidden="true"
+											class="size-4 shrink-0 group-open:rotate-180"
+											name="lucide:chevron-down"
+										/>
+									</summary>
+									<ul class="ml-4 mt-2 grid gap-y-1" role="list">
+										{links.map((link) => {
+											switch (link.discriminant) {
+												case "link": {
+													const { label, href } = link.value;
+
+													return (
+														<li>
+															<Link
+																class="transition hover:text-neutral-950 dark:hover:text-neutral-0"
+																href={href}
+															>
+																{label}
+															</Link>
+														</li>
+													);
+												}
+
+												case "page": {
+													const { id, label } = link.value;
+
+													return (
+														<li>
+															<Link
+																class="transition hover:text-neutral-950 dark:hover:text-neutral-0"
+																href={`/${id}`}
+															>
+																{label}
+															</Link>
+														</li>
+													);
+												}
+
+												default: {
+													return null;
+												}
+											}
+										})}
+									</ul>
+								</details>
+							</li>
+						);
+					}
+
+					default: {
+						return null;
+					}
+				}
+			})
+		}
+	</ul>
+
+	<hr class="my-6" />
+
+	<div class="flex justify-between">
+		<LocaleSwitcher />
+		<Search />
+	</div>
+</div>

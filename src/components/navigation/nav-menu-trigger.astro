@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+	aria-expanded="true"
+	class="inline-flex items-center gap-x-2 rounded px-4 py-2 hover:text-neutral-950 aria-expanded:text-neutral-950 dark:hover:text-neutral-0 dark:aria-expanded:text-neutral-0"
+	data-nav-menu-trigger
+>
+	<slot />
+	<Icon
+		aria-hidden="true"
+		class="size-4 shrink-0 group-data-[open=true]:rotate-180"
+		name="lucide:chevron-down"
+	/>
+</button>

@@ -1,0 +1,26 @@
+---
+interface Props {
+	variant:
+		| "four-columns"
+		| "one-four-columns"
+		| "one-three-columns"
+		| "one-two-columns"
+		| "three-columns"
+		| "two-columns";
+}
+
+const { variant } = Astro.props;
+
+const variants: Record<Props["variant"], string> = {
+	"two-columns": "sm:grid-cols-2",
+	"three-columns": "sm:grid-cols-3",
+	"four-columns": "sm:grid-cols-4",
+	"one-two-columns": "sm:grid-cols-[1fr_2fr]",
+	"one-three-columns": "sm:grid-cols-[1fr_3fr]",
+	"one-four-columns": "sm:grid-cols-[1fr_4fr]",
+};
+---
+
+<div class:list={[variants[variant], "grid content-start gap-8"]}>
+	<slot />
+</div>

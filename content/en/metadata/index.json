@@ -1,0 +1,13 @@
+{
+	"title": "ACDH-CH Website",
+	"description": "A project website.",
+	"twitter": {
+		"creator": "@acdh_oeaw",
+		"site": "@acdh_oeaw"
+	},
+	"manifest": {
+		"name": "ACDH-CH Website",
+		"short-name": "ACDH-CH Website",
+		"description": "A project website."
+	}
+}

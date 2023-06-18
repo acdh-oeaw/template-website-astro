@@ -1,0 +1,37 @@
+---
+import type { Toc } from "@/lib/content/with-table-of-contents";
+
+interface Props {
+	headings: Toc;
+	depth?: number;
+}
+
+const { depth = 0, headings } = Astro.props;
+---
+
+<ol
+	class="grid gap-y-1.5 text-neutral-700 dark:text-neutral-300"
+	style={{ marginLeft: String(depth * 8) + "px" }}
+>
+	{
+		headings.map((heading) => {
+			return (
+				<li class="grid justify-start gap-y-1.5">
+					{heading.id != null ? (
+						<a
+							class="inline-flex underline decoration-dotted transition hover:text-neutral-950 hover:decoration-solid dark:hover:text-neutral-0"
+							href={"#" + heading.id}
+						>
+							{heading.value}
+						</a>
+					) : (
+						<span>{heading.value}</span>
+					)}
+					{Array.isArray(heading.children) && heading.children.length > 0 ? (
+						<Astro.self depth={depth + 1} headings={heading.children} />
+					) : null}
+				</li>
+			);
+		})
+	}
+</ol>

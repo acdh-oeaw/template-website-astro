@@ -1,0 +1,23 @@
+---
+interface Props {
+	src: string;
+	title?: string;
+}
+
+const { src, title } = Astro.props;
+---
+
+<figure>
+	<iframe
+		allowfullscreen
+		class="aspect-video w-full overflow-hidden rounded-md"
+		src={src}
+		title={title ?? "Iframe"}></iframe>
+	{
+		Astro.slots.has("default") ? (
+			<figcaption>
+				<slot />
+			</figcaption>
+		) : null
+	}
+</figure>
