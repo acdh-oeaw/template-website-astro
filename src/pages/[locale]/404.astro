@@ -1,0 +1,38 @@
+---
+import { type GetStaticPathsItem } from "astro";
+
+import MainContent from "@/components/main-content.astro";
+import PageTitle from "@/components/page-title.astro";
+import Section from "@/components/section.astro";
+import PageLayout from "@/layouts/page-layout.astro";
+import { useLocale } from "@/lib/use-locale";
+import { useTranslations } from "@/lib/use-translations";
+import { type Locale, locales } from "@/config/i18n.config";
+
+type Params = {
+	locale: Locale;
+};
+
+interface Path extends GetStaticPathsItem {
+	params: Params;
+}
+
+export async function getStaticPaths(): Promise<Array<Path>> {
+	return locales.map((locale) => {
+		return {
+			params: { locale },
+		};
+	});
+}
+
+const locale = useLocale(Astro);
+const t = useTranslations(locale, "NotFoundPage");
+---
+
+<PageLayout bots={false} locale={locale} title={t("meta.title")}>
+	<MainContent searchable={false}>
+		<Section variant="header">
+			<PageTitle>{t("title")}</PageTitle>
+		</Section>
+	</MainContent>
+</PageLayout>

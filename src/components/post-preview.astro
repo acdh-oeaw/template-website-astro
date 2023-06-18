@@ -1,0 +1,48 @@
+---
+import { type CollectionEntry } from "astro:content";
+
+import Card from "@/components/card.astro";
+import CardContent from "@/components/card-content.astro";
+import CardImage from "@/components/card-image.astro";
+import CardTitle from "@/components/card-title.astro";
+import { getContentEntryId } from "@/lib/get-content-entry-id";
+import { useLocaleLink } from "@/lib/use-locale-link";
+import { useTranslations } from "@/lib/use-translations";
+import { type Locale } from "@/config/i18n.config";
+
+interface Props {
+	locale: Locale;
+	post: CollectionEntry<"posts">;
+}
+
+const { locale, post } = Astro.props;
+
+const t = useTranslations(locale, "PostPreview");
+const l = useLocaleLink(locale);
+
+const id = getContentEntryId(post);
+const href = l(`/posts/${id}`);
+---
+
+<Card>
+	{
+		post.data.featuredImage != null ? (
+			<a aria-hidden="true" href={href} tabindex={-1}>
+				<CardImage alt="" src={post.data.featuredImage} />
+			</a>
+		) : null
+	}
+	<CardContent>
+		<CardTitle>{post.data.title}</CardTitle>
+		<p>{post.data.description}</p>
+		<div class="justify-self-end">
+			<a
+				class="inline-flex rounded border px-3 py-1 text-sm transition hover:bg-muted-background hover:text-muted-foreground"
+				href={href}
+			>
+				<span>{t("read-post")}</span>
+				<span class="sr-only">{post.data.title}</span>
+			</a>
+		</div>
+	</CardContent>
+</Card>

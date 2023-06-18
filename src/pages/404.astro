@@ -1,0 +1,19 @@
+---
+import MainContent from "@/components/main-content.astro";
+import PageTitle from "@/components/page-title.astro";
+import Section from "@/components/section.astro";
+import PageLayout from "@/layouts/page-layout.astro";
+import { useTranslations } from "@/lib/use-translations";
+import { defaultLocale } from "@/config/i18n.config";
+
+const locale = defaultLocale;
+const t = useTranslations(locale, "NotFoundPage");
+---
+
+<PageLayout bots={false} locale={locale} title={t("meta.title")}>
+	<MainContent searchable={false}>
+		<Section variant="header">
+			<PageTitle>{t("title")}</PageTitle>
+		</Section>
+	</MainContent>
+</PageLayout>

@@ -1,0 +1,115 @@
+---
+import { times } from "@acdh-oeaw/lib";
+import { type GetStaticPathsItem } from "astro";
+import { getCollection } from "astro:content";
+
+import exampleImage from "@/assets/example.jpg";
+import Card from "@/components/card.astro";
+import CardContent from "@/components/card-content.astro";
+import CardImage from "@/components/card-image.astro";
+import CardTitle from "@/components/card-title.astro";
+import Grid from "@/components/grid.astro";
+import Hero from "@/components/hero.astro";
+import HeroTagline from "@/components/hero-tagline.astro";
+import HeroTitle from "@/components/hero-title.astro";
+import MainContent from "@/components/main-content.astro";
+import PostPreview from "@/components/post-preview.astro";
+import Section from "@/components/section.astro";
+import SectionTitle from "@/components/section-title.astro";
+import PageLayout from "@/layouts/page-layout.astro";
+import { useLocale } from "@/lib/use-locale";
+import { useTranslations } from "@/lib/use-translations";
+import { type Locale, locales } from "@/config/i18n.config";
+
+type Params = {
+	locale: Locale;
+};
+
+interface Path extends GetStaticPathsItem {
+	params: Params;
+}
+
+export async function getStaticPaths(): Promise<Array<Path>> {
+	return locales.map((locale) => {
+		return {
+			params: { locale },
+		};
+	});
+}
+
+const locale = useLocale(Astro);
+const t = useTranslations(locale, "IndexPage");
+
+const item = {
+	image: exampleImage,
+	title: "Example title",
+	text: "Use me to create accessible, modern and responsive websites that follow the design guidelines of ACDH.",
+	url: {
+		href: "/",
+		label: "Read more",
+	},
+};
+const items = times(3).map(() => item);
+
+const posts = await getCollection("posts", (entry) => {
+	return entry.id.startsWith(locale + "/");
+});
+const recentPosts = posts.slice(0, 3);
+---
+
+<PageLayout locale={locale} title={t("meta.title")}>
+	<MainContent>
+		<Hero>
+			<HeroTitle>{t("hero.title")}</HeroTitle>
+			<HeroTagline>{t("hero.tagline")}</HeroTagline>
+			<div>
+				<a
+					class="inline-flex rounded border border-foreground px-6 py-2 transition hover:bg-foreground hover:text-background"
+					href="/"
+				>
+					Get started
+				</a>
+			</div>
+		</Hero>
+
+		<Section>
+			<SectionTitle>{t("section.title")}</SectionTitle>
+			<Grid>
+				{
+					items.map(() => {
+						return (
+							<Card>
+								<a aria-hidden="true" href={item.url.href} tabindex={-1}>
+									<CardImage alt="" src={item.image} />
+								</a>
+								<CardContent>
+									<CardTitle>{item.title}</CardTitle>
+									<p>{item.text}</p>
+									<div class="justify-self-end">
+										<a
+											class="inline-flex rounded border px-3 py-1 text-sm transition hover:bg-muted-background hover:text-muted-foreground"
+											href={item.url.href}
+										>
+											{item.url.label}
+										</a>
+									</div>
+								</CardContent>
+							</Card>
+						);
+					})
+				}
+			</Grid>
+		</Section>
+
+		<Section>
+			<SectionTitle>{t("section.title")}</SectionTitle>
+			<Grid>
+				{
+					recentPosts.map((post) => {
+						return <PostPreview locale={locale} post={post} />;
+					})
+				}
+			</Grid>
+		</Section>
+	</MainContent>
+</PageLayout>

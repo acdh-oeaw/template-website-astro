@@ -1,0 +1,122 @@
+---
+import { type GetStaticPathsItem } from "astro";
+import { Image } from "astro:assets";
+import { type CollectionEntry, getCollection, getEntries } from "astro:content";
+import { type Article, type WithContext } from "schema-dts";
+
+import MainContent from "@/components/main-content.astro";
+import PageTitle from "@/components/page-title.astro";
+import Section from "@/components/section.astro";
+import PageLayout from "@/layouts/page-layout.astro";
+import * as format from "@/lib/format";
+import { getContentEntryId } from "@/lib/get-content-entry-id";
+import { getFullName } from "@/lib/get-full-name";
+import { useLocale } from "@/lib/use-locale";
+import { type Locale, locales } from "@/config/i18n.config";
+
+type Params = {
+	id: string;
+	locale: Locale;
+};
+
+type Props = {
+	post: CollectionEntry<"posts">;
+};
+
+interface Path extends GetStaticPathsItem {
+	params: Params;
+	props: Props;
+}
+
+export async function getStaticPaths(): Promise<Array<Path>> {
+	return (
+		await Promise.all(
+			locales.map(async (locale) => {
+				const collection = await getCollection("posts", (entry) => {
+					return entry.id.startsWith(locale + "/");
+				});
+
+				return collection.map((post) => {
+					const id = getContentEntryId(post);
+
+					return {
+						params: { id, locale },
+						props: { post },
+					};
+				});
+			}),
+		)
+	).flat();
+}
+
+const locale = useLocale(Astro);
+
+const { post } = Astro.props;
+
+const { Content } = await post.render();
+
+const authors = await getEntries(post.data.authors);
+
+const jsonLd: WithContext<Article> = {
+	"@context": "https://schema.org",
+	"@type": "Article",
+	headline: post.data.title,
+	abstract: post.data.description,
+	datePublished: format.date(locale, post.data.date),
+	author: authors.map((person) => {
+		return {
+			"@type": "Person",
+			familyName: person.data.lastName,
+			givenName: person.data.firstName,
+		};
+	}),
+};
+---
+
+<PageLayout
+	description={post.data.meta.description}
+	image={post.data.featuredImage}
+	jsonLd={jsonLd}
+	locale={locale}
+	title={post.data.meta.title}
+	type="article"
+>
+	<Fragment slot="open-graph">
+		<meta property="article:published_time" content={post.data.date.toISOString()} />
+		{
+			authors.map((person) => {
+				return <meta property="article:author" content={getFullName(person)} />;
+			})
+		}
+	</Fragment>
+
+	<MainContent>
+		<Section variant="header">
+			<PageTitle>{post.data.title}</PageTitle>
+			<div class="flex items-center justify-between gap-4">
+				<span class="hidden">
+					{
+						authors.map((person) => {
+							/**
+							 * TODO: Add `data-pagefind-filter="author"` in case we want to be able to filter
+							 * search results by author.
+							 */
+							return <span>{getFullName(person)}</span>;
+						})
+					}
+				</span>
+				<span>
+					{format.list(locale, authors.map(getFullName))}
+				</span>
+				<time datetime={post.data.date.toISOString()}>{format.date(locale, post.data.date)}</time>
+			</div>
+		</Section>
+
+		<Section>
+			{post.data.featuredImage != null ? <Image alt="" src={post.data.featuredImage} /> : null}
+			<div class="prose max-w-3xl dark:prose-invert">
+				<Content />
+			</div>
+		</Section>
+	</MainContent>
+</PageLayout>
