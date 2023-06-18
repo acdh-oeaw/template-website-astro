@@ -1,0 +1,39 @@
+diff --git a/npm_dist/cjs/ui-core.cjs b/npm_dist/cjs/ui-core.cjs
+index c953b271781432fb2d478e77a0fcedc8cd58c9f9..4821569c9f4b5e31a4b28460c7807dafbb46046f 100644
+--- a/npm_dist/cjs/ui-core.cjs
++++ b/npm_dist/cjs/ui-core.cjs
+@@ -3479,7 +3479,7 @@ var PagefindUI = class {
+     delete opts["debounceTimeoutMs"];
+     delete opts["mergeIndex"];
+     delete opts["translations"];
+-    const dom = document.querySelector(selector);
++    const dom = selector instanceof HTMLElement ? selector : document.querySelector(selector);
+     if (dom) {
+       this._pfs = new ui_default({
+         target: dom,
+diff --git a/npm_dist/mjs/ui-core.mjs b/npm_dist/mjs/ui-core.mjs
+index ce5cc86d9adbb8b0e0ae2c01e6e5a005f15bb3ef..7a7b432e815fa76b75ce146759b2d626eb107860 100644
+--- a/npm_dist/mjs/ui-core.mjs
++++ b/npm_dist/mjs/ui-core.mjs
+@@ -3460,7 +3460,7 @@ var PagefindUI = class {
+     delete opts["debounceTimeoutMs"];
+     delete opts["mergeIndex"];
+     delete opts["translations"];
+-    const dom = document.querySelector(selector);
++    const dom = selector instanceof HTMLElement ? selector : document.querySelector(selector);
+     if (dom) {
+       this._pfs = new ui_default({
+         target: dom,
+diff --git a/ui-core.js b/ui-core.js
+index 94dabfa6e03079b1c2209a9b78326960d7da3d9e..7bcb435a206702e4b7985ad076cc95555cc5c038 100644
+--- a/ui-core.js
++++ b/ui-core.js
+@@ -37,7 +37,7 @@ export class PagefindUI {
+         delete opts["mergeIndex"];
+         delete opts["translations"];
+ 
+-        const dom = document.querySelector(selector);
++        const dom = selector instanceof HTMLElement ? selector : document.querySelector(selector);
+         if (dom) {
+             this._pfs = new PagefindSvelte({
+                 target: dom,
