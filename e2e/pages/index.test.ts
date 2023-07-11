@@ -3,18 +3,12 @@ import { expect, test } from "@playwright/test";
 
 test.describe("home page", () => {
 	test("should have document title", async ({ page }) => {
-		await page.goto("/en");
+		await page.goto("/");
 		await expect(page).toHaveTitle("Home | ACDH-CH Website");
-
-		await page.goto("/de");
-		await expect(page).toHaveTitle("Startseite | ACDH-CH Website");
 	});
 
 	test("should not have any automatically detectable accessibility issues", async ({ page }) => {
-		await page.goto("/en");
-		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
-
-		await page.goto("/de");
+		await page.goto("/");
 		expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
 	});
 });

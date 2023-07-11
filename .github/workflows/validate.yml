@@ -2,6 +2,7 @@ name: Validate
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 on:
   pull_request:
@@ -24,7 +25,8 @@ jobs:
         os: [ubuntu-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       # necessary because `actions/setup-node` does not yet support `corepack`.
       # @see https://github.com/actions/setup-node/issues/531
@@ -59,7 +61,7 @@ jobs:
         run: pnpm run build
         env:
           PUBLIC_APP_BASE_URL: "http://localhost:3000"
-          PUBLIC_REDMINE_ID: "13777"
+          PUBLIC_REDMINE_ID: "${{ vars.PUBLIC_REDMINE_ID }}"
 
       - name: Run e2e tests
         run: pnpm run test:e2e

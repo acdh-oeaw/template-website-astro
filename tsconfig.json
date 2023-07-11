@@ -1,16 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	/**
-	 * FIXME: astro does not yet support extends array.
-	 *
-	 * @see https://github.com/withastro/astro/issues/6918
-	 */
-	// "extends": ["astro/tsconfigs/base", "@acdh-oeaw/tsconfig"],
 	"extends": "@acdh-oeaw/tsconfig",
 	"compilerOptions": {
 		"baseUrl": ".",
-		"jsx": "react-jsx",
-		"jsxImportSource": "react",
 		"paths": {
 			"@/*": ["./src/*"],
 			"~/*": ["./*"]

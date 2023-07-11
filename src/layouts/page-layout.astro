@@ -7,19 +7,14 @@ import roboto from "@fontsource-variable/roboto-flex/files/roboto-flex-latin-sta
 import { type ImageMetadata } from "astro";
 import { type Article, type WebSite, type WithContext } from "schema-dts";
 
-import { id } from "@/components/main-content.astro";
+import MainContent, { id } from "@/components/main-content.astro";
 import PageFooter from "@/components/page-footer.astro";
 import PageHeader from "@/components/page-header.astro";
 import SkipLink from "@/components/skip-link.astro";
+import { metadata } from "@/config/metadata.config";
 import { createAnalyticsScript } from "@/lib/analytics";
-import { prefixPathname } from "@/lib/prefix-pathname";
+import { env } from "@/lib/env";
 import { safeJsonLdReplacer } from "@/lib/safe-json-ld-replacer";
-import { unprefixPathname } from "@/lib/unprefix-pathname";
-import { useLocaleLink } from "@/lib/use-locale-link";
-import { useTranslations } from "@/lib/use-translations";
-import { env } from "~/config/env.config";
-import { type Locale, locales } from "~/config/i18n.config";
-import { metadata } from "~/config/metadata.config";
 
 interface Props {
 	/** @default true */
@@ -27,22 +22,15 @@ interface Props {
 	description?: string;
 	image?: ImageMetadata & { alt?: string };
 	jsonLd?: WithContext<Article | WebSite>;
-	locale: Locale;
 	title: string;
 	/** @default 'website' */
 	type?: "article" | "website";
 }
 
-const { locale } = Astro.props;
-const t = useTranslations(locale, "PageLayout");
-const l = useLocaleLink(locale);
-
-const meta = metadata[locale];
-
 const {
 	bots = true,
-	description = meta.description,
-	image = meta.image,
+	description = metadata.description,
+	image = metadata.image,
 	jsonLd,
 	title,
 	type,
@@ -53,17 +41,17 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const websiteJsonLd: WithContext<WebSite> = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
-	name: meta.title,
-	description: meta.description,
+	name: metadata.title,
+	description: metadata.description,
 };
 ---
 
-<html lang={locale}>
+<html lang={metadata.locale}>
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="color-scheme" content="light dark" />
-		<title>{[title, meta.title].join(" | ")}</title>
+		<title>{[title, metadata.title].join(" | ")}</title>
 
 		{bots === false ? <meta name="robots" content="nofollow, noindex" /> : null}
 
@@ -73,28 +61,13 @@ const websiteJsonLd: WithContext<WebSite> = {
 		<link rel="manifest" href="/site.webmanifest" />
 
 		<link rel="canonical" href={canonicalUrl} />
-		{
-			locales.map((locale) => {
-				const pathname = prefixPathname(locale, unprefixPathname(Astro.url.pathname));
-				const href = new URL(pathname, Astro.site);
-
-				return <link rel="alternate" hreflang={locale} href={href} />;
-			})
-		}
 
 		<meta name="description" content={description} />
 
 		<meta property="og:type" content={type} />
-		<meta property="og:locale" content={locale} />
-		{
-			locales
-				.filter((l) => l !== locale)
-				.map((locale) => {
-					return <meta property="og:locale:alternate" content={locale} />;
-				})
-		}
+		<meta property="og:locale" content={metadata.locale} />
 		<meta property="og:url" content={canonicalUrl} />
-		<meta property="og:site_name" content={meta.title} />
+		<meta property="og:site_name" content={metadata.title} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:image" content={new URL(image.src, canonicalUrl)} />
@@ -106,13 +79,12 @@ const websiteJsonLd: WithContext<WebSite> = {
 
 		<meta property="twitter:card" content="summary_large_image" />
 		{
-			isNonEmptyString(meta.twitter) ? (
-				<meta property="twitter:site" content={meta.twitter} />
+			isNonEmptyString(metadata.twitter) ? (
+				<meta property="twitter:site" content={metadata.twitter} />
 			) : null
 		}
 
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<link rel="alternate" href={l("/rss.xml")} title="RSS Feed" type="application/rss+xml" />
 
 		<script
 			type="application/ld+json"
@@ -132,10 +104,12 @@ const websiteJsonLd: WithContext<WebSite> = {
 	</head>
 
 	<body class="grid min-h-full grid-rows-[auto_1fr_auto]">
-		<SkipLink targetId={id}>{t("skip-to-main-content")}</SkipLink>
+		<SkipLink targetId={id}>Skip to main content</SkipLink>
 
-		<PageHeader locale={locale} />
-		<slot />
-		<PageFooter locale={locale} />
+		<PageHeader />
+		<MainContent>
+			<slot />
+		</MainContent>
+		<PageFooter />
 	</body>
 </html>

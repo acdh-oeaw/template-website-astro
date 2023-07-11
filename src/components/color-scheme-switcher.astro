@@ -1,27 +1,16 @@
 ---
 import { Icon } from "astro-icon/components";
-
-import { useTranslations } from "@/lib/use-translations";
-import { type Locale } from "~/config/i18n.config";
-
-interface Props {
-	locale: Locale;
-}
-
-const { locale } = Astro.props;
-
-const t = useTranslations(locale, "ThemeSwitcher");
 ---
 
 <div class="inline-flex items-center gap-2">
 	<button class="transition hover:text-muted-foreground" data-color-theme-switcher>
 		<span class="hidden dark:block">
-			<span class="sr-only">{t("switch-theme", { theme: t("themes.light") })}</span>
+			<span class="sr-only">Switch to light theme</span>
 			<Icon aria-hidden="true" class="h-5 w-5 shrink-0" name="lucide:sun" />
 		</span>
 
 		<span class="block dark:hidden">
-			<span class="sr-only">{t("switch-theme", { theme: t("themes.dark") })}</span>
+			<span class="sr-only">Switch to dark theme</span>
 			<Icon aria-hidden="true" class="h-5 w-5 shrink-0" name="lucide:moon" />
 		</span>
 	</button>

@@ -1,6 +1,4 @@
 import { createEnv } from "@t3-oss/env-core";
-// TODO: check upstream at `@t3-oss/t3-env` for recommended pattern
-// maybe https://github.com/withastro/astro.build/blob/main/src/process-env.ts
 import { loadEnv } from "vite";
 import { z } from "zod";
 

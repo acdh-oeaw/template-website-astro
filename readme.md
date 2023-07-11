@@ -15,7 +15,8 @@ set required environment variables in `.env.local`:
 cp .env.example .env.local
 ```
 
-adjust environment variables in `.github/workflows/validate.yml`.
+also, for deployment, set environment variables in
+[github](https://github.com/acdh-oeaw/template-website-astro/settings/variables/actions).
 
 install dependencies:
 

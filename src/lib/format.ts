@@ -1,25 +1,18 @@
-import { type Locale, locales } from "~/config/i18n.config";
+import { metadata } from "@/config/metadata.config";
 
-const formatters = new Map(
-	locales.map((locale) => {
-		return [
-			locale,
-			{
-				date: new Intl.DateTimeFormat(locale),
-				list: new Intl.ListFormat(locale),
-			},
-		];
-	}),
-);
+const { locale } = metadata;
 
-export function date(locale: Locale, value: Date | number) {
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const formatter = formatters.get(locale)!.date;
+const formatters = {
+	date: new Intl.DateTimeFormat(locale),
+	list: new Intl.ListFormat(locale),
+};
+
+export function date(value: Date | number) {
+	const formatter = formatters.date;
 	return formatter.format(value);
 }
 
-export function list(locale: Locale, value: Iterable<string>) {
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const formatter = formatters.get(locale)!.list;
+export function list(value: Iterable<string>) {
+	const formatter = formatters.list;
 	return formatter.format(value);
 }
