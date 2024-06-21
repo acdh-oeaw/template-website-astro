@@ -54,17 +54,15 @@ test.describe("app", () => {
 		const sitemapResponse = await request.get("/sitemap-0.xml");
 		const sitemap = await sitemapResponse.body();
 
-		for (const locale of locales) {
-			for (const url of ["/", "/imprint/"]) {
-				const loc = String(
-					createUrl({
-						baseUrl,
-						pathname: ["/", locale, url].join(""),
-					}),
-				);
+		for (const url of ["/", "/imprint/"]) {
+			const loc = String(
+				createUrl({
+					baseUrl,
+					pathname: url,
+				}),
+			);
 
-				expect(sitemap.toString()).toContain(`<loc>${loc}</loc>`);
-			}
+			expect(sitemap.toString()).toContain(`<loc>${loc}</loc>`);
 		}
 	});
 

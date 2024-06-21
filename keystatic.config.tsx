@@ -23,8 +23,7 @@ import {
 import { Logo } from "@/components/logo";
 import { createAssetPaths, createPreviewUrl } from "@/config/content.config";
 import { env } from "@/config/env.config";
-import type { Locale } from "@/config/i18n.config";
-import { getCollectionName } from "@/lib/content/get-collection-name";
+import { defaultLocale, type Locale } from "@/config/i18n.config";
 import { useObjectUrl } from "@/lib/content/use-object-url";
 
 function createCollection<T extends Record<string, ComponentSchema>, U extends string>(
@@ -36,7 +35,7 @@ function createCollection<T extends Record<string, ComponentSchema>, U extends s
 		locale: Locale,
 	) => Collection<T, U>,
 ) {
-	return function createI18nCollection(locale: Locale): Collection<T, U> {
+	return function createI18nCollection(locale = defaultLocale): Collection<T, U> {
 		const collection = create(`./content/${locale}${path}**`, `/content/${locale}${path}`, locale);
 
 		return collection;
@@ -45,10 +44,15 @@ function createCollection<T extends Record<string, ComponentSchema>, U extends s
 
 function createSingleton<T extends Record<string, ComponentSchema>>(
 	path: `/${string}/`,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	create: (path: Singleton<any>["path"], assetPath: `/${string}/`, locale: Locale) => Singleton<T>,
+
+	create: (
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		path: Singleton<any>["path"],
+		assetPath: `/${string}/`,
+		locale: Locale,
+	) => Singleton<T>,
 ) {
-	return function createI18nCollection(locale: Locale): Singleton<T> {
+	return function createI18nCollection(locale = defaultLocale): Singleton<T> {
 		const collection = create(`./content/${locale}${path}`, `/content/${locale}${path}`, locale);
 
 		return collection;
@@ -245,9 +249,9 @@ function createComponents(
 }
 
 const collections = {
-	pages: createCollection("/pages/", (path, assetPath, locale) => {
+	pages: createCollection("/pages/", (path, assetPath) => {
 		return collection({
-			label: `Pages (${locale})`,
+			label: "Page",
 			path,
 			slugField: "title",
 			format: { contentField: "content" },
@@ -284,9 +288,9 @@ const collections = {
 };
 
 const singletons = {
-	indexPage: createSingleton("/index-page/", (path, assetPath, locale) => {
+	indexPage: createSingleton("/index-page/", (path, assetPath) => {
 		return singleton({
-			label: `Home page (${locale})`,
+			label: "Home page",
 			path,
 			format: { data: "json" },
 			entryLayout: "form",
@@ -338,7 +342,7 @@ const singletons = {
 										}),
 										reference: fields.relationship({
 											label: "Page",
-											collection: getCollectionName("pages", locale),
+											collection: "pages",
 											validation: { isRequired: true },
 										}),
 									}),
@@ -452,7 +456,7 @@ const singletons = {
 																}),
 																reference: fields.relationship({
 																	label: "Page",
-																	collection: getCollectionName("pages", locale),
+																	collection: "pages",
 																	validation: { isRequired: true },
 																}),
 																link: fields.object(
@@ -496,9 +500,9 @@ const singletons = {
 			},
 		});
 	}),
-	metadata: createSingleton("/metadata/", (path, _assetPath, locale) => {
+	metadata: createSingleton("/metadata/", (path, _assetPath) => {
 		return singleton({
-			label: `Metadata (${locale})`,
+			label: "Metadata",
 			path,
 			format: { data: "json" },
 			entryLayout: "form",
@@ -522,9 +526,9 @@ const singletons = {
 			},
 		});
 	}),
-	navigation: createSingleton("/navigation/", (path, _assetPath, locale) => {
+	navigation: createSingleton("/navigation/", (path, _assetPath) => {
 		return singleton({
-			label: `Navigation (${locale})`,
+			label: "Navigation",
 			path,
 			format: { data: "json" },
 			entryLayout: "form",
@@ -559,7 +563,7 @@ const singletons = {
 								}),
 								reference: fields.relationship({
 									label: "Page",
-									collection: getCollectionName("pages", locale),
+									collection: "pages",
 									validation: { isRequired: true },
 								}),
 							}),
@@ -610,7 +614,7 @@ const singletons = {
 													}),
 													reference: fields.relationship({
 														label: "Page",
-														collection: getCollectionName("pages", locale),
+														collection: "pages",
 														validation: { isRequired: true },
 													}),
 												},
@@ -650,9 +654,9 @@ export default config({
 			mark: Logo,
 		},
 		navigation: {
-			Pages: ["de_indexPage", "en_indexPage", "---", "de_pages", "en_pages"],
-			Navigation: ["de_navigation", "en_navigation"],
-			Settings: ["de_metadata", "en_metadata"],
+			Pages: ["indexPage", "---", "pages"],
+			Navigation: ["navigation"],
+			Settings: ["metadata"],
 		},
 	},
 	storage:
@@ -674,17 +678,13 @@ export default config({
 					kind: "local",
 				},
 	collections: {
-		de_pages: collections.pages("de"),
-		en_pages: collections.pages("en"),
+		pages: collections.pages(),
 	},
 	singletons: {
-		de_indexPage: singletons.indexPage("de"),
-		en_indexPage: singletons.indexPage("en"),
+		indexPage: singletons.indexPage(),
 
-		de_metadata: singletons.metadata("de"),
-		en_metadata: singletons.metadata("en"),
+		metadata: singletons.metadata(),
 
-		de_navigation: singletons.navigation("de"),
-		en_navigation: singletons.navigation("en"),
+		navigation: singletons.navigation(),
 	},
 });
