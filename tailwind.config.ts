@@ -1,26 +1,22 @@
 import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import colors from "tailwindcss/colors";
+import animatePlugin from "tailwindcss-animate";
 
-const config: Config = {
-	content: [
-		"./keystatic.config.@(ts|tsx)",
-		"./content/**/*.@(md|mdx)",
-		"./src/@(components|layouts|pages)/**/*.@(astro|css|ts|tsx)",
-		"./src/styles/**/*.css",
-	],
+const config = {
+	content: ["./src/@(components|config|layouts|lib|pages|styles)/**/*.@(astro|css|ts|tsx)"],
 	corePlugins: {
 		container: false,
 	},
 	darkMode: [
 		"variant",
 		[
-			':where([data-ui-color-scheme="dark"]) &',
+			'&:where([data-ui-color-scheme="dark"], [data-ui-color-scheme="dark"] *)',
 			/** Keystatic. */
-			":where(.kui-theme.kui-scheme--dark) &",
+			"&:where(.kui-theme.kui-scheme--dark, .kui-theme.kui-scheme--dark *)",
 		],
 	],
-	plugins: [typographyPlugin],
+	plugins: [animatePlugin, typographyPlugin],
 	theme: {
 		extend: {
 			colors: {
@@ -42,20 +38,18 @@ const config: Config = {
 				body: "var(--font-body, ui-sans-serif), system-ui, sans-serif",
 				heading: "var(--font-heading, var(--font-body, ui-sans-serif)), system-ui, sans-serif",
 			},
-			typography(_theme: (key: string) => unknown) {
-				return {
-					DEFAULT: {
-						css: {
-							maxWidth: "none",
-							/** Don't add quotes around `blockquote`. */
-							"blockquote p:first-of-type::before": null,
-							"blockquote p:last-of-type::after": null,
-							/** Don't add backticks around inline `code`. */
-							"code::before": null,
-							"code::after": null,
-						},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: null,
+						/** Don't add quotes around `blockquote`. */
+						"blockquote p:first-of-type::before": null,
+						"blockquote p:last-of-type::after": null,
+						/** Don't add backticks around inline `code`. */
+						"code::before": null,
+						"code::after": null,
 					},
-				};
+				},
 			},
 		},
 		screens: {
@@ -68,6 +62,6 @@ const config: Config = {
 			"3xl": "120rem",
 		},
 	},
-};
+} satisfies Config;
 
 export default config;

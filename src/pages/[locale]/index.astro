@@ -34,7 +34,13 @@ const { hero } = page.data;
 	<MainContent>
 		<PageSection>
 			<div>
-				<Image alt="" fetchpriority="high" loading="eager" src={getImageImport(hero.image)} />
+				<Image
+					alt=""
+					decoding="auto"
+					fetchpriority="high"
+					loading="eager"
+					src={getImageImport(hero.image)}
+				/>
 				<PageTitle>{hero.title}</PageTitle>
 				<p>{hero.lead}</p>
 			</div>

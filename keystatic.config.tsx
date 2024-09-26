@@ -1,17 +1,26 @@
 /* @jsxImportSource react */
 
 import { config } from "@keystatic/core";
+import { withI18nPrefix } from "@acdh-oeaw/keystatic-lib";
 
 import { Logo } from "@/components/content/logo";
 import { env } from "@/config/env.config";
 import { locales } from "@/config/i18n.config";
-import { collections } from "@/lib/content/collections";
-import { i18n, withI18nPrefix } from "@/lib/content/i18n";
-import { singletons } from "@/lib/content/singletons";
+import { createPages } from "@/lib/keystatic/collections";
+import { createMetadata, createNavigation } from "@/lib/keystatic/singletons";
 
 export default config({
-	collections: i18n(collections),
-	singletons: i18n(singletons),
+	collections: {
+		[withI18nPrefix("pages", "de")]: createPages("de"),
+		[withI18nPrefix("pages", "en")]: createPages("en"),
+	},
+	singletons: {
+		[withI18nPrefix("metadata", "de")]: createMetadata("de"),
+		[withI18nPrefix("metadata", "en")]: createMetadata("en"),
+
+		[withI18nPrefix("navigation", "de")]: createNavigation("de"),
+		[withI18nPrefix("navigation", "en")]: createNavigation("en"),
+	},
 	storage:
 		env.PUBLIC_KEYSTATIC_MODE === "github" &&
 		env.PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER &&
@@ -35,17 +44,15 @@ export default config({
 			name: "Website",
 		},
 		navigation: {
-			data: [],
-			pages: [
-				...locales.map((locale) => withI18nPrefix(locale, "indexPage")),
-				"---",
-				...locales.map((locale) => withI18nPrefix(locale, "pages")),
-			],
-			settings: [
-				...locales.map((locale) => withI18nPrefix(locale, "metadata")),
-				"---",
-				...locales.map((locale) => withI18nPrefix(locale, "navigation")),
-			],
+			Pages: locales.map((locale) => {
+				return withI18nPrefix("pages", locale);
+			}),
+			Navigation: locales.map((locale) => {
+				return withI18nPrefix("navigation", locale);
+			}),
+			Metadata: locales.map((locale) => {
+				return withI18nPrefix("metadata", locale);
+			}),
 		},
 	},
 });

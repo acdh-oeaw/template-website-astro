@@ -1,10 +1,7 @@
 {
-  "hero": {
-    "title": "ACDH-CH Website",
-    "lead": "A project website.",
-    "image": "/assets/content/en/index-page/hero/image.svg"
-  },
-  "main": {
-    "sections": []
-  }
+	"hero": {
+		"title": "ACDH-CH Website",
+		"lead": "A project website.",
+		"image": "/assets/content/en/index-page/hero/image.svg"
+	}
 }

@@ -13,7 +13,7 @@ import NavMenuTrigger from "@/components/navigation/nav-menu-trigger.astro";
 import Navigation from "@/components/navigation/navigation.astro";
 import Search from "@/components/search.astro";
 import { defaultLocale, type Locale } from "@/config/i18n.config";
-import { createSingletonResource } from "@/lib/content/create-resource";
+import { createSingletonResource } from "@/lib/keystatic/resources";
 import { createI18n } from "@/lib/i18n";
 import logoDark from "~/public/assets/images/acdh-ch-logo-dark.svg";
 import logoLight from "~/public/assets/images/acdh-ch-logo-light.svg";
@@ -23,6 +23,21 @@ const { t } = await createI18n(locale);
 const navigation = await createSingletonResource("navigation", locale).read();
 
 const home = t("WebsiteHeader.links.home");
+
+function getHref(
+	link: Extract<(typeof navigation.data.links)[number], { discriminant: "link" }>["value"]["link"],
+) {
+	switch (link.discriminant) {
+		case "download":
+		case "external": {
+			return link.value;
+		}
+
+		case "pages": {
+			return `/${link.value}`;
+		}
+	}
+}
 ---
 
 <header class="border-b">
@@ -34,15 +49,15 @@ const home = t("WebsiteHeader.links.home");
 				<Image
 					alt=""
 					class="block size-8 dark:hidden"
+					decoding="auto"
 					fetchpriority="high"
-					loading="eager"
 					src={logoLight}
 				/>
 				<Image
 					alt=""
 					class="hidden size-8 dark:block"
+					decoding="auto"
 					fetchpriority="high"
-					loading="eager"
 					src={logoDark}
 				/>
 				<span>{home}</span>
@@ -53,7 +68,9 @@ const home = t("WebsiteHeader.links.home");
 					navigation.data.links.map((item) => {
 						switch (item.discriminant) {
 							case "link": {
-								const { label, href } = item.value;
+								const { label, link } = item.value;
+
+								const href = getHref(link);
 
 								return (
 									<li>
@@ -62,18 +79,8 @@ const home = t("WebsiteHeader.links.home");
 								);
 							}
 
-							case "page": {
-								const { id, label } = item.value;
-
-								return (
-									<li>
-										<NavMenuLink href={`/${id}`}>{label}</NavMenuLink>
-									</li>
-								);
-							}
-
 							case "menu": {
-								const { label, links } = item.value;
+								const { items, label } = item.value;
 
 								return (
 									<li>
@@ -81,24 +88,16 @@ const home = t("WebsiteHeader.links.home");
 											<NavMenuTrigger>{label}</NavMenuTrigger>
 											<NavMenuPopover>
 												<ul role="list">
-													{links.map((link) => {
-														switch (link.discriminant) {
+													{items.map((item) => {
+														switch (item.discriminant) {
 															case "link": {
-																const { label, href } = link.value;
+																const { label, link } = item.value;
+
+																const href = getHref(link);
 
 																return (
 																	<li>
 																		<NavMenuItem href={href}>{label}</NavMenuItem>
-																	</li>
-																);
-															}
-
-															case "page": {
-																const { id, label } = link.value;
-
-																return (
-																	<li>
-																		<NavMenuItem href={`/${id}`}>{label}</NavMenuItem>
 																	</li>
 																);
 															}

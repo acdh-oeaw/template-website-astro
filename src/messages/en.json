@@ -1,4 +1,8 @@
 {
+	"mdx": {
+		"footnote-back-label": "Back to reference {reference}",
+		"footnotes": "Footnotes"
+	},
 	"ColorSchemeSwitcher": {
 		"color-schemes": {
 			"dark": "Dark",
@@ -69,9 +73,5 @@
 			"home": "Home"
 		},
 		"navigation-primary": "Primary"
-	},
-	"mdx": {
-		"footnote-back-label": "Back to reference {reference}",
-		"footnotes": "Footnotes"
 	}
 }

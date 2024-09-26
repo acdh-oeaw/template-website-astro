@@ -36,7 +36,7 @@
 	"tailwindCSS.classAttributes": ["class", "class:list"],
 	"tailwindCSS.experimental.classRegex": [
 		["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-		["variants\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
+		["styles\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]
 	],
 	"tailwindCSS.validate": true,
 	"terminal.integrated.enablePersistentSessions": false,

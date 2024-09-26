@@ -23,12 +23,6 @@ export default defineConfig({
 		mode: "standalone",
 	}),
 	base: env.PUBLIC_APP_BASE_PATH,
-	experimental: {
-		// actions: true,
-		// contentCollectionCache: true,
-		// env: {},
-		// serverIslands: true,
-	},
 	i18n: {
 		defaultLocale,
 		locales: locales as Writable<typeof locales>,
@@ -40,19 +34,6 @@ export default defineConfig({
 			include: {
 				lucide: ["chevron-down", "menu", "message-circle", "search", "square-arrow-left", "x"],
 				simpleIcons: [],
-			},
-			svgoOptions: {
-				multipass: true,
-				plugins: [
-					{
-						name: "preset-default",
-						params: {
-							overrides: {
-								removeViewBox: false,
-							},
-						},
-					},
-				],
 			},
 		}),
 		mdx(),

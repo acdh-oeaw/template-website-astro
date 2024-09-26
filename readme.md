@@ -6,12 +6,12 @@ template repository for project websites.
 
 prerequisites:
 
-- [node.js 20.x](https://nodejs.org/en/download)
+- [node.js 22.x](https://nodejs.org/en/download)
 - [pnpm 9.x](https://pnpm.io/installation)
 
 > [!TIP]
 >
-> you can use `pnpm` to install the required node.js version with `pnpm env use 20 --global`
+> you can use `pnpm` to install the required node.js version with `pnpm env use 22 --global`
 
 set required environment variables in `.env.local`:
 
@@ -86,6 +86,11 @@ commit changes to the github repository).
   "https://my-app.acdh-ch-dev.oeaw.ac.at"), and set the `KUBE_INGRESS_BASE_DOMAIN` to the public
   url's base domain (e.g. "acdh-ch-dev.oeaw.ac.at"). `PUBLIC_URL` should match
   `PUBLIC_APP_BASE_URL`.
+- when deploying to a production domain (i.e. a domain not ending in "acdh-ch-dev.oeaw.ac.at"), set
+  `HELM_UPGRADE_EXTRA_ARGS` to
+  `--set 'ingress.annotations.cert-manager\.io/cluster-issuer=acdh-prod'` for "acdh.oeaw.ac.at"
+  domains, or to `--set 'ingress.annotations.cert-manager\.io/cluster-issuer=letsencrypt-prod'` for
+  any other non-oeaw domains, and ensure `KUBE_INGRESS_BASE_DOMAIN` is set correctly.
 - if you haven't yet, create a service issue in the acdh-ch
   [redmine](https://redmine.acdh.oeaw.ac.at) issue tracker, and set the `SERVICE_ID` github variable
   to the issue number. this should match the `PUBLIC_REDMINE_ID` variable in your `.env.local` file.
