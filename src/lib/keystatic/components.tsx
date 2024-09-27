@@ -21,7 +21,20 @@ import {
 } from "lucide-react";
 
 import { createLinkSchema } from "@/lib/keystatic/create-link-schema";
-import { FigurePreview, TweetPreview, VideoPreview } from "@/lib/keystatic/previews";
+import {
+	CalloutPreview,
+	DisclosurePreview,
+	EmbedPreview,
+	FigurePreview,
+	GridItemPreview,
+	GridPreview,
+	LinkButtonPreview,
+	TableOfContentsPreview,
+	TabPreview,
+	TabsPreview,
+	TweetPreview,
+	VideoPreview,
+} from "@/lib/keystatic/previews";
 import {
 	calloutKinds,
 	figureAlignments,
@@ -45,7 +58,15 @@ export const createCallout = createComponent((_assetPath, _locale) => {
 					validation: { isRequired: false },
 				}),
 			},
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children, value } = props;
+
+				return (
+					<CalloutPreview kind={value.kind} title={value.title}>
+						{children}
+					</CalloutPreview>
+				);
+			},
 		}),
 	};
 });
@@ -61,7 +82,11 @@ export const createDisclosure = createComponent((_assetPath, _locale) => {
 					validation: { isRequired: true },
 				}),
 			},
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children, value } = props;
+
+				return <DisclosurePreview title={value.title}>{children}</DisclosurePreview>;
+			},
 		}),
 	};
 });
@@ -77,7 +102,11 @@ export const createEmbed = createComponent((_assetPath, _locale) => {
 					validation: { isRequired: true },
 				}),
 			},
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children, value } = props;
+
+				return <EmbedPreview src={value.src}>{children}</EmbedPreview>;
+			},
 		}),
 	};
 });
@@ -106,12 +135,8 @@ export const createFigure = createComponent((assetPath, _locale) => {
 			ContentView(props) {
 				const { children, value } = props;
 
-				const src = useObjectUrl(value.src);
-
-				if (src == null) return null;
-
 				return (
-					<FigurePreview alignment={value.alignment} alt={value.alt} src={src}>
+					<FigurePreview alignment={value.alignment} alt={value.alt} src={value.src}>
 						{children}
 					</FigurePreview>
 				);
@@ -127,7 +152,6 @@ export const createFootnote = createComponent((_assetPath, _locale) => {
 			icon: <SuperscriptIcon />,
 			schema: {},
 			className: "underline decoration-dotted align-super text-sm",
-			// ContentView(props) {},
 		}),
 	};
 });
@@ -145,14 +169,22 @@ export const createGrid = createComponent((_assetPath, _locale) => {
 				}),
 			},
 			children: ["GridItem"],
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children, value } = props;
+
+				return <GridPreview layout={value.layout}>{children}</GridPreview>;
+			},
 		}),
 		GridItem: wrapper({
 			label: "Grid item",
 			icon: <SquareIcon />,
 			schema: {},
 			forSpecificLocations: true,
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children } = props;
+
+				return <GridItemPreview>{children}</GridItemPreview>;
+			},
 		}),
 	};
 });
@@ -186,20 +218,23 @@ export const createLink = createComponent((assetPath, locale) => {
 				link: createLinkSchema(assetPath, locale),
 			},
 			tag: "a",
-			// ContentView(props) {},
 		}),
 	};
 });
 
 export const createLinkButton = createComponent((assetPath, locale) => {
 	return {
-		Link: block({
+		Link: wrapper({
 			label: "LinkButton",
 			icon: <LinkIcon />,
 			schema: {
 				link: createLinkSchema(assetPath, locale),
 			},
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children } = props;
+
+				return <LinkButtonPreview>{children}</LinkButtonPreview>;
+			},
 		}),
 	};
 });
@@ -215,7 +250,11 @@ export const createTableOfContents = createComponent(() => {
 					validation: { isRequired: false },
 				}),
 			},
-			// ContentView(props) {},
+			ContentView(props) {
+				const { value } = props;
+
+				return <TableOfContentsPreview title={value.title} />;
+			},
 		}),
 	};
 });
@@ -227,7 +266,11 @@ export const createTabs = createComponent((_assetPath, _locale) => {
 			icon: <CaptionsIcon />,
 			schema: {},
 			children: ["Tab"],
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children } = props;
+
+				return <TabsPreview>{children}</TabsPreview>;
+			},
 		}),
 		Tab: wrapper({
 			label: "Tab",
@@ -239,7 +282,11 @@ export const createTabs = createComponent((_assetPath, _locale) => {
 				}),
 			},
 			forSpecificLocations: true,
-			// ContentView(props) {},
+			ContentView(props) {
+				const { children, value } = props;
+
+				return <TabPreview title={value.title}>{children}</TabPreview>;
+			},
 		}),
 	};
 });

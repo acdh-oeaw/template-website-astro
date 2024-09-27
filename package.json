@@ -36,7 +36,7 @@
 		"validate": "run-p format:check lint:check types:check test test:e2e"
 	},
 	"dependencies": {
-		"@acdh-oeaw/keystatic-lib": "^0.4.0",
+		"@acdh-oeaw/keystatic-lib": "^0.4.1",
 		"@acdh-oeaw/lib": "^0.1.12",
 		"@acdh-oeaw/mdx-lib": "^0.1.1",
 		"@acdh-oeaw/style-variants": "^0.1.0",
@@ -56,6 +56,7 @@
 		"@shikijs/rehype": "^1.19.0",
 		"astro": "^4.15.9",
 		"astro-icon": "^1.1.1",
+		"astro-tweet": "^0.0.4",
 		"date-fns": "^4.1.0",
 		"lucide-react": "^0.446.0",
 		"nodemailer": "^6.9.15",

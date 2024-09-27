@@ -8,32 +8,4 @@ const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
 const imprint = t("WebsiteFooter.links.imprint");
 ---
 
-<footer class="border-t">
-	<div class="mx-auto flex w-full max-w-screen-lg items-center justify-between px-4 py-6 text-sm">
-		<div>
-			<Link
-				class="underline decoration-dotted underline-offset-4 hover:no-underline"
-				href="/imprint"
-			>
-				{imprint}
-			</Link>
-		</div>
-
-		<div>
-			&copy; {new Date().getUTCFullYear()}
-			<a
-				class="underline decoration-dotted underline-offset-4 hover:no-underline"
-				href="https://www.oeaw.ac.at/acdh"
-			>
-				ACDH-CH
-			</a>
-			|
-			<Link
-				class="underline decoration-dotted underline-offset-4 hover:no-underline"
-				href="/feed.xml"
-			>
-				RSS Feed
-			</Link>
-		</div>
-	</div>
-</footer>
+<footer class="border-t"></footer>

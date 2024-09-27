@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@acdh-oeaw/keystatic-lib':
-        specifier: ^0.4.0
-        version: 0.4.0(@keystatic/core@0.5.36(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        specifier: ^0.4.1
+        version: 0.4.1(@keystatic/core@0.5.36(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@acdh-oeaw/lib':
         specifier: ^0.1.12
         version: 0.1.12
@@ -68,6 +68,9 @@ importers:
       astro-icon:
         specifier: ^1.1.1
         version: 1.1.1
+      astro-tweet:
+        specifier: ^0.0.4
+        version: 0.0.4(astro@4.15.9(@types/node@22.7.2)(rollup@4.22.4)(typescript@5.6.2))(prettier-plugin-astro@0.14.1)(prettier@3.3.3)
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
@@ -283,8 +286,8 @@ packages:
       globals: 15.x
       typescript: 5.x
 
-  '@acdh-oeaw/keystatic-lib@0.4.0':
-    resolution: {integrity: sha512-tR71RR5ve5gdUffpinMLF4fbI6sJUNShks33ekCfLMVQqPCTM00Cty+npvwIa2u10MG/GWk0NEcjILEvDXKJVA==}
+  '@acdh-oeaw/keystatic-lib@0.4.1':
+    resolution: {integrity: sha512-p4UrmoMb8cTp0eQhh7RscBWv13ygAsPPOYLOow3s7mjG/P4qLyl+4rAPf/wEEzT1FnGJ001Awj48C/J9XS9SXw==}
     engines: {node: '>=22', pnpm: 9.x}
     peerDependencies:
       '@keystatic/core': 0.x
@@ -333,6 +336,12 @@ packages:
 
   '@antfu/utils@0.7.10':
     resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
+
+  '@astrojs/check@0.2.1':
+    resolution: {integrity: sha512-s85uBS/qjnqsKAeM0VKNWKvNaqvR06ZJupEwr2oT5/6Bti7qB5Vd8KekWIRAu2/WqOXHMFaDJz5D+qSizFnq5g==}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.0.0
 
   '@astrojs/check@0.9.3':
     resolution: {integrity: sha512-I6Dz45bMI5YRbp4yK2LKWsHH3/kkHRGdPGruGkLap6pqxhdcNh7oCgN04Ac+haDfc9ow5BYPGPmEhkwef15GQQ==}
@@ -2119,6 +2128,11 @@ packages:
   astro-icon@1.1.1:
     resolution: {integrity: sha512-HKBesWk2Faw/0+klLX+epQVqdTfSzZz/9+5vxXUjTJaN/HnpDf608gRPgHh7ZtwBPNJMEFoU5GLegxoDcT56OQ==}
 
+  astro-tweet@0.0.4:
+    resolution: {integrity: sha512-D4rpm8r2AiDeY2L+wee1+smVojLd0Qd114NqO4uuczWh4R0hbJTwgd4fpyGp87M6SmF1g85d5QejxLzLjGn3rw==}
+    peerDependencies:
+      astro: ^3.0.0 || ^4.0.0
+
   astro@4.15.9:
     resolution: {integrity: sha512-51oXq9qrZ5OPWYmEXt1kGrvWmVeWsx28SgBTzi2XW6iwcnW/wC5ONm6ol6qBGSCF93tQvZplXvuzpaw1injECA==}
     engines: {node: ^18.17.1 || ^20.3.0 || >=21.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
@@ -2485,6 +2499,10 @@ packages:
   data-view-byte-offset@1.0.0:
     resolution: {integrity: sha512-t/Ygsytq+R995EJ5PZlD4Cu56sWa8InXySaViRzw9apusqsOO2bQP+SbYzAhR0pFKoB+43lYy8rWban9JSuXnA==}
     engines: {node: '>= 0.4'}
+
+  date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
 
   date-fns@4.1.0:
     resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
@@ -5761,7 +5779,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  '@acdh-oeaw/keystatic-lib@0.4.0(@keystatic/core@0.5.36(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@acdh-oeaw/keystatic-lib@0.4.1(@keystatic/core@0.5.36(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
       '@keystatic/core': 0.5.36(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@sindresorhus/slugify': 2.2.1
@@ -5826,6 +5844,18 @@ snapshots:
       tinyexec: 0.3.0
 
   '@antfu/utils@0.7.10': {}
+
+  '@astrojs/check@0.2.1(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.6.2)':
+    dependencies:
+      '@astrojs/language-server': 2.14.2(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.6.2)
+      chokidar: 3.6.0
+      fast-glob: 3.3.2
+      kleur: 4.1.5
+      typescript: 5.6.2
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - prettier
+      - prettier-plugin-astro
 
   '@astrojs/check@0.9.3(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.6.2)':
     dependencies:
@@ -8367,6 +8397,17 @@ snapshots:
       - debug
       - supports-color
 
+  astro-tweet@0.0.4(astro@4.15.9(@types/node@22.7.2)(rollup@4.22.4)(typescript@5.6.2))(prettier-plugin-astro@0.14.1)(prettier@3.3.3):
+    dependencies:
+      '@astrojs/check': 0.2.1(prettier-plugin-astro@0.14.1)(prettier@3.3.3)(typescript@5.6.2)
+      astro: 4.15.9(@types/node@22.7.2)(rollup@4.22.4)(typescript@5.6.2)
+      clsx: 2.1.1
+      date-fns: 2.30.0
+      typescript: 5.6.2
+    transitivePeerDependencies:
+      - prettier
+      - prettier-plugin-astro
+
   astro@4.15.9(@types/node@22.7.2)(rollup@4.22.4)(typescript@5.6.2):
     dependencies:
       '@astrojs/compiler': 2.10.3
@@ -8826,6 +8867,10 @@ snapshots:
       call-bind: 1.0.7
       es-errors: 1.3.0
       is-data-view: 1.0.1
+
+  date-fns@2.30.0:
+    dependencies:
+      '@babel/runtime': 7.25.6
 
   date-fns@4.1.0: {}
 

@@ -1,12 +1,10 @@
 ---
 import Link from "@/components/content/link.astro";
-import type { linkCollections } from "@/lib/content/create-components";
-
-type LinkCollection = (typeof linkCollections)[number]["value"];
+import type { LinkKind } from "@/lib/keystatic/component-options";
 
 interface Props {
 	item: {
-		discriminant: LinkCollection;
+		discriminant: LinkKind;
 		value: string;
 	};
 	label: string;

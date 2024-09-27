@@ -1,13 +1,11 @@
 ---
 import Anchor from "@/components/link.astro";
-import type { linkCollections } from "@/lib/content/create-components";
-
-type LinkCollection = (typeof linkCollections)[number]["value"];
+import type { LinkKind } from "@/lib/keystatic/component-options";
 
 interface Props {
 	class?: string;
 	item: {
-		discriminant: LinkCollection;
+		discriminant: LinkKind;
 		value: string;
 	};
 }

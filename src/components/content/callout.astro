@@ -1,17 +1,17 @@
 ---
-import type { calloutKinds } from "@/lib/content/create-components";
-import { variants } from "@/lib/styles";
+import { styles } from "@acdh-oeaw/style-variants";
 
-type CalloutKind = (typeof calloutKinds)[number]["value"];
+import type { CalloutKind } from "@/lib/keystatic/component-options";
 
 interface Props {
+	/** @default "note" */
 	kind: CalloutKind;
 	title?: string;
 }
 
 const { kind, title } = Astro.props;
 
-const calloutStyles = variants({
+const calloutStyles = styles({
 	base: "my-4 rounded-md border p-4 text-sm leading-relaxed [&>:first-child]:mt-0 [&>:last-child]:mb-0",
 	variants: {
 		kind: {
@@ -22,7 +22,7 @@ const calloutStyles = variants({
 			warning: "",
 		},
 	},
-	defaultVariants: {
+	defaults: {
 		kind: "note",
 	},
 });

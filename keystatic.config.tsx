@@ -3,7 +3,7 @@
 import { config } from "@keystatic/core";
 import { withI18nPrefix } from "@acdh-oeaw/keystatic-lib";
 
-import { Logo } from "@/components/content/logo";
+import { Logo } from "@/lib/keystatic/logo";
 import { env } from "@/config/env.config";
 import { locales } from "@/config/i18n.config";
 import { createPages } from "@/lib/keystatic/collections";

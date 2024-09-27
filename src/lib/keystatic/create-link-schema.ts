@@ -12,11 +12,6 @@ export function createLinkSchema(assetPath: `/${string}/`, locale: Locale) {
 			defaultValue: "external",
 		}),
 		{
-			pages: fields.relationship({
-				label: "Pages",
-				validation: { isRequired: true },
-				collection: withI18nPrefix("pages", locale),
-			}),
 			download: fields.file({
 				label: "Download",
 				validation: { isRequired: true },
@@ -25,6 +20,11 @@ export function createLinkSchema(assetPath: `/${string}/`, locale: Locale) {
 			external: fields.url({
 				label: "URL",
 				validation: { isRequired: true },
+			}),
+			pages: fields.relationship({
+				label: "Pages",
+				validation: { isRequired: true },
+				collection: withI18nPrefix("pages", locale),
 			}),
 		},
 	);

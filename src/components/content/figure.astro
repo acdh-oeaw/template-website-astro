@@ -1,8 +1,6 @@
 ---
 import Img from "@/components/content/img.astro";
-import type { figureAlignments } from "@/lib/content/create-components";
-
-type FigureAlignment = (typeof figureAlignments)[number]["value"];
+import type { FigureAlignment } from "@/lib/keystatic/component-options";
 
 interface Props {
 	/** @default "stretch" */

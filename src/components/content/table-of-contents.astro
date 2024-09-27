@@ -1,12 +1,13 @@
 ---
 import TableOfContentsLevel from "@/components/content/table-of-contents-level.astro";
 import type { Locale } from "@/config/i18n.config";
-import type { Toc } from "@/lib/content/with-table-of-contents";
+import type { TableOfContents } from "@acdh-oeaw/mdx-lib";
 import { generateUniqueId } from "@/lib/generate-unique-id";
 import { createI18n } from "@/lib/i18n";
 
 interface Props {
-	tableOfContents: Toc;
+	/** Added by `@acdh-oeaw/mdx-lib#with-table-of-contents`. */
+	tableOfContents?: TableOfContents;
 	title?: string;
 }
 

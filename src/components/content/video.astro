@@ -1,22 +1,18 @@
 ---
-import { createUrl, createUrlSearchParams } from "@acdh-oeaw/lib";
+import type { VideoProvider } from "@/lib/keystatic/component-options";
+import { createVideoUrl } from "@/lib/keystatic/create-video-url";
 
 interface Props {
-	provider: "youtube";
 	id: string;
+	provider: VideoProvider;
 	startTime?: number;
+	/** Added by `@acdh-oeaw/mdx-lib#with-iframe-titles`. */
 	title?: string;
 }
 
-const { id, startTime, title } = Astro.props;
+const { id, provider, startTime, title } = Astro.props;
 
-const href = String(
-	createUrl({
-		baseUrl: "https://www.youtube-nocookie.com",
-		pathname: `/embed/${id}`,
-		searchParams: startTime ? createUrlSearchParams({ t: startTime }) : undefined,
-	}),
-);
+const href = String(createVideoUrl(provider, id, startTime));
 ---
 
 <figure>
