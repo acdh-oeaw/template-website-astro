@@ -305,6 +305,7 @@
 	--corner-radius-20: 1.25rem;
 	--corner-radius-24: 1.5rem;
 	--corner-radius-32: 2rem;
+	--corner-radius-full: calc(infinity * 1px);
 
 	--spacing-0: 0rem;
 	--spacing-4: 0.25rem;

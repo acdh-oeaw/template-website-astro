@@ -1,6 +1,5 @@
 import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
-import colors from "tailwindcss/colors";
 import animatePlugin from "tailwindcss-animate";
 
 const config = {
@@ -20,15 +19,19 @@ const config = {
 	theme: {
 		borderRadius: {
 			"0": "var(--corner-radius-0)",
-			"4": "var(--corner-radius-4)",
-			"8": "var(--corner-radius-8)",
-			"12": "var(--corner-radius-12)",
-			"16": "var(--corner-radius-16)",
-			"20": "var(--corner-radius-20)",
-			"24": "var(--corner-radius-24)",
-			"32": "var(--corner-radius-32)",
+			"1": "var(--corner-radius-4)",
+			"2": "var(--corner-radius-8)",
+			"3": "var(--corner-radius-12)",
+			"4": "var(--corner-radius-16)",
+			"5": "var(--corner-radius-20)",
+			"6": "var(--corner-radius-24)",
+			"8": "var(--corner-radius-32)",
+			full: "var(--corner-radius-full)",
 		},
 		colors: {
+			current: "currentColor",
+			transparent: "transparent",
+
 			"background-alternate": "var(--color-background-alternate)",
 			"background-base": "var(--color-background-base)",
 			"background-brand": "var(--color-background-brand)",
@@ -122,22 +125,22 @@ const config = {
 		},
 		spacing: {
 			"0": "var(--spacing-0)",
-			"4": "var(--spacing-4)",
-			"8": "var(--spacing-8)",
-			"12": "var(--spacing-12)",
-			"16": "var(--spacing-16)",
-			"20": "var(--spacing-20)",
-			"24": "var(--spacing-24)",
-			"32": "var(--spacing-32)",
-			"40": "var(--spacing-40)",
-			"48": "var(--spacing-48)",
-			"56": "var(--spacing-56)",
-			"64": "var(--spacing-64)",
-			"80": "var(--spacing-80)",
-			"96": "var(--spacing-96)",
-			"128": "var(--spacing-128)",
-			"192": "var(--spacing-192)",
-			"256": "var(--spacing-256)",
+			"1": "var(--spacing-4)",
+			"2": "var(--spacing-8)",
+			"3": "var(--spacing-12)",
+			"4": "var(--spacing-16)",
+			"5": "var(--spacing-20)",
+			"6": "var(--spacing-24)",
+			"8": "var(--spacing-32)",
+			"10": "var(--spacing-40)",
+			"12": "var(--spacing-48)",
+			"14": "var(--spacing-56)",
+			"16": "var(--spacing-64)",
+			"20": "var(--spacing-80)",
+			"24": "var(--spacing-96)",
+			"32": "var(--spacing-128)",
+			"48": "var(--spacing-192)",
+			"64": "var(--spacing-256)",
 		},
 		extend: {
 			typography: {
