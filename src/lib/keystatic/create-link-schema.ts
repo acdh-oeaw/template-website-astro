@@ -21,6 +21,7 @@ export function createLinkSchema(assetPath: `/${string}/`, locale: Locale) {
 				label: "URL",
 				validation: { isRequired: true },
 			}),
+			"index-page": fields.empty(),
 			pages: fields.relationship({
 				label: "Pages",
 				validation: { isRequired: true },

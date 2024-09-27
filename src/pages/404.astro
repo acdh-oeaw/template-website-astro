@@ -1,10 +1,9 @@
 ---
 import MainContent from "@/components/main-content.astro";
-import PageSection from "@/components/page-section.astro";
-import PageTitle from "@/components/page-title.astro";
 import { defaultLocale, type Locale } from "@/config/i18n.config";
 import PageLayout from "@/layouts/page-layout.astro";
 import { createI18n } from "@/lib/i18n";
+import { pageSection, pageTitle } from "@/styles/components";
 
 const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
 const { t } = await createI18n(locale);
@@ -15,8 +14,8 @@ const title = t("NotFoundPage.title");
 
 <PageLayout locale={locale} robots="noindex" title={documentTitle}>
 	<MainContent search="exclude">
-		<PageSection class="grid min-h-full place-items-center">
-			<PageTitle>{title}</PageTitle>
-		</PageSection>
+		<section class:list={[pageSection, "grid min-h-full place-items-center"]}>
+			<h1 class={pageTitle}>{title}</h1>
+		</section>
 	</MainContent>
 </PageLayout>

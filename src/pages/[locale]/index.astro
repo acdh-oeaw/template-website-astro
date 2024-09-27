@@ -2,18 +2,19 @@
 import { Image } from "astro:assets";
 
 import MainContent from "@/components/main-content.astro";
-import PageSection from "@/components/page-section.astro";
-import PageTitle from "@/components/page-title.astro";
+
 import { locales } from "@/config/i18n.config";
+
+import { pageSection, pageTitle } from "@/styles/components";
 import PageLayout from "@/layouts/page-layout.astro";
-import { createSingletonResource } from "@/lib/content/create-resource";
+import { createSingletonResource } from "@/lib/keystatic/resources";
 import { getImageImport } from "@/lib/get-image-import";
 import { createI18n } from "@/lib/i18n";
 
 export function getStaticPaths() {
 	return Promise.all(
 		locales.map(async (locale) => {
-			const page = await createSingletonResource("indexPage", locale).read();
+			const page = await createSingletonResource("index-page", locale).read();
 
 			return { params: { locale }, props: { page } };
 		}),
@@ -32,7 +33,7 @@ const { hero } = page.data;
 
 <PageLayout locale={locale} title={documentTitle}>
 	<MainContent>
-		<PageSection>
+		<section class={pageSection}>
 			<div>
 				<Image
 					alt=""
@@ -41,9 +42,9 @@ const { hero } = page.data;
 					loading="eager"
 					src={getImageImport(hero.image)}
 				/>
-				<PageTitle>{hero.title}</PageTitle>
+				<h1 class={pageTitle}>{hero.title}</h1>
 				<p>{hero.lead}</p>
 			</div>
-		</PageSection>
+		</section>
 	</MainContent>
 </PageLayout>

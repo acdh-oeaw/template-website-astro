@@ -1,26 +1,13 @@
 ---
 import Anchor from "@/components/link.astro";
-import type { LinkKind } from "@/lib/keystatic/component-options";
+import { getLinkProps, type LinkSchema } from "@/lib/keystatic/get-link-props";
 
 interface Props {
 	class?: string;
-	item: {
-		discriminant: LinkKind;
-		value: string;
-	};
+	link: LinkSchema;
 }
 
-const { item, ...rest } = Astro.props;
-
-const isDownloadLink = item.discriminant === "download";
-
-const href = isDownloadLink
-	? item.value
-	: item.discriminant === "external"
-		? item.value
-		: item.discriminant === "pages"
-			? `/${item.value}`
-			: `/${item.discriminant}/${item.value}`;
+const { link, ...rest } = Astro.props;
 ---
 
-<Anchor {...rest} download={isDownloadLink} href={href}><slot /></Anchor>
+<Anchor {...rest} {...getLinkProps(link)}><slot /></Anchor>

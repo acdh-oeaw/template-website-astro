@@ -7,7 +7,7 @@ import { Logo } from "@/lib/keystatic/logo";
 import { env } from "@/config/env.config";
 import { locales } from "@/config/i18n.config";
 import { createPages } from "@/lib/keystatic/collections";
-import { createMetadata, createNavigation } from "@/lib/keystatic/singletons";
+import { createMetadata, createNavigation, createIndexPage } from "@/lib/keystatic/singletons";
 
 export default config({
 	collections: {
@@ -15,6 +15,9 @@ export default config({
 		[withI18nPrefix("pages", "en")]: createPages("en"),
 	},
 	singletons: {
+		[withI18nPrefix("index-page", "de")]: createIndexPage("de"),
+		[withI18nPrefix("index-page", "en")]: createIndexPage("en"),
+
 		[withI18nPrefix("metadata", "de")]: createMetadata("de"),
 		[withI18nPrefix("metadata", "en")]: createMetadata("en"),
 
@@ -44,6 +47,9 @@ export default config({
 			name: "Website",
 		},
 		navigation: {
+			HomePage: locales.map((locale) => {
+				return withI18nPrefix("index-page", locale);
+			}),
 			Pages: locales.map((locale) => {
 				return withI18nPrefix("pages", locale);
 			}),

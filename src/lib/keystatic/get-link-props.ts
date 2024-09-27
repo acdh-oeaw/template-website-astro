@@ -13,6 +13,10 @@ export function getLinkProps(params: LinkSchema) {
 			return { href: params.value };
 		}
 
+		case "index-page": {
+			return { href: "/" };
+		}
+
 		case "pages": {
 			return { href: `/${params.value}/` };
 		}

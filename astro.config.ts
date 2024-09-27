@@ -61,7 +61,7 @@ export default defineConfig({
 	/** Use `@/lib/content/get-mdx-content.ts` instead of astro's built-in markdown processor. */
 	// // @ts-expect-error Astro types are incomplete.
 	// markdown: {
-	// 	...(await createMdxConfig(defaultLocale)),
+	// 	...(await createMdxConfig()),
 	// 	gfm: false,
 	// 	smartypants: false,
 	// 	syntaxHighlight: false,
@@ -89,4 +89,9 @@ export default defineConfig({
 		port: 3000,
 	},
 	site: env.PUBLIC_APP_BASE_URL,
+	vite: {
+		ssr: {
+			noExternal: "react-tweet",
+		},
+	},
 });

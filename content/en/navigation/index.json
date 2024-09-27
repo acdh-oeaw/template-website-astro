@@ -1,10 +1,13 @@
 {
   "links": [
     {
-      "discriminant": "page",
+      "discriminant": "link",
       "value": {
-        "label": "Demo",
-        "id": "kitchen-sink"
+        "label": "Kitchen sink",
+        "link": {
+          "discriminant": "pages",
+          "value": "kitchen-sink"
+        }
       }
     }
   ]

@@ -6,7 +6,8 @@ import { createSingletonResource } from "@/lib/keystatic/resources";
 import { createI18n } from "@/lib/i18n";
 import logoDark from "~/public/assets/images/acdh-ch-logo-dark.svg";
 import logoLight from "~/public/assets/images/acdh-ch-logo-light.svg";
-import { getLinkProps } from "@/lib/keystatic/get-link-props";
+import Link from "@/components/content/link.astro";
+import { NavigationMenu } from "@/components/navigation-menu";
 
 const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
 const { t } = await createI18n(locale);
@@ -15,4 +16,73 @@ const navigation = await createSingletonResource("navigation", locale).read();
 const home = t("WebsiteHeader.links.home");
 ---
 
-<header class="border-b"></header>
+<header class="border-b">
+	<div class="container py-16">
+		<nav>
+			<ul class="flex gap-x-24" role="list">
+				<li>
+					<a href="/">
+						<Image
+							alt=""
+							class="h-24 w-auto block dark:hidden"
+							decoding="auto"
+							fetchpriority="high"
+							src={logoLight}
+						/>
+						<Image
+							alt=""
+							class="h-24 w-auto hidden dark:block"
+							decoding="auto"
+							fetchpriority="high"
+							src={logoDark}
+						/>
+						<span class="sr-only">{home}</span>
+					</a>
+				</li>
+				{
+					navigation.data.links.map((item) => {
+						switch (item.discriminant) {
+							case "link": {
+								return (
+									<li>
+										<Link link={item.value.link}>{item.value.label}</Link>
+									</li>
+								);
+							}
+
+							case "menu": {
+								return (
+									<li>
+										<NavigationMenu client:load label={item.value.label}>
+											<ul role="list">
+												{item.value.items.map((item) => {
+													switch (item.discriminant) {
+														case "link": {
+															return (
+																<li>
+																	<Link link={item.value.link}>{item.value.label}</Link>
+																</li>
+															);
+														}
+
+														case "separator": {
+															return <li aria-orientation="horizontal" role="separator" />;
+														}
+													}
+												})}
+											</ul>
+										</NavigationMenu>
+									</li>
+								);
+							}
+
+							case "separator": {
+								return <li aria-orientation="vertical" role="separator" />;
+							}
+						}
+					})
+				}
+			</ul>
+		</nav>
+	</div>
+</header>

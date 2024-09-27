@@ -29,6 +29,7 @@ export type GridLayout = (typeof gridLayouts)[number]["value"];
 export const linkKinds = [
 	{ label: "Download", value: "download" },
 	{ label: "External", value: "external" },
+	{ label: "Home page", value: "index-page" },
 	{ label: "Pages", value: "pages" },
 ] as const;
 

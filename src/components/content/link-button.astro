@@ -1,22 +1,19 @@
 ---
 import Link from "@/components/content/link.astro";
-import type { LinkKind } from "@/lib/keystatic/component-options";
+import type { LinkSchema } from "@/lib/keystatic/get-link-props";
 
 interface Props {
-	item: {
-		discriminant: LinkKind;
-		value: string;
-	};
 	label: string;
+	link: LinkSchema;
 }
 
-const { item, label } = Astro.props;
+const { label, link } = Astro.props;
 ---
 
 <div class="flex">
 	<Link
 		class="my-4 inline-flex rounded-md bg-fg px-6 py-2 font-heading font-semibold text-fg no-underline transition hover:bg-bg/80"
-		item={item}
+		link={link}
 	>
 		{label}
 	</Link>
