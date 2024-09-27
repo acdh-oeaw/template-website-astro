@@ -1,9 +1,9 @@
 import type { createLinkSchema } from "@/lib/keystatic/create-link-schema";
 import type { ValueForReading } from "@keystatic/core";
 
-export type CreateHrefParams = ValueForReading<ReturnType<typeof createLinkSchema>>;
+export type LinkSchema = ValueForReading<ReturnType<typeof createLinkSchema>>;
 
-export function createHref(params: CreateHrefParams) {
+export function getLinkProps(params: LinkSchema) {
 	switch (params.discriminant) {
 		case "download": {
 			return { download: true, href: params.value };

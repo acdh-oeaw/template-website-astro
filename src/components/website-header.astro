@@ -6,7 +6,7 @@ import { createSingletonResource } from "@/lib/keystatic/resources";
 import { createI18n } from "@/lib/i18n";
 import logoDark from "~/public/assets/images/acdh-ch-logo-dark.svg";
 import logoLight from "~/public/assets/images/acdh-ch-logo-light.svg";
-import { createHref } from "@/lib/keystatic/create-href";
+import { getLinkProps } from "@/lib/keystatic/get-link-props";
 
 const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
 const { t } = await createI18n(locale);
