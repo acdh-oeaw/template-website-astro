@@ -1,8 +1,8 @@
 import { onCleanup, type Accessor } from "solid-js";
 
-export function clickOutside(el: HTMLElement, close: Accessor<() => void>) {
+export function clickOutside(element: HTMLElement, close: Accessor<() => void>) {
 	function onClick(event: MouseEvent) {
-		if (!el.contains(event.target as Node)) {
+		if (!element.contains(event.target as Node)) {
 			close()?.();
 		}
 	}

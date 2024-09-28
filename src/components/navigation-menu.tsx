@@ -16,7 +16,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
 
 	const id = createUniqueId();
 
-	/** Typescript does not understand that `use:clickOutside` means `clickOutside` is used. */
+	/** Typescript does not understand which directives are being used. */
 	false && clickOutside;
 
 	return (
