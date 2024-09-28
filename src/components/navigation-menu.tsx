@@ -1,23 +1,25 @@
 /* @jsxImportSource solid-js */
 
 import { clickOutside } from "@/lib/ui/click-outside";
-import { useDisclosureState } from "@/lib/ui/use-disclosure-state";
+import { useDisclosureProps } from "@/lib/ui/use-disclosure-props";
+import { useToggleState } from "@/lib/ui/use-toggle-state";
 import { useOverlayPosition } from "@/lib/ui/use-overlay-position";
-import { createUniqueId, Show, type JSX } from "solid-js";
+import { windowChange } from "@/lib/ui/window-change";
+import { Show, type JSX } from "solid-js";
 
 interface NavigationMenuProps {
 	children: JSX.Element;
-	label: string;
+	label: JSX.Element;
 }
 
 export function NavigationMenu(props: NavigationMenuProps) {
-	const state = useDisclosureState();
+	const state = useToggleState();
+	const disclosure = useDisclosureProps(state);
 	const position = useOverlayPosition();
-
-	const id = createUniqueId();
 
 	/** Typescript does not understand which directives are being used. */
 	false && clickOutside;
+	false && windowChange;
 
 	return (
 		<div
@@ -27,18 +29,13 @@ export function NavigationMenu(props: NavigationMenuProps) {
 				}
 			}}
 		>
-			<button
-				ref={position.setTriggerElement}
-				aria-controls={id}
-				aria-expanded={state.isOpen}
-				onClick={state.toggle}
-			>
+			<button ref={position.setTriggerElement} {...disclosure.triggerProps} onClick={state.toggle}>
 				{props.label}
 			</button>
 			<Show when={state.isOpen}>
 				<div
 					ref={position.setPopoverElement}
-					id={id}
+					{...disclosure.panelProps}
 					class="z-10 bg-background-overlay rounded-2 shadow-md border border-stroke-weak py-2 my-1"
 					style={{
 						position: position.strategy,
@@ -46,6 +43,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
 						left: `${position.x}px`,
 					}}
 					use:clickOutside={state.close}
+					use:windowChange={state.close}
 				>
 					{props.children}
 				</div>

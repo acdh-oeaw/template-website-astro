@@ -60,6 +60,7 @@
 		"astro-tweet": "^0.0.4",
 		"date-fns": "^4.1.0",
 		"lucide-react": "^0.446.0",
+		"lucide-solid": "^0.446.0",
 		"nodemailer": "^6.9.15",
 		"pagefind": "^1.1.1",
 		"react": "^18.3.1",

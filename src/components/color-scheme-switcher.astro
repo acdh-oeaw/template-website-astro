@@ -1,0 +1,26 @@
+---
+import type { Locale } from "@/config/i18n.config";
+import { createI18n } from "@/lib/i18n";
+import { ColorSchemeSelect } from "@/components/color-scheme-select";
+
+const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
+
+const label = t("ColorSchemeSwitcher.change");
+
+const colorSchemes = {
+	system: t("ColorSchemeSwitcher.color-schemes.system"),
+	light: t("ColorSchemeSwitcher.color-schemes.light"),
+	dark: t("ColorSchemeSwitcher.color-schemes.dark"),
+};
+---
+
+<label>
+	<span class="sr-only">{label}</span>
+	<ColorSchemeSelect client:load>
+		{
+			Object.entries(colorSchemes).map(([value, label]) => {
+				return <option value={value}>{label}</option>;
+			})
+		}
+	</ColorSchemeSelect>
+</label>

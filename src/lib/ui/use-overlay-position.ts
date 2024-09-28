@@ -3,10 +3,19 @@ import {
 	shift,
 	type ComputePositionConfig,
 	type ComputePositionReturn,
+	type Strategy,
 } from "@floating-ui/dom";
-import { createEffect, createSignal, onCleanup } from "solid-js";
+import { createEffect, createSignal, onCleanup, type Setter } from "solid-js";
 
-export function useOverlayPosition() {
+export interface OverlayPosition {
+	x: number;
+	y: number;
+	strategy: Strategy;
+	setPopoverElement: Setter<HTMLElement | undefined>;
+	setTriggerElement: Setter<HTMLButtonElement | undefined>;
+}
+
+export function useOverlayPosition(): OverlayPosition {
 	const config = {
 		middleware: [shift()],
 		placement: "bottom",

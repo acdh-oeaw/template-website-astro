@@ -1,6 +1,13 @@
 import { createSignal } from "solid-js";
 
-export function useDisclosureState() {
+export interface ToggleState {
+	isOpen: boolean;
+	open: () => void;
+	close: () => void;
+	toggle: () => void;
+}
+
+export function useToggleState(): ToggleState {
 	const [isOpen, setIsOpen] = createSignal(false);
 
 	function open() {
