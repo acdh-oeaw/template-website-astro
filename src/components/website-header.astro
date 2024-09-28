@@ -54,13 +54,18 @@ const home = t("WebsiteHeader.links.home");
 								return (
 									<li>
 										<NavigationMenu client:load label={item.value.label}>
-											<ul role="list">
+											<ul class="grid" role="list">
 												{item.value.items.map((item) => {
 													switch (item.discriminant) {
 														case "link": {
 															return (
 																<li>
-																	<Link link={item.value.link}>{item.value.label}</Link>
+																	<Link
+																		class="py-1 px-4 flex hover:bg-fill-weak"
+																		link={item.value.link}
+																	>
+																		{item.value.label}
+																	</Link>
 																</li>
 															);
 														}

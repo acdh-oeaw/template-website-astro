@@ -1,8 +1,8 @@
-import { onCleanup } from "solid-js";
+import { onCleanup, type Accessor } from "solid-js";
 
-export function clickOutside(el: HTMLElement, close) {
+export function clickOutside(el: HTMLElement, close: Accessor<() => void>) {
 	function onClick(event: MouseEvent) {
-		if (!el.contains(event.target)) {
+		if (!el.contains(event.target as Node)) {
 			close()?.();
 		}
 	}
@@ -20,4 +20,12 @@ export function clickOutside(el: HTMLElement, close) {
 		document.removeEventListener("click", onClick);
 		document.removeEventListener("keydown", onKey);
 	});
+}
+
+declare module "solid-js" {
+	namespace JSX {
+		interface DirectiveFunctions {
+			clickOutside: typeof clickOutside;
+		}
+	}
 }

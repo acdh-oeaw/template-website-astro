@@ -69,6 +69,10 @@ textarea {
 	scroll-margin-block-start: 2ex;
 }
 
+[inert] ::-webkit-scrollbar {
+	display: none;
+}
+
 :where(.container) {
 	width: 100%;
 	max-width: var(--container-width, theme("screens.2xl"));

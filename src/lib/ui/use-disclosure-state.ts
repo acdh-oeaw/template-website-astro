@@ -3,6 +3,14 @@ import { createSignal } from "solid-js";
 export function useDisclosureState() {
 	const [isOpen, setIsOpen] = createSignal(false);
 
+	function open() {
+		setIsOpen(true);
+	}
+
+	function close() {
+		setIsOpen(false);
+	}
+
 	function toggle() {
 		setIsOpen((isOpen) => !isOpen);
 	}
@@ -11,6 +19,8 @@ export function useDisclosureState() {
 		get isOpen() {
 			return isOpen();
 		},
+		open,
+		close,
 		toggle,
 	};
 }
