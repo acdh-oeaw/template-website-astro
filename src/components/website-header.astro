@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 
+import { Icon } from "astro-icon/components";
 import { defaultLocale, type Locale } from "@/config/i18n.config";
 import { createSingletonResource } from "@/lib/keystatic/resources";
 import { createI18n } from "@/lib/i18n";
@@ -8,86 +9,159 @@ import logoDark from "~/public/assets/images/acdh-ch-logo-dark.svg";
 import logoLight from "~/public/assets/images/acdh-ch-logo-light.svg";
 import Link from "@/components/content/link.astro";
 import { NavigationMenu } from "@/components/navigation-menu";
+import { MobileNavigation } from "@/components/mobile-navigation";
+import ColorSchemeSwitcher from "@/components/color-scheme-switcher.astro";
 
 const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
 const { t } = await createI18n(locale);
 const navigation = await createSingletonResource("navigation", locale).read();
-
-const home = t("WebsiteHeader.links.home");
 ---
 
 <header class="border-b">
-	<div class="container py-4">
-		<nav>
-			<ul class="flex gap-x-6" role="list">
-				<li>
-					<a href="/">
-						<Image
-							alt=""
-							class="h-6 w-auto block dark:hidden"
-							decoding="auto"
-							fetchpriority="high"
-							src={logoLight}
-						/>
-						<Image
-							alt=""
-							class="h-6 w-auto hidden dark:block"
-							decoding="auto"
-							fetchpriority="high"
-							src={logoDark}
-						/>
-						<span class="sr-only">{home}</span>
-					</a>
-				</li>
-				{
-					navigation.data.links.map((item) => {
-						switch (item.discriminant) {
-							case "link": {
-								return (
-									<li>
-										<Link link={item.value.link}>{item.value.label}</Link>
-									</li>
-								);
-							}
+	<div class="container py-4 flex items-center gap-x-8 justify-between">
+		<a class="shrink-0" href="/">
+			<Image
+				alt=""
+				class="h-6 w-auto block dark:hidden"
+				decoding="auto"
+				fetchpriority="high"
+				src={logoLight}
+			/>
+			<Image
+				alt=""
+				class="h-6 w-auto hidden dark:block"
+				decoding="auto"
+				fetchpriority="high"
+				src={logoDark}
+			/>
+			<span class="sr-only">{t("WebsiteHeader.links.home")}</span>
+		</a>
 
-							case "menu": {
-								return (
-									<li>
-										<NavigationMenu client:load label={item.value.label}>
-											<ul class="grid" role="list">
-												{item.value.items.map((item) => {
-													switch (item.discriminant) {
-														case "link": {
-															return (
-																<li>
-																	<Link
-																		class="py-1 px-4 flex hover:bg-fill-weak"
-																		link={item.value.link}
-																	>
-																		{item.value.label}
-																	</Link>
-																</li>
-															);
+		<div class="hidden lg:flex lg:items-center lg:gap-x-8">
+			<nav>
+				<ul class="flex flex-wrap items-center gap-x-8" role="list">
+					{
+						navigation.data.links.map((item) => {
+							switch (item.discriminant) {
+								case "link": {
+									return (
+										<li>
+											<Link link={item.value.link}>{item.value.label}</Link>
+										</li>
+									);
+								}
+
+								case "menu": {
+									return (
+										<li>
+											<NavigationMenu client:load label={item.value.label}>
+												<Fragment slot="label">
+													<span>{item.value.label}</span>
+													<Icon class="group-open:rotate-180" name="lucide:chevron-down" />
+												</Fragment>
+												<ul class="grid" role="list">
+													{item.value.items.map((item) => {
+														switch (item.discriminant) {
+															case "link": {
+																return (
+																	<li>
+																		<Link
+																			class="py-1 px-4 flex hover:bg-fill-weak"
+																			link={item.value.link}
+																		>
+																			{item.value.label}
+																		</Link>
+																	</li>
+																);
+															}
+
+															case "separator": {
+																return <li aria-orientation="horizontal" role="separator" />;
+															}
 														}
+													})}
+												</ul>
+											</NavigationMenu>
+										</li>
+									);
+								}
 
-														case "separator": {
-															return <li aria-orientation="horizontal" role="separator" />;
+								case "separator": {
+									return <li aria-orientation="vertical" role="separator" />;
+								}
+							}
+						})
+					}
+				</ul>
+			</nav>
+			<div class="flex gap-x-8 items-center">
+				<ColorSchemeSwitcher />
+			</div>
+		</div>
+
+		<div class="block lg:hidden">
+			<MobileNavigation client:load label={t("WebsiteHeader.mobile-nav-trigger")}>
+				<Fragment slot="label">
+					<Icon aria-hidden="true" class="size-6" name="lucide:menu" />
+					<span class="sr-only">{t("WebsiteHeader.mobile-nav-trigger")}</span>
+				</Fragment>
+				<ul class="grid" role="list">
+					{
+						navigation.data.links.map((item) => {
+							switch (item.discriminant) {
+								case "link": {
+									return (
+										<li>
+											<Link class="py-1 px-4 flex hover:bg-fill-hover" link={item.value.link}>
+												{item.value.label}
+											</Link>
+										</li>
+									);
+								}
+
+								case "menu": {
+									return (
+										<li>
+											<details class="group">
+												<summary class="py-1 px-4 flex items-center gap-x-4 cursor-pointer hover:bg-fill-hover">
+													{item.value.label}
+													<Icon class="group-open:rotate-180" name="lucide:chevron-down" />
+												</summary>
+												<ul class="grid" role="list">
+													{item.value.items.map((item) => {
+														switch (item.discriminant) {
+															case "link": {
+																return (
+																	<li>
+																		<Link
+																			class="py-1 px-4 flex hover:bg-fill-hover"
+																			link={item.value.link}
+																		>
+																			{item.value.label}
+																		</Link>
+																	</li>
+																);
+															}
+
+															case "separator": {
+																return <li aria-orientation="horizontal" role="separator" />;
+															}
 														}
-													}
-												})}
-											</ul>
-										</NavigationMenu>
-									</li>
-								);
-							}
+													})}
+												</ul>
+											</details>
+										</li>
+									);
+								}
 
-							case "separator": {
-								return <li aria-orientation="vertical" role="separator" />;
+								case "separator": {
+									return <li aria-orientation="vertical" role="separator" />;
+								}
 							}
-						}
-					})
-				}
-			</ul>
-		</nav>
+						})
+					}
+				</ul>
+			</MobileNavigation>
+		</div>
 	</div>
 </header>

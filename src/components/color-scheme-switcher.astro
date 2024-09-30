@@ -16,11 +16,12 @@ const colorSchemes = {
 
 <label>
 	<span class="sr-only">{label}</span>
-	<ColorSchemeSelect client:load>
+	<ColorSchemeSelect client:only="solid-js">
 		{
 			Object.entries(colorSchemes).map(([value, label]) => {
 				return <option value={value}>{label}</option>;
 			})
 		}
+		<div slot="fallback" class="size-8"></div>
 	</ColorSchemeSelect>
 </label>

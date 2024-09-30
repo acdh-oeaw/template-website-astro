@@ -7,6 +7,9 @@ const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
 const label = t("SkipLink.skip-to-main-content");
 ---
 
-<a class="absolute -translate-y-full px-3 py-1.5 focus:translate-y-0" href="#main-content">
+<a
+	class="absolute -translate-y-full px-3 py-1.5 focus:translate-y-0 text-text-brand bg-background-overlay border-stroke-brand-strong"
+	href="#main-content"
+>
 	{label}
 </a>

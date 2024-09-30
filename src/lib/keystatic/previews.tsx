@@ -148,7 +148,7 @@ interface LinkButtonPreviewProps {
 export function LinkButtonPreview(props: LinkButtonPreviewProps): ReactNode {
 	const { children } = props;
 
-	return <button>{children}</button>;
+	return <button type="button">{children}</button>;
 }
 
 interface TableOfContentsPreviewProps {

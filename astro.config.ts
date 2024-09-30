@@ -32,7 +32,7 @@ export default defineConfig({
 		icon({
 			/** @see https://www.astroicon.dev/reference/configuration/#include */
 			include: {
-				lucide: ["chevron-down", "menu", "message-circle", "search", "square-arrow-left", "x"],
+				lucide: ["chevron-down", "menu", "search", "x"],
 				simpleIcons: [],
 			},
 		}),
@@ -58,7 +58,7 @@ export default defineConfig({
 			exclude: ["**/content/**", "**/keystatic/**"],
 		}),
 	],
-	/** Use `@/lib/content/get-mdx-content.ts` instead of astro's built-in markdown processor. */
+	/** Use `@/lib/keystatic/compile-mdx.ts` instead of astro's built-in markdown processor. */
 	// // @ts-expect-error Astro types are incomplete.
 	// markdown: {
 	// 	...(await createMdxConfig()),

@@ -11,7 +11,9 @@ export interface OverlayPosition {
 	x: number;
 	y: number;
 	strategy: Strategy;
+	popoverElement: HTMLElement | undefined;
 	setPopoverElement: Setter<HTMLElement | undefined>;
+	triggerElement: HTMLButtonElement | undefined;
 	setTriggerElement: Setter<HTMLButtonElement | undefined>;
 }
 
@@ -62,7 +64,13 @@ export function useOverlayPosition(): OverlayPosition {
 		get strategy() {
 			return position().strategy;
 		},
+		get popoverElement() {
+			return popoverElement();
+		},
 		setPopoverElement,
+		get triggerElement() {
+			return triggerElement();
+		},
 		setTriggerElement,
 	};
 }

@@ -17,6 +17,13 @@ export function NavigationMenu(props: NavigationMenuProps) {
 	const disclosure = useDisclosureProps(state);
 	const position = useOverlayPosition();
 
+	// TODO: should this be part of a hook
+	// TODO: how does it behave with click-outside
+	function close() {
+		position.triggerElement?.focus();
+		state.close();
+	}
+
 	/** Typescript does not understand which directives are being used. */
 	false && clickOutside;
 	false && windowChange;
@@ -29,7 +36,12 @@ export function NavigationMenu(props: NavigationMenuProps) {
 				}
 			}}
 		>
-			<button ref={position.setTriggerElement} {...disclosure.triggerProps} onClick={state.toggle}>
+			<button
+				ref={position.setTriggerElement}
+				{...disclosure.triggerProps}
+				class="inline-flex gap-x-2 items-center"
+				type="button"
+			>
 				{props.label}
 			</button>
 			<Show when={state.isOpen}>
@@ -42,8 +54,8 @@ export function NavigationMenu(props: NavigationMenuProps) {
 						top: `${position.y}px`,
 						left: `${position.x}px`,
 					}}
-					use:clickOutside={state.close}
-					use:windowChange={state.close}
+					use:clickOutside={close}
+					use:windowChange={close}
 				>
 					{props.children}
 				</div>

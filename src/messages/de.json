@@ -44,9 +44,6 @@
 		"switch-locale": "Sprache wechseln",
 		"switch-locale-to": "Zu {locale} wechseln"
 	},
-	"MobileNavToggle": {
-		"label": "Navigationsmenü öffnen"
-	},
 	"NotFoundPage": {
 		"meta": {
 			"title": "Seite nicht gefunden"
@@ -72,6 +69,6 @@
 		"links": {
 			"home": "Startseite"
 		},
-		"navigation-primary": "Primär"
+		"mobile-nav-trigger": "Navigationsmenü"
 	}
 }
