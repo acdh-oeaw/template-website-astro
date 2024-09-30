@@ -2,10 +2,15 @@
 import Link from "@/components/link.astro";
 import type { Locale } from "@/config/i18n.config";
 import { createI18n } from "@/lib/i18n";
+import { pageSection } from "@/styles/components";
 
 const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
-
-const imprint = t("WebsiteFooter.links.imprint");
 ---
 
-<footer class="border-t"></footer>
+<footer class="border-t">
+	<section class={pageSection}>
+		<span>&copy; ACDH-CH {new Date().getUTCFullYear()}</span> |
+		<Link href="/imprint">{t("WebsiteFooter.links.imprint")}</Link> |
+		<Link href="/feed.xml">{t("WebsiteFooter.links.feed")}</Link>
+	</section>
+</footer>

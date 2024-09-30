@@ -62,6 +62,7 @@
 	},
 	"WebsiteFooter": {
 		"links": {
+			"feed": "RSS Feed",
 			"imprint": "Impressum"
 		}
 	},

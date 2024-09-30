@@ -83,6 +83,7 @@
 		"@acdh-oeaw/eslint-config-astro": "^2.0.2",
 		"@acdh-oeaw/eslint-config-playwright": "^2.0.2",
 		"@acdh-oeaw/eslint-config-react": "^2.0.2",
+		"@acdh-oeaw/eslint-config-solid": "^2.0.3",
 		"@acdh-oeaw/eslint-config-tailwindcss": "^2.0.1",
 		"@acdh-oeaw/prettier-config": "^2.0.0",
 		"@acdh-oeaw/stylelint-config": "^2.0.4",
