@@ -80,9 +80,9 @@ export default defineConfig({
 		},
 	},
 	scopedStyleStrategy: "where",
-	security: {
-		checkOrigin: true,
-	},
+	// security: {
+	// 	checkOrigin: true,
+	// },
 	server: {
 		/** Required by keystatic. */
 		host: "127.0.0.1",

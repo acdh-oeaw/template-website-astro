@@ -1,16 +1,16 @@
 ---
 import { Image } from "astro:assets";
-
 import { Icon } from "astro-icon/components";
+
+import ColorSchemeSwitcher from "@/components/color-scheme-switcher.astro";
+import ContentLink from "@/components/content/link.astro";
+import { MobileNavigation } from "@/components/mobile-navigation";
+import { NavigationMenu } from "@/components/navigation-menu";
 import { defaultLocale, type Locale } from "@/config/i18n.config";
-import { createSingletonResource } from "@/lib/keystatic/resources";
 import { createI18n } from "@/lib/i18n";
+import { createSingletonResource } from "@/lib/keystatic/resources";
 import logoDark from "~/public/assets/images/acdh-ch-logo-dark.svg";
 import logoLight from "~/public/assets/images/acdh-ch-logo-light.svg";
-import Link from "@/components/content/link.astro";
-import { NavigationMenu } from "@/components/navigation-menu";
-import { MobileNavigation } from "@/components/mobile-navigation";
-import ColorSchemeSwitcher from "@/components/color-scheme-switcher.astro";
 
 const locale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
 const { t } = await createI18n(locale);
@@ -18,18 +18,18 @@ const navigation = await createSingletonResource("navigation", locale).read();
 ---
 
 <header class="border-b">
-	<div class="container py-4 flex items-center gap-x-8 justify-between">
+	<div class="container flex items-center justify-between gap-x-8 py-4">
 		<a class="shrink-0" href="/">
 			<Image
 				alt=""
-				class="h-6 w-auto block dark:hidden"
+				class="block h-6 w-auto dark:hidden"
 				decoding="auto"
 				fetchpriority="high"
 				src={logoLight}
 			/>
 			<Image
 				alt=""
-				class="h-6 w-auto hidden dark:block"
+				class="hidden h-6 w-auto dark:block"
 				decoding="auto"
 				fetchpriority="high"
 				src={logoDark}
@@ -46,7 +46,7 @@ const navigation = await createSingletonResource("navigation", locale).read();
 								case "link": {
 									return (
 										<li>
-											<Link link={item.value.link}>{item.value.label}</Link>
+											<ContentLink link={item.value.link}>{item.value.label}</ContentLink>
 										</li>
 									);
 								}
@@ -65,12 +65,12 @@ const navigation = await createSingletonResource("navigation", locale).read();
 															case "link": {
 																return (
 																	<li>
-																		<Link
-																			class="py-1 px-4 flex hover:bg-fill-weak"
+																		<ContentLink
+																			class="flex px-4 py-1 hover:bg-fill-weak"
 																			link={item.value.link}
 																		>
 																			{item.value.label}
-																		</Link>
+																		</ContentLink>
 																	</li>
 																);
 															}
@@ -94,7 +94,7 @@ const navigation = await createSingletonResource("navigation", locale).read();
 					}
 				</ul>
 			</nav>
-			<div class="flex gap-x-8 items-center">
+			<div class="flex items-center gap-x-8">
 				<ColorSchemeSwitcher />
 			</div>
 		</div>
@@ -112,9 +112,12 @@ const navigation = await createSingletonResource("navigation", locale).read();
 								case "link": {
 									return (
 										<li>
-											<Link class="py-1 px-4 flex hover:bg-fill-hover" link={item.value.link}>
+											<ContentLink
+												class="flex px-4 py-1 hover:bg-fill-hover"
+												link={item.value.link}
+											>
 												{item.value.label}
-											</Link>
+											</ContentLink>
 										</li>
 									);
 								}
@@ -123,7 +126,7 @@ const navigation = await createSingletonResource("navigation", locale).read();
 									return (
 										<li>
 											<details class="group">
-												<summary class="py-1 px-4 flex items-center gap-x-4 cursor-pointer hover:bg-fill-hover">
+												<summary class="flex cursor-pointer items-center gap-x-4 px-4 py-1 hover:bg-fill-hover">
 													{item.value.label}
 													<Icon class="group-open:rotate-180" name="lucide:chevron-down" />
 												</summary>
@@ -133,12 +136,12 @@ const navigation = await createSingletonResource("navigation", locale).read();
 															case "link": {
 																return (
 																	<li>
-																		<Link
-																			class="py-1 px-4 flex hover:bg-fill-hover"
+																		<ContentLink
+																			class="flex px-4 py-1 hover:bg-fill-hover"
 																			link={item.value.link}
 																		>
 																			{item.value.label}
-																		</Link>
+																		</ContentLink>
 																	</li>
 																);
 															}

@@ -1,5 +1,5 @@
 ---
-import Link from "@/components/content/link.astro";
+import ContentLink from "@/components/content/link.astro";
 import type { LinkSchema } from "@/lib/keystatic/get-link-props";
 
 interface Props {
@@ -11,10 +11,10 @@ const { label, link } = Astro.props;
 ---
 
 <div class="flex">
-	<Link
-		class="my-4 inline-flex rounded-md bg-fg px-6 py-2 font-heading font-semibold text-fg no-underline transition hover:bg-bg/80"
+	<ContentLink
+		class="my-4 inline-flex rounded-1 bg-fill-brand-strong px-6 py-2 font-strong no-underline transition"
 		link={link}
 	>
 		{label}
-	</Link>
+	</ContentLink>
 </div>

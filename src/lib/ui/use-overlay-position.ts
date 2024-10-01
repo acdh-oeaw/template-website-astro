@@ -1,8 +1,8 @@
 import {
 	computePosition,
-	shift,
 	type ComputePositionConfig,
 	type ComputePositionReturn,
+	shift,
 	type Strategy,
 } from "@floating-ui/dom";
 import { createEffect, createSignal, onCleanup, type Setter } from "solid-js";
@@ -46,7 +46,7 @@ export function useOverlayPosition(): OverlayPosition {
 				isCanceled = true;
 			});
 
-			computePosition(reference, floating, config).then((position) => {
+			void computePosition(reference, floating, config).then((position) => {
 				if (!isCanceled) {
 					setPosition(position);
 				}

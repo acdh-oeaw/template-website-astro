@@ -1,8 +1,9 @@
 /* @jsxImportSource solid-js */
 
+import { type JSX,Show } from "solid-js";
+
 import { useDisclosureProps } from "@/lib/ui/use-disclosure-props";
 import { useToggleState } from "@/lib/ui/use-toggle-state";
-import { Show, type JSX } from "solid-js";
 
 interface MobileNavigationProps {
 	children: JSX.Element;

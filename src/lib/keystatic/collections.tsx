@@ -10,7 +10,6 @@ import { collection, fields } from "@keystatic/core";
 
 import {
 	createCallout,
-	createLinkButton,
 	// createTableOfContents,
 	createDisclosure,
 	createEmbed,
@@ -19,6 +18,7 @@ import {
 	createGrid,
 	createHeadingId,
 	createLink,
+	createLinkButton,
 	createTabs,
 	createTweet,
 	createVideo,
@@ -38,6 +38,11 @@ export const createPages = createCollection("/pages/", (paths, locale) => {
 					label: "Title",
 					validation: { isRequired: true },
 				},
+			}),
+			publicationDate: fields.date({
+				label: "Publication date",
+				validation: { isRequired: true },
+				defaultValue: { kind: "today" },
 			}),
 			image: fields.image({
 				label: "Image",

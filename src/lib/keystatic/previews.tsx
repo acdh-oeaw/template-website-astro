@@ -1,14 +1,15 @@
 /* @jsxImportSource react */
 
-import type { CalloutKind, GridLayout, VideoProvider } from "@/lib/keystatic/component-options";
-import { createVideoUrl } from "@/lib/keystatic/create-video-url";
 import { useObjectUrl, type UseObjectUrlParams } from "@acdh-oeaw/keystatic-lib/preview";
 import { styles } from "@acdh-oeaw/style-variants";
 import type { ReactNode } from "react";
 import { Tweet as StaticTweet } from "react-tweet";
 
+import type { CalloutKind, GridLayout, VideoProvider } from "@/lib/keystatic/component-options";
+import { createVideoUrl } from "@/lib/keystatic/create-video-url";
+
 const calloutStyles = styles({
-	base: "my-4 rounded-md border p-4 text-sm leading-relaxed [&>:first-child]:mt-0 [&>:last-child]:mb-0",
+	base: "my-4 rounded-1 p-4 text-sm leading-relaxed",
 	variants: {
 		kind: {
 			caution: "",
@@ -70,8 +71,8 @@ export function EmbedPreview(props: EmbedPreviewProps): ReactNode {
 	return (
 		<figure>
 			<iframe
-				allowFullScreen
-				className="aspect-video w-full overflow-hidden rounded-md"
+				allowFullScreen={true}
+				className="aspect-video w-full overflow-hidden rounded-1"
 				src={src}
 			/>
 			{children ? <figcaption>{children}</figcaption> : null}
@@ -96,7 +97,7 @@ export function FigurePreview(props: FigurePreviewProps): ReactNode {
 
 	return (
 		<figure>
-			<img alt={alt} src={url} />
+			<img alt={alt} className="overflow-hidden rounded-1" src={url} />
 			{children ? <figcaption>{children}</figcaption> : null}
 		</figure>
 	);
@@ -218,8 +219,8 @@ export function VideoPreview(props: VideoPreviewProps): ReactNode {
 	return (
 		<figure>
 			<iframe
-				allowFullScreen
-				className="aspect-video w-full overflow-hidden rounded-md"
+				allowFullScreen={true}
+				className="aspect-video w-full overflow-hidden rounded-1"
 				src={href}
 			/>
 			{children ? <figcaption>{children}</figcaption> : null}

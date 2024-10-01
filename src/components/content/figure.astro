@@ -13,7 +13,7 @@ const { alignment = "stretch", alt = "", src } = Astro.props;
 ---
 
 <figure>
-	<Img alt={alt} src={src} />
+	<Img alt={alt} class="overflow-hidden rounded-1" src={src} />
 	{
 		Astro.slots.has("default") ? (
 			<figcaption>

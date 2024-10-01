@@ -126,6 +126,7 @@ const config = {
 		spacing: {
 			"0": "var(--spacing-0)",
 			"1": "var(--spacing-4)",
+			"1.5": "var(--spacing-6)",
 			"2": "var(--spacing-8)",
 			"3": "var(--spacing-12)",
 			"4": "var(--spacing-16)",

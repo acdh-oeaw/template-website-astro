@@ -1,6 +1,7 @@
 /* @jsxImportSource solid-js */
 
-import { createEffect, For, type JSX } from "solid-js";
+import { createEffect, type JSX } from "solid-js";
+
 import type { ColorScheme } from "@/lib/color-scheme";
 
 interface ColorSchemeSelectProps {

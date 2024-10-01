@@ -2,14 +2,12 @@
 import { Image } from "astro:assets";
 
 import MainContent from "@/components/main-content.astro";
-
 import { locales } from "@/config/i18n.config";
-
-import { pageSection, pageTitle } from "@/styles/components";
 import PageLayout from "@/layouts/page-layout.astro";
-import { createSingletonResource } from "@/lib/keystatic/resources";
 import { getImageImport } from "@/lib/get-image-import";
 import { createI18n } from "@/lib/i18n";
+import { createSingletonResource } from "@/lib/keystatic/resources";
+import { pageSection, pageTitle } from "@/styles/components";
 
 export function getStaticPaths() {
 	return Promise.all(

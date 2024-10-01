@@ -19,7 +19,7 @@ export function useToggleState(): ToggleState {
 	}
 
 	function toggle() {
-		setIsOpen((isOpen) => !isOpen);
+		setIsOpen((isOpen) => {return !isOpen});
 	}
 
 	return {

@@ -21,14 +21,15 @@ const config = [
 	...astroConfig,
 	...reactConfig.map((config) => {
 		return {
-			files: reactFiles,
 			...config,
+			files: reactFiles,
 		};
 	}),
 	...solidJsConfig.map((config) => {
 		return {
-			ignores: reactFiles,
 			...config,
+			files: ["**/components/**/*.@(ts|tsx)", "**/ui/**/*.@(ts|tsx)"],
+			ignores: reactFiles,
 		};
 	}),
 	...tailwindcssConfig,
@@ -46,6 +47,12 @@ const config = [
 		files: reactFiles,
 		rules: {
 			"react/jsx-sort-props": ["error", { reservedFirst: true }],
+		},
+	},
+	{
+		rules: {
+			"import-x/default": "off",
+			"import-x/namespace": "off",
 		},
 	},
 ];

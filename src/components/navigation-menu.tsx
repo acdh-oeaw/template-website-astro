@@ -1,11 +1,12 @@
 /* @jsxImportSource solid-js */
 
+import { type JSX, Show } from "solid-js";
+
 import { clickOutside } from "@/lib/ui/click-outside";
 import { useDisclosureProps } from "@/lib/ui/use-disclosure-props";
-import { useToggleState } from "@/lib/ui/use-toggle-state";
 import { useOverlayPosition } from "@/lib/ui/use-overlay-position";
+import { useToggleState } from "@/lib/ui/use-toggle-state";
 import { windowChange } from "@/lib/ui/window-change";
-import { Show, type JSX } from "solid-js";
 
 interface NavigationMenuProps {
 	children: JSX.Element;
@@ -39,7 +40,7 @@ export function NavigationMenu(props: NavigationMenuProps) {
 			<button
 				ref={position.setTriggerElement}
 				{...disclosure.triggerProps}
-				class="inline-flex gap-x-2 items-center"
+				class="inline-flex items-center gap-x-2"
 				type="button"
 			>
 				{props.label}
@@ -48,11 +49,11 @@ export function NavigationMenu(props: NavigationMenuProps) {
 				<div
 					ref={position.setPopoverElement}
 					{...disclosure.panelProps}
-					class="z-10 bg-background-overlay rounded-2 shadow-md border border-stroke-weak py-2 my-1"
+					class="z-10 my-1 rounded-2 border border-stroke-weak bg-background-overlay py-2 shadow-md"
 					style={{
 						position: position.strategy,
-						top: `${position.y}px`,
-						left: `${position.x}px`,
+						top: `${String(position.y)}px`,
+						left: `${String(position.x)}px`,
 					}}
 					use:clickOutside={close}
 					use:windowChange={close}

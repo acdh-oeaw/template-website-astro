@@ -1,7 +1,8 @@
 /* @jsxImportSource solid-js */
 
-import { useToggleState } from "@/lib/ui/use-toggle-state";
 import { createUniqueId, type JSX } from "solid-js";
+
+import { useToggleState } from "@/lib/ui/use-toggle-state";
 
 interface SearchDialogProps {
 	children: JSX.Element;

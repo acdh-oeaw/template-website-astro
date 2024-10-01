@@ -20,6 +20,12 @@ import {
 	VideoIcon,
 } from "lucide-react";
 
+import {
+	calloutKinds,
+	figureAlignments,
+	gridLayouts,
+	videoProviders,
+} from "@/lib/keystatic/component-options";
 import { createLinkSchema } from "@/lib/keystatic/create-link-schema";
 import {
 	CalloutPreview,
@@ -35,12 +41,6 @@ import {
 	TweetPreview,
 	VideoPreview,
 } from "@/lib/keystatic/previews";
-import {
-	calloutKinds,
-	figureAlignments,
-	gridLayouts,
-	videoProviders,
-} from "@/lib/keystatic/component-options";
 
 export const createCallout = createComponent((_assetPath, _locale) => {
 	return {

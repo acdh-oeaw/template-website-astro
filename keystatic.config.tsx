@@ -1,13 +1,13 @@
 /* @jsxImportSource react */
 
-import { config } from "@keystatic/core";
 import { withI18nPrefix } from "@acdh-oeaw/keystatic-lib";
+import { config } from "@keystatic/core";
 
-import { Logo } from "@/lib/keystatic/logo";
 import { env } from "@/config/env.config";
 import { locales } from "@/config/i18n.config";
 import { createPages } from "@/lib/keystatic/collections";
-import { createMetadata, createNavigation, createIndexPage } from "@/lib/keystatic/singletons";
+import { Logo } from "@/lib/keystatic/logo";
+import { createIndexPage,createMetadata, createNavigation } from "@/lib/keystatic/singletons";
 
 export default config({
 	collections: {

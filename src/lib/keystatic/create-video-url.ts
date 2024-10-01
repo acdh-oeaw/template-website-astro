@@ -1,5 +1,6 @@
-import type { VideoProvider } from "@/lib/keystatic/component-options";
 import { createUrl, createUrlSearchParams } from "@acdh-oeaw/lib";
+
+import type { VideoProvider } from "@/lib/keystatic/component-options";
 
 export function createVideoUrl(
 	provider: VideoProvider,

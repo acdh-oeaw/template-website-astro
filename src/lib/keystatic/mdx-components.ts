@@ -12,8 +12,8 @@ import LinkButton from "@/components/content/link-button.astro";
 import Tab from "@/components/content/tab.astro";
 import TableOfContents from "@/components/content/table-of-contents.astro";
 import Tabs from "@/components/content/tabs.astro";
-import Video from "@/components/content/video.astro";
 import Tweet from "@/components/content/tweet.astro";
+import Video from "@/components/content/video.astro";
 import Anchor from "@/components/link.astro";
 
 const components = {

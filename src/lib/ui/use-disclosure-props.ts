@@ -1,5 +1,6 @@
-import type { ToggleState } from "@/lib/ui/use-toggle-state";
 import { createUniqueId } from "solid-js";
+
+import type { ToggleState } from "@/lib/ui/use-toggle-state";
 
 export function useDisclosureProps(state: ToggleState) {
 	const panelId = createUniqueId();

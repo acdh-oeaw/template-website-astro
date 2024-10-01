@@ -1,5 +1,6 @@
-import type { createLinkSchema } from "@/lib/keystatic/create-link-schema";
 import type { ValueForReading } from "@keystatic/core";
+
+import type { createLinkSchema } from "@/lib/keystatic/create-link-schema";
 
 export type LinkSchema = ValueForReading<ReturnType<typeof createLinkSchema>>;
 

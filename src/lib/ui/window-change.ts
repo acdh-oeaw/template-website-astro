@@ -1,8 +1,8 @@
-import { onCleanup, type Accessor } from "solid-js";
+import { type Accessor,onCleanup } from "solid-js";
 
 export function windowChange(element: HTMLElement, accessor: Accessor<() => void>): void {
 	function onWindowChange() {
-		accessor()?.();
+		accessor()();
 	}
 
 	window.addEventListener("resize", onWindowChange, { once: true, passive: true });
