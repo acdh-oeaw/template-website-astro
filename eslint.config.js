@@ -49,12 +49,6 @@ const config = [
 			"react/jsx-sort-props": ["error", { reservedFirst: true }],
 		},
 	},
-	{
-		rules: {
-			"import-x/default": "off",
-			"import-x/namespace": "off",
-		},
-	},
 ];
 
 export default config;

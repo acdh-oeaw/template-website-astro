@@ -4,6 +4,7 @@ import { Icon } from "astro-icon/components";
 
 import ColorSchemeSwitcher from "@/components/color-scheme-switcher.astro";
 import ContentLink from "@/components/content/link.astro";
+import Link from "@/components/link.astro";
 import { MobileNavigation } from "@/components/mobile-navigation";
 import { NavigationMenu } from "@/components/navigation-menu";
 import { defaultLocale, type Locale } from "@/config/i18n.config";
@@ -19,7 +20,7 @@ const navigation = await createSingletonResource("navigation", locale).read();
 
 <header class="border-b">
 	<div class="container flex items-center justify-between gap-x-8 py-4">
-		<a class="shrink-0" href="/">
+		<Link class="shrink-0" href="/">
 			<Image
 				alt=""
 				class="block h-6 w-auto dark:hidden"
@@ -35,7 +36,7 @@ const navigation = await createSingletonResource("navigation", locale).read();
 				src={logoDark}
 			/>
 			<span class="sr-only">{t("WebsiteHeader.links.home")}</span>
-		</a>
+		</Link>
 
 		<div class="hidden lg:flex lg:items-center lg:gap-x-8">
 			<nav>

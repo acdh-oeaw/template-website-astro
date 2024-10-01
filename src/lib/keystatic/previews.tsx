@@ -9,7 +9,7 @@ import type { CalloutKind, GridLayout, VideoProvider } from "@/lib/keystatic/com
 import { createVideoUrl } from "@/lib/keystatic/create-video-url";
 
 const calloutStyles = styles({
-	base: "my-4 rounded-1 p-4 text-sm leading-relaxed",
+	base: "text-sm my-4 rounded-1 p-4 leading-relaxed",
 	variants: {
 		kind: {
 			caution: "",

@@ -115,6 +115,10 @@ if the validation pipeline passes.
 you can reference the [template repository](https://github.com/acdh-oeaw/template-website-astro) for
 a working setup.
 
+> [!IMPORTANT]
+>
+> don't forget to include relevant data in the [rss feed](./src/pages/[locale]/feed.xml.ts).
+
 > [!NOTE]
 >
 > by default, this will deploy a `node` server, which will serve pre-rendered pages, assets, and api

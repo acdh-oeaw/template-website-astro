@@ -1,4 +1,4 @@
-import { type Accessor,onCleanup } from "solid-js";
+import { type Accessor, onCleanup } from "solid-js";
 
 export function clickOutside(element: HTMLElement, accessor: Accessor<() => void>): void {
 	function onClick(event: MouseEvent) {

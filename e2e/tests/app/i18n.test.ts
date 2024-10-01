@@ -93,7 +93,9 @@ test.describe("i18n", () => {
 				const links = await page
 					.locator('link[rel="alternate"][hreflang]')
 					.evaluateAll((elements) => {
-						return elements.map((element) => {return element.outerHTML});
+						return elements.map((element) => {
+							return element.outerHTML;
+						});
 					});
 
 				expect(links).toEqual(
