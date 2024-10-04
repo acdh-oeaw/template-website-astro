@@ -2,7 +2,6 @@
 import Link from "@/components/link.astro";
 import type { Locale } from "@/config/i18n.config";
 import { createI18n } from "@/lib/i18n";
-import { pageSection } from "@/styles/components";
 
 const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
 ---

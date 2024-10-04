@@ -1,6 +1,6 @@
 /* @jsxImportSource solid-js */
 
-import { createEffect, type JSX } from "solid-js";
+import { createEffect, For, type JSX } from "solid-js";
 
 import type { ColorScheme } from "@/lib/color-scheme";
 
@@ -37,9 +37,11 @@ export function ColorSchemeSelect(props: ColorSchemeSelectProps) {
 		<label>
 			<span class="sr-only">{props.label}</span>
 			<select onChange={onChange} value={getColorScheme()}>
-				{Object.entries(props.options).map(([value, label]) => {
-					return <option value={value}>{label}</option>;
-				})}
+				<For each={Object.entries(props.options)}>
+					{([value, label]) => {
+						return <option value={value}>{label}</option>;
+					}}
+				</For>
 			</select>
 		</label>
 	);
