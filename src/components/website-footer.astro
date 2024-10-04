@@ -8,9 +8,14 @@ const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
 ---
 
 <footer class="border-t">
-	<section class={pageSection}>
-		<span>&copy; ACDH-CH {new Date().getUTCFullYear()}</span> |
-		<Link href="/imprint">{t("WebsiteFooter.links.imprint")}</Link> |
-		<Link href="/feed.xml">{t("WebsiteFooter.links.feed")}</Link>
+	<section class="container py-4">
+		<div>
+			<span>
+				&copy; <a class="underline transition" href="https://oeaw.ac.at/acdh">ACDH-CH</a>
+				{new Date().getUTCFullYear()}
+			</span> |
+			<Link class="underline transition" href="/imprint">{t("WebsiteFooter.links.imprint")}</Link> |
+			<Link class="underline transition" href="/feed.xml">{t("WebsiteFooter.links.feed")}</Link>
+		</div>
 	</section>
 </footer>
