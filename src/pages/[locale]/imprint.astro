@@ -29,7 +29,7 @@ const imprintHtml = await request(imprintUrl, { responseType: "text" });
 	<MainContent search="exclude">
 		<section class={pageSection}>
 			<h1 class={pageTitle}>{title}</h1>
-			<div class="prose prose-sm" set:html={imprintHtml} />
+			<div class="prose" set:html={imprintHtml} />
 		</section>
 	</MainContent>
 </PageLayout>

@@ -88,7 +88,7 @@
 		"@acdh-oeaw/prettier-config": "^2.0.0",
 		"@acdh-oeaw/stylelint-config": "^2.0.4",
 		"@acdh-oeaw/tsconfig": "^1.2.0",
-		"@astrojs/check": "^0.9.3",
+		"@astrojs/check": "^0.9.4",
 		"@astrojs/ts-plugin": "^1.10.2",
 		"@playwright/test": "^1.47.2",
 		"@tailwindcss/typography": "^0.5.15",

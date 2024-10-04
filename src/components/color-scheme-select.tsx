@@ -5,7 +5,8 @@ import { createEffect, type JSX } from "solid-js";
 import type { ColorScheme } from "@/lib/color-scheme";
 
 interface ColorSchemeSelectProps {
-	children: JSX.Element;
+	label: string;
+	options: Record<ColorScheme | "system", string>;
 }
 
 export function ColorSchemeSelect(props: ColorSchemeSelectProps) {
@@ -33,8 +34,13 @@ export function ColorSchemeSelect(props: ColorSchemeSelectProps) {
 	});
 
 	return (
-		<select onChange={onChange} value={getColorScheme()}>
-			{props.children}
-		</select>
+		<label>
+			<span class="sr-only">{props.label}</span>
+			<select onChange={onChange} value={getColorScheme()}>
+				{Object.entries(props.options).map(([value, label]) => {
+					return <option value={value}>{label}</option>;
+				})}
+			</select>
+		</label>
 	);
 }
