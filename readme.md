@@ -71,7 +71,7 @@ pnpm run dev
 
 ## how to edit content
 
-use the admin ui at when developing locally <http://localhost:3000/admin> (this will save changes to
+use the admin ui at <http://localhost:3000/admin> when developing locally (this will save changes to
 the filesystem), or at <https://template-website-astro.acdh-ch-dev.oeaw.ac.at/admin> (this will
 commit changes to the github repository).
 
