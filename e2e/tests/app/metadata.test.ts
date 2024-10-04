@@ -113,14 +113,15 @@ test("should add json+ld metadata", async ({ createIndexPage }) => {
 	}
 });
 
-test("should serve an open-graph image", async ({ page, request }) => {
+test("should serve an open-graph image", async ({ createIndexPage, request }) => {
 	for (const locale of locales) {
 		// TODO: support per-locale opengraph images
 		// const imagePath = `/${locale}/opengraph-image.png`;
 		const imagePath = "/opengraph-image.png";
 
-		await page.goto(`/${locale}`);
-		await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
+		const { indexPage } = await createIndexPage(locale);
+		await indexPage.goto();
+		await expect(indexPage.page.locator('meta[property="og:image"]')).toHaveAttribute(
 			"content",
 			expect.stringContaining(String(createUrl({ baseUrl, pathname: imagePath }))),
 		);
