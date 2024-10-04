@@ -36,6 +36,7 @@ export default defineConfig({
 				simpleIcons: [],
 			},
 		}),
+		/** Only needed to make the astro jsx runtime work correctly. */
 		mdx(),
 		/**
 		 * @see https://docs.astro.build/en/guides/integrations-guide/solid-js/#combining-multiple-jsx-frameworks
