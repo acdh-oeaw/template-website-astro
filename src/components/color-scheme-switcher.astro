@@ -1,84 +1,44 @@
 ---
-import type { Locale } from "@/config/i18n.config";
-import { createI18n } from "@/lib/i18n";
+import { Icon } from "astro-icon/components";
 
-const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
+import ColorSchemeRadioGroup from "@/components/color-scheme-radio-group.svelte";
+import { getTranslations } from "@/lib/i18n/get-translations";
 
-const label = t("ColorSchemeSwitcher.change");
+const { locale } = Astro.locals;
+
+const t = await getTranslations(locale, "ColorSchemeSwitcher");
 
 const colorSchemes = {
-	system: t("ColorSchemeSwitcher.color-schemes.system"),
-	light: t("ColorSchemeSwitcher.color-schemes.light"),
-	dark: t("ColorSchemeSwitcher.color-schemes.dark"),
+	system: t("color-schemes.system"),
+	light: t("color-schemes.light"),
+	dark: t("color-schemes.dark"),
 };
+
+const label = t("change");
 ---
 
-<color-scheme-switcher>
-	<label>
-		<span class="sr-only">{label}</span>
-		<select class="bg-bg text-fg" data-color-scheme-switcher>
-			{
-				Object.entries(colorSchemes).map(([value, label]) => {
-					return <option value={value}>{label}</option>;
-				})
-			}
-		</select>
-	</label>
-</color-scheme-switcher>
+<ColorSchemeRadioGroup client:only="svelte" {colorSchemes} {label}>
+	<Fragment slot="system">
+		<Icon
+			aria-hidden={true}
+			class="size-5 shrink-0 rounded-full text-icon-neutral transition group-data-checked:text-text-strong hover:text-text-strong"
+			name="lucide:laptop"
+		/>
+	</Fragment>
 
-<script>
-	import { assert } from "@acdh-oeaw/lib";
+	<Fragment slot="dark">
+		<Icon
+			aria-hidden={true}
+			class="size-5 shrink-0 rounded-full text-icon-neutral transition group-data-checked:text-text-strong hover:text-text-strong"
+			name="lucide:moon"
+		/>
+	</Fragment>
 
-	import type { ColorScheme } from "@/lib/color-scheme";
-
-	class ColorSchemeSwitcher extends HTMLElement {
-		selectElement: HTMLSelectElement;
-
-		constructor() {
-			super();
-
-			const selectElement = this.querySelector("select");
-			assert(selectElement);
-
-			this.selectElement = selectElement;
-
-			this.getColorScheme = this.getColorScheme.bind(this);
-			this.setColorScheme = this.setColorScheme.bind(this);
-			this.onSelectColorScheme = this.onSelectColorScheme.bind(this);
-			this.init = this.init.bind(this);
-			this.update = this.update.bind(this);
-
-			this.init();
-			window.__colorScheme.subscribe(this.update);
-		}
-
-		getColorScheme() {
-			const colorSchemeState = window.__colorScheme.get();
-			return colorSchemeState.kind === "system" ? "system" : colorSchemeState.colorScheme;
-		}
-
-		setColorScheme(value: ColorScheme | "system") {
-			window.__colorScheme.set(value === "system" ? null : value);
-		}
-
-		onSelectColorScheme(event: Event) {
-			const value = (event.currentTarget as HTMLSelectElement).value as ColorScheme | "system";
-			this.setColorScheme(value);
-		}
-
-		init() {
-			this.update();
-			this.selectElement.addEventListener("change", this.onSelectColorScheme);
-		}
-
-		update() {
-			const selectedKey = this.getColorScheme();
-
-			this.selectElement.querySelectorAll("option").forEach((optionElement) => {
-				optionElement.selected = optionElement.value === selectedKey;
-			});
-		}
-	}
-
-	window.customElements.define("color-scheme-switcher", ColorSchemeSwitcher);
-</script>
+	<Fragment slot="light">
+		<Icon
+			aria-hidden={true}
+			class="size-5 shrink-0 rounded-full text-icon-neutral transition group-data-checked:text-text-strong hover:text-text-strong"
+			name="lucide:sun"
+		/>
+	</Fragment>
+</ColorSchemeRadioGroup>

@@ -1,10 +1,12 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1-labs
+# labs version is needed for `COPY --exclude`.
+# @see https://docs.docker.com/reference/dockerfile/#copy---exclude
 
 # using alpine base image to avoid `sharp` memory leaks.
 # @see https://sharp.pixelplumbing.com/install#linux-memory-allocator
 
 # build
-FROM node:20-alpine AS build
+FROM node:24-alpine AS build
 
 RUN corepack enable
 
@@ -13,7 +15,11 @@ WORKDIR /app
 
 USER node
 
-COPY --chown=node:node .npmrc package.json pnpm-lock.yaml ./
+COPY --chown=node:node .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# COPY --chown=node:node ./patches ./patches
+
+ENV CI=true
+ENV SKIP_INSTALL_SIMPLE_GIT_HOOKS=1
 
 RUN pnpm fetch
 
@@ -30,10 +36,12 @@ ARG PUBLIC_REDMINE_ID
 # disable validation for runtime environment variables
 ENV ENV_VALIDATION=public
 
-ENV NODE_ENV=production
-
 RUN pnpm install --frozen-lockfile --offline
 
+ENV NODE_ENV=production
+
+# to mount secrets which need to be available at build time
+# @see https://docs.docker.com/build/building/secrets/
 RUN pnpm run build
 
 # serve
@@ -41,7 +49,8 @@ FROM caddy:2-alpine AS serve
 
 WORKDIR /usr/share/caddy
 
-COPY --from=build /app/dist /usr/share/caddy
+# exclude assets which should have been optimized with `astro:assets`.
+COPY --from=build --exclude=client/assets/content/assets/ /app/dist /usr/share/caddy
 
 EXPOSE 3000
 

@@ -1,0 +1,110 @@
+{
+	"mdx": {
+		"footnote-back-label": "Zurück zur Referenz {reference}",
+		"footnotes": "Fußnoten",
+		"tableOfContents": "Inhaltsverzeichnis"
+	},
+	"ColorSchemeSwitcher": {
+		"color-schemes": {
+			"dark": "Dunkel",
+			"light": "Hell",
+			"system": "System"
+		},
+		"change": "Farbschema ändern"
+	},
+	"ContactPage": {
+		"form": {
+			"email": "Email-Adresse",
+			"message": "Nachricht",
+			"name": "Name",
+			"status": {
+				"invalid-input": "Ungültige Eingabe.",
+				"success": "Nachricht erfolgreich gesendet.",
+				"unknown-error": "Konnte Nachricht nicht senden."
+			},
+			"subject": "Betreff",
+			"submit": "Absenden"
+		},
+		"meta": {
+			"title": "Kontakt"
+		},
+		"title": "Kontakt"
+	},
+	"DefaultFooter": {
+		"navigation": {
+			"items": {
+				"contact": "Kontakt",
+				"home": "Startseite",
+				"imprint": "Impressum"
+			},
+			"label": "Zusätzliche"
+		},
+		"navigation-social-media": {
+			"items": {
+				"bluesky": "Bluesky",
+				"email": "Email",
+				"facebook": "Facebook",
+				"flickr": "Flickr",
+				"github": "GitHub",
+				"instagram": "Instagram",
+				"linkedin": "LinkedIn",
+				"mastodon": "Mastodon",
+				"orcid": "ORCID",
+				"rss": "RSS",
+				"twitter": "Twitter",
+				"website": "Website",
+				"youtube": "YouTube"
+			},
+			"label": "Social media"
+		}
+	},
+	"DefaultHeader": {
+		"navigation": {
+			"drawer": {
+				"close": "Menü schließen",
+				"label": "Menü",
+				"open": "Menü öffnen"
+			},
+			"items": {
+				"home": "Startseite"
+			},
+			"label": "Haupt"
+		}
+	},
+	"DefaultLayout": {
+		"skip-link": "Zum Hauptinhalt springen"
+	},
+	"ErrorPage": {
+		"meta": {
+			"title": "Fehler"
+		},
+		"reset": "Erneut versuchen",
+		"title": "Etwas ist schief gelaufen"
+	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Impressum"
+		},
+		"title": "Impressum"
+	},
+	"IndexPage": {
+		"meta": {
+			"title": "Startseite"
+		}
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Aktuelle Sprache: {locale}",
+		"switch-locale": "Sprache wechseln",
+		"switch-locale-to": "Sprache zu {locale} wechseln"
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Seite nicht gefunden"
+		},
+		"title": "Seite nicht gefunden"
+	},
+	"SearchDialog": {
+		"close": "Dialog schließen",
+		"trigger": "Suchen"
+	}
+}

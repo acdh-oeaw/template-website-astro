@@ -1,13 +1,28 @@
 ---
-import { defaultLocale } from "@/config/i18n.config";
+import { match } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
+
+import { defaultLocale, type IntlLocale, locales } from "@/lib/i18n/locales";
+import { localeToPrefix } from "@/lib/i18n/routing";
 
 export const prerender = false;
 
-/**
- * The typescript warning is about:
- * @see https://github.com/withastro/language-tools/issues/476
- */
-const locale = Astro.preferredLocale ?? defaultLocale;
+const languages = new Negotiator({
+	headers: {
+		"accept-language": Astro.request.headers.get("accept-language") ?? undefined,
+	},
+}).languages();
 
-return Astro.redirect(`/${locale}/`, 307);
+function getPreferredLocale(): IntlLocale {
+	try {
+		return match(languages, locales, defaultLocale) as IntlLocale;
+	} catch {
+		return defaultLocale;
+	}
+}
+
+const locale = getPreferredLocale();
+
+// eslint-disable-next-line unicorn/prefer-module
+return Astro.redirect(`/${localeToPrefix[locale]}`, 307);
 ---

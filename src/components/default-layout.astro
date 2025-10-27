@@ -1,0 +1,32 @@
+---
+import DefaultFooter from "@/components/default-footer.astro";
+import DefaultHeader from "@/components/default-header.astro";
+import Main from "@/components/main.astro";
+import SkipLink from "@/components/skip-link.astro";
+import { getTranslations } from "@/lib/i18n/get-translations";
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const { locale } = Astro.locals;
+const t = await getTranslations(locale, "DefaultLayout");
+
+const mainContentId = "main-content";
+---
+
+<div class="relative isolate flex min-h-full flex-col">
+	<SkipLink href={`#${mainContentId}`}>
+		{t("skip-link")}
+	</SkipLink>
+
+	<DefaultHeader />
+
+	<Main class:list={["container flex-1 px-4 py-12 sm:px-8", className]} id={mainContentId}>
+		<slot />
+	</Main>
+
+	<DefaultFooter />
+</div>

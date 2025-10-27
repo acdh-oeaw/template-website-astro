@@ -1,0 +1,31 @@
+---
+import DefaultLayout from "@/components/default-layout.astro";
+import DocumentBody from "@/components/document-body.astro";
+import DocumentHead from "@/components/document-head.astro";
+import DocumentMetadata from "@/components/document-metadata.astro";
+import HtmlDocument from "@/components/html-document.astro";
+import { getTranslations } from "@/lib/i18n/get-translations";
+import { defaultLocale } from "@/lib/i18n/locales";
+
+interface Props {
+	error: unknown;
+}
+
+const { locale = defaultLocale } = Astro.locals;
+const t = await getTranslations(locale, "ErrorPage");
+
+const { error } = Astro.props;
+---
+
+<HtmlDocument data-pagefind-ignore>
+	<DocumentHead>
+		<DocumentMetadata robots="noindex" title={t("meta.title")} />
+	</DocumentHead>
+
+	<DocumentBody>
+		<DefaultLayout class="grid place-content-center place-items-center text-center">
+			<h1 class="text-lg font-semibold text-text-strong">{t("title")}</h1>
+			<p class="text-text-weak">{error}</p>
+		</DefaultLayout>
+	</DocumentBody>
+</HtmlDocument>

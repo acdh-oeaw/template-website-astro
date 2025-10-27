@@ -1,29 +1,85 @@
+import { createUrl } from "@acdh-oeaw/lib";
 import { test as base } from "@playwright/test";
 
-import { defaultLocale, type Locale } from "@/config/i18n.config";
+import { env } from "@/config/env.config";
+import { defaultLocale, type IntlLocale } from "@/lib/i18n/locales";
 import { type AccessibilityScanner, createAccessibilityScanner } from "~/e2e/lib/fixtures/a11y";
+import { ContactPage } from "~/e2e/lib/fixtures/contact-page";
+import { createEmailService, type EmailService } from "~/e2e/lib/fixtures/email-service";
 import { createI18n, type I18n, type WithI18n } from "~/e2e/lib/fixtures/i18n";
 import { ImprintPage } from "~/e2e/lib/fixtures/imprint-page";
 import { IndexPage } from "~/e2e/lib/fixtures/index-page";
 
 interface Fixtures {
+	// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+	beforeEachTest: void;
+
 	createAccessibilityScanner: () => Promise<AccessibilityScanner>;
-	createI18n: (locale?: Locale) => Promise<I18n>;
-	createImprintPage: (locale?: Locale) => Promise<WithI18n<{ imprintPage: ImprintPage }>>;
-	createIndexPage: (locale?: Locale) => Promise<WithI18n<{ indexPage: IndexPage }>>;
+	createEmailService: () => EmailService;
+	createI18n: (locale: IntlLocale) => Promise<I18n>;
+	createContactPage: (locale: IntlLocale) => Promise<WithI18n<{ contactPage: ContactPage }>>;
+	createImprintPage: (locale: IntlLocale) => Promise<WithI18n<{ imprintPage: ImprintPage }>>;
+	createIndexPage: (locale: IntlLocale) => Promise<WithI18n<{ indexPage: IndexPage }>>;
 }
 
 export const test = base.extend<Fixtures>({
+	/** @see {@link https://playwright.dev/docs/test-fixtures#adding-global-beforeeachaftereach-hooks} */
+	beforeEachTest: [
+		async ({ context }, use) => {
+			if (env.PUBLIC_MATOMO_BASE_URL != null) {
+				/**
+				 * If we were to block loading the actual matomo javascript snippet, we would need to
+				 * check if `windows._paq` was pushed to (because no requests to `matomo.php`
+				 * would be dispatched).
+				 */
+				// const scriptUrl = String(
+				// 	createUrl({ baseUrl: env.PUBLIC_MATOMO_BASE_URL, pathname: "/matomo.js" }),
+				// );
+
+				// await context.route(scriptUrl, (route) => {
+				// 	return route.fulfill({ status: 200, body: "" });
+				// });
+
+				const baseUrl = String(
+					createUrl({ baseUrl: env.PUBLIC_MATOMO_BASE_URL, pathname: "/matomo.php?**" }),
+				);
+
+				await context.route(baseUrl, (route) => {
+					return route.fulfill({ status: 204, body: "" });
+				});
+			}
+
+			await use();
+		},
+		{ auto: true },
+	],
+
 	async createAccessibilityScanner({ page }, use) {
 		await use(() => {
 			return createAccessibilityScanner(page);
 		});
 	},
 
+	async createEmailService({ request }, use) {
+		await use(() => {
+			return createEmailService(request);
+		});
+	},
+
 	async createI18n({ page }, use) {
-		await use((locale = defaultLocale) => {
+		await use((locale) => {
 			return createI18n(page, locale);
 		});
+	},
+
+	async createContactPage({ page }, use) {
+		async function createContactPage(locale = defaultLocale) {
+			const i18n = await createI18n(page, locale);
+			const contactPage = new ContactPage(page, locale, i18n);
+			return { i18n, contactPage };
+		}
+
+		await use(createContactPage);
 	},
 
 	async createImprintPage({ page }, use) {

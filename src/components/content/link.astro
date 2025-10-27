@@ -1,28 +1,17 @@
 ---
-import Anchor from "@/components/link.astro";
-import type { linkCollections } from "@/lib/content/create-components";
-
-type LinkCollection = (typeof linkCollections)[number]["value"];
+import AppLink from "@/components/link.astro";
+import { getLinkProps, type LinkSchema } from "@/lib/content/utils/get-link-props";
 
 interface Props {
 	class?: string;
-	item: {
-		discriminant: LinkCollection;
-		value: string;
-	};
+	item: LinkSchema;
 }
 
 const { item, ...rest } = Astro.props;
 
-const isDownloadLink = item.discriminant === "download";
-
-const href = isDownloadLink
-	? item.value
-	: item.discriminant === "external"
-		? item.value
-		: item.discriminant === "pages"
-			? `/${item.value}`
-			: `/${item.discriminant}/${item.value}`;
+const linkProps = getLinkProps(item);
 ---
 
-<Anchor {...rest} download={isDownloadLink} href={href}><slot /></Anchor>
+<AppLink {...rest} {...linkProps}>
+	<slot />
+</AppLink>

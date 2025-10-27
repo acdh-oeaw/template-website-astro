@@ -1,0 +1,9 @@
+---
+import "@/styles/index.css";
+
+const { locale } = Astro.locals;
+---
+
+<html lang={locale}>
+	<slot />
+</html>

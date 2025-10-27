@@ -1,18 +1,20 @@
 ---
+import type { TableOfContents as Toc } from "@acdh-oeaw/mdx-lib";
+
 import TableOfContentsLevel from "@/components/content/table-of-contents-level.astro";
-import type { Locale } from "@/config/i18n.config";
-import type { Toc } from "@/lib/content/with-table-of-contents";
-import { generateUniqueId } from "@/lib/generate-unique-id";
-import { createI18n } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/get-translations";
+import { generateUniqueId } from "@/lib/utils/generate-unique-id";
 
 interface Props {
 	tableOfContents: Toc;
 	title?: string;
 }
 
+const { locale } = Astro.locals;
+
 const { tableOfContents, title } = Astro.props;
 
-const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
+const t = await getTranslations(locale, "mdx");
 
 const id = generateUniqueId();
 ---
@@ -20,11 +22,15 @@ const id = generateUniqueId();
 {
 	Array.isArray(tableOfContents) && tableOfContents.length > 0 ? (
 		<nav
-			aria-label={title != null ? undefined : t("TableOfContents.tableOfContents")}
+			aria-label={title != null ? undefined : t("tableOfContents")}
 			aria-labelledby={title != null ? id : undefined}
 		>
-			{title != null ? <h2 id={id}>{title}</h2> : null}
-			<div class="not-prose mb-12">
+			{title != null ? (
+				<h2 class="font-semibold" id={id}>
+					{title}
+				</h2>
+			) : null}
+			<div class="not-richtext mb-12">
 				<TableOfContentsLevel headings={tableOfContents} />
 			</div>
 		</nav>

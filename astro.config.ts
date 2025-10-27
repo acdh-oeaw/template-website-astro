@@ -1,111 +1,96 @@
+import * as path from "node:path";
+
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
-import solidJs from "@astrojs/solid-js";
-import { defineConfig } from "astro/config";
+import svelte from "@astrojs/svelte";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, fontProviders } from "astro/config";
 import icon from "astro-icon";
-import type { Writable } from "type-fest";
 import { loadEnv } from "vite";
 
-import { defaultLocale, locales } from "./src/config/i18n.config";
-// import { createConfig as createMdxConfig } from "./src/config/mdx.config";
+import { defaultLocale } from "./src/lib/i18n/locales";
+import { localeToPrefix } from "./src/lib/i18n/routing";
 
-const env = loadEnv(import.meta.env.MODE, process.cwd(), "");
+// eslint-disable-next-line no-restricted-syntax
+const env = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "");
 
 export default defineConfig({
-	/**
-	 * When switching to static site generation, place an empty `index.astro` file in
-	 * the `src/pages` folder, so `astro` will generate a redirect to the default locale
-	 * via `<meta http-equiv="refresh" content="0;url=/en/">`.
-	 */
 	adapter: node({
 		mode: "standalone",
 	}),
 	base: env.PUBLIC_APP_BASE_PATH,
 	experimental: {
-		// actions: true,
-		// contentCollectionCache: true,
-		// env: {},
-		// serverIslands: true,
-	},
-	i18n: {
-		defaultLocale,
-		locales: locales as Writable<typeof locales>,
-		routing: "manual",
+		fonts: [
+			{
+				provider: fontProviders.google(),
+				name: "Inter",
+				cssVariable: "--_font-body",
+				weights: ["100 900"],
+			},
+		],
 	},
 	integrations: [
 		icon({
+			iconDir: "./src/assets/icons",
 			/** @see https://www.astroicon.dev/reference/configuration/#include */
 			include: {
-				lucide: ["chevron-down", "menu", "message-circle", "search", "square-arrow-left", "x"],
-				simpleIcons: [],
+				lucide: [
+					"chevron-down",
+					"globe",
+					"laptop",
+					"mail",
+					"menu",
+					"moon",
+					"rss",
+					"search",
+					"sun",
+					"x",
+				],
+				simpleIcons: ["bluesky", "instagram", "linkedin", "mastodon", "twitter", "youtube"],
 			},
 			svgoOptions: {
 				multipass: true,
-				plugins: [
-					{
-						name: "preset-default",
-						params: {
-							overrides: {
-								removeViewBox: false,
-							},
-						},
-					},
-				],
+				plugins: [{ name: "preset-default", params: { overrides: { removeViewBox: false } } }],
 			},
 		}),
-		mdx(),
 		/**
-		 * @see https://docs.astro.build/en/guides/integrations-guide/solid-js/#combining-multiple-jsx-frameworks
-		 * @see https://github.com/Thinkmill/keystatic/discussions/951
+		 * Even though we are using our own mdx processing pipeline, the astro mdx integration is
+		 * required. Not entirely sure why, but probably because it disables the built-in astro-jsx
+		 * plugin.
 		 */
+		mdx(),
 		react({
-			include: ["**/content/**", "**/keystatic/**"],
+			include: ["**/keystatic/**"],
+		}),
+		svelte({
+			exclude: ["**/keystatic/**"],
 		}),
 		sitemap({
 			i18n: {
+				locales: localeToPrefix,
 				defaultLocale,
-				locales: Object.fromEntries(
-					locales.map((locale) => {
-						return [locale, locale];
-					}),
-				),
 			},
 		}),
-		solidJs({
-			exclude: ["**/content/**", "**/keystatic/**"],
-		}),
 	],
-	/** Use `@/lib/content/get-mdx-content.ts` instead of astro's built-in markdown processor. */
-	// // @ts-expect-error Astro types are incomplete.
-	// markdown: {
-	// 	...(await createMdxConfig(defaultLocale)),
-	// 	gfm: false,
-	// 	smartypants: false,
-	// 	syntaxHighlight: false,
-	// },
-	output: "hybrid",
-	prefetch: {
-		defaultStrategy: "hover",
-		prefetchAll: true,
-	},
-	redirects: {
-		"/admin": {
-			destination: env.PUBLIC_APP_BASE_PATH
-				? `${env.PUBLIC_APP_BASE_PATH.replace(/\/$/, "")}/keystatic`
-				: "/keystatic",
-			status: 307,
-		},
-	},
-	scopedStyleStrategy: "where",
-	security: {
-		checkOrigin: true,
-	},
 	server: {
-		/** Required by keystatic. */
+		/** Required by `keystatic`. */
 		host: "127.0.0.1",
 		port: 3000,
 	},
 	site: env.PUBLIC_APP_BASE_URL,
+	vite: {
+		plugins: [tailwindcss()],
+		resolve: {
+			alias: {
+				"@content": path.resolve(".content/generated"),
+			},
+		},
+		server: {
+			watch: {
+				ignored: ["content/**"],
+			},
+		},
+	},
 });

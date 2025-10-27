@@ -1,10 +1,49 @@
 {
   "links": [
     {
-      "discriminant": "page",
+      "discriminant": "link",
       "value": {
-        "label": "Demo",
-        "id": "kitchen-sink"
+        "label": "About the project",
+        "link": {
+          "discriminant": "pages",
+          "value": {
+            "id": "about-the-project"
+          }
+        }
+      }
+    },
+    {
+      "discriminant": "separator"
+    },
+    {
+      "discriminant": "menu",
+      "value": {
+        "label": "Info",
+        "items": [
+          {
+            "discriminant": "link",
+            "value": {
+              "label": "Imprint",
+              "link": {
+                "discriminant": "external",
+                "value": "/imprint"
+              }
+            }
+          },
+          {
+            "discriminant": "separator"
+          },
+          {
+            "discriminant": "link",
+            "value": {
+              "label": "Contact",
+              "link": {
+                "discriminant": "external",
+                "value": "/contact"
+              }
+            }
+          }
+        ]
       }
     }
   ]

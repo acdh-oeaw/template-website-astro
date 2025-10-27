@@ -6,6 +6,7 @@ node_modules/
 *.log
 
 # non-public environment variables
+.env.keys
 .env.local
 .env.*.local
 
@@ -15,16 +16,29 @@ node_modules/
 .stylelintcache
 *.tsbuildinfo
 
+# performance profiles
+*.cpuprofile
+*.heapprofile
+*.heapsnapshot
+
 # vercel
 .vercel
 
 # misc
 .DS_Store
+*.pem
 .idea/
 
 # astro
-dist/
 .astro/
+dist/
+
+# self-signed certificates
+/certificates/
+
+# i18n
+/content/**/*.d.json.ts
+/messages/**/*.d.json.ts
 
 # test
 /coverage/
@@ -34,3 +48,6 @@ dist/
 /playwright/.cache/
 /playwright-report/
 /test-results/
+
+# generated content
+.content/

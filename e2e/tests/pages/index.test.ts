@@ -1,4 +1,4 @@
-import { locales } from "@/config/i18n.config";
+import { locales } from "@/lib/i18n/locales";
 import { expect, test } from "~/e2e/lib/test";
 
 test.describe("index page", () => {
@@ -8,7 +8,7 @@ test.describe("index page", () => {
 			await indexPage.goto();
 
 			await expect(indexPage.page).toHaveTitle(
-				[i18n.t("IndexPage.meta.title"), i18n.t("metadata.title")].join(" | "),
+				[i18n.t("IndexPage.meta.title"), i18n.messages.metadata.title].join(" | "),
 			);
 		}
 	});
@@ -27,12 +27,30 @@ test.describe("index page", () => {
 	});
 
 	// eslint-disable-next-line playwright/no-skipped-test
-	test.skip("should not have visible changes", async ({ createIndexPage }) => {
-		for (const locale of locales) {
-			const { indexPage } = await createIndexPage(locale);
-			await indexPage.goto();
+	test.describe.skip("should not have visible changes", () => {
+		test.use({ colorScheme: "light" });
 
-			await expect(indexPage.page).toHaveScreenshot();
-		}
+		test("in light mode", async ({ createIndexPage }) => {
+			for (const locale of locales) {
+				const { indexPage } = await createIndexPage(locale);
+				await indexPage.goto();
+
+				await expect(indexPage.page).toHaveScreenshot({ fullPage: true });
+			}
+		});
+	});
+
+	// eslint-disable-next-line playwright/no-skipped-test
+	test.describe.skip("should not have visible changes", () => {
+		test.use({ colorScheme: "dark" });
+
+		test("in dark mode", async ({ createIndexPage }) => {
+			for (const locale of locales) {
+				const { indexPage } = await createIndexPage(locale);
+				await indexPage.goto();
+
+				await expect(indexPage.page).toHaveScreenshot({ fullPage: true });
+			}
+		});
 	});
 });
