@@ -1,7 +1,7 @@
 <script lang="ts">
 	import "@pagefind/default-ui/css/ui.css";
 
-	import { type Snippet, tick } from "svelte";
+	import { onDestroy, type Snippet, tick } from "svelte";
 
 	interface Props {
 		closeLabel: string;
@@ -53,6 +53,10 @@
 
 	const SearchIcon = search;
 	const XIcon = x;
+
+	onDestroy(() => {
+		dialogElement?.close();
+	});
 </script>
 
 <button
