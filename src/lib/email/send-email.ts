@@ -4,8 +4,10 @@ import { createTransport, type SendMailOptions, type SentMessageInfo } from "nod
 import { subjectPrefix } from "@/config/email.config";
 import { env } from "@/config/env.config";
 
-interface SendEmailParams
-	extends Pick<SendMailOptions, "attachments" | "from" | "subject" | "text"> {}
+interface SendEmailParams extends Pick<
+	SendMailOptions,
+	"attachments" | "from" | "subject" | "text"
+> {}
 
 export function sendEmail(params: SendEmailParams): Promise<SentMessageInfo> {
 	const { attachments, from, subject, text } = params;
