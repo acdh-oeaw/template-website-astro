@@ -1,9 +1,9 @@
 ---
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
 import Link from "@/components/link.astro";
 import LocaleSwitcher from "@/components/locale-switcher.astro";
+import Logo from "@/components/logo.astro";
 import MobileNavMenu from "@/components/mobile-nav-menu.svelte";
 import MobileNavMenuToggle from "@/components/mobile-nav-menu-toggle.svelte";
 import NavigationMenu from "@/components/navigation-menu.svelte";
@@ -13,8 +13,6 @@ import { getTranslations } from "@/lib/i18n/get-translations";
 import { getIntlLanguage } from "@/lib/i18n/locales";
 import { createHref } from "@/lib/navigation/create-href";
 import type { NavigationLink } from "@/lib/navigation/navigation";
-import logoDark from "~/public/assets/images/logo-acdh-dark.svg";
-import logoLight from "~/public/assets/images/logo-acdh-light.svg";
 
 const { locale } = Astro.locals;
 const t = await getTranslations(locale, "DefaultHeader");
@@ -36,22 +34,7 @@ const navigation = await client.singletons.navigation.get();
 	<div class="container flex flex-wrap items-center justify-between gap-x-6 px-4 py-4 sm:px-8">
 		<nav aria-label={t("navigation.label")} class="flex flex-1 items-center gap-x-6">
 			<Link class="-ml-2 inline-block shrink-0 rounded-xs p-2 focus-outline" href={links.home.href}>
-				<Image
-					alt=""
-					class="block h-8 w-auto dark:hidden"
-					decoding="auto"
-					fetchpriority="high"
-					loading="eager"
-					src={logoLight}
-				/>
-				<Image
-					alt=""
-					class="hidden h-8 w-auto dark:block"
-					decoding="auto"
-					fetchpriority="high"
-					loading="eager"
-					src={logoDark}
-				/>
+				<Logo class="block h-8 w-auto shrink-0" />
 				<span class="sr-only">{links.home.label}</span>
 			</Link>
 
