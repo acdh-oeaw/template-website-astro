@@ -6,7 +6,7 @@
 	"engines": {
 		"node": "^24"
 	},
-	"packageManager": "pnpm@10.23.0",
+	"packageManager": "pnpm@10.24.0",
 	"scripts": {
 		"app:build": "astro build",
 		"app:dev": "astro dev",
@@ -46,7 +46,6 @@
 		"@acdh-oeaw/style-variants": "^0.1.0",
 		"@acdh-oeaw/validate-env": "^0.1.1",
 		"@astrojs/node": "^9.5.1",
-		"@astrojs/preact": "^4.1.3",
 		"@astrojs/react": "^4.4.2",
 		"@astrojs/rss": "^4.0.14",
 		"@astrojs/sitemap": "^3.6.0",
@@ -63,14 +62,12 @@
 		"@valibot/i18n": "^1.0.0",
 		"astro": "^5.16.1",
 		"astro-icon": "^1.1.5",
-		"bits-ui": "^2.14.4",
 		"clsx": "^2.1.1",
 		"image-size": "^2.0.2",
 		"lucide-react": "^0.554.0",
 		"negotiator": "^1.0.0",
 		"nodemailer": "^7.0.11",
 		"pagefind": "^1.4.0",
-		"preact": "^10.27.2",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
 		"rehype-slug": "^6.0.0",
