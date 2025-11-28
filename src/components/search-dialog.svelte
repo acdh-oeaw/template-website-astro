@@ -1,7 +1,7 @@
 <script lang="ts">
 	import "@pagefind/default-ui/css/ui.css";
 
-	import { onDestroy, type Snippet, tick } from "svelte";
+	import { onDestroy, onMount, type Snippet, tick } from "svelte";
 
 	interface Props {
 		closeLabel: string;
@@ -13,8 +13,9 @@
 	const { closeLabel, label, search, x }: Props = $props();
 
 	let dialogElement = $state<HTMLDialogElement | null>(null);
+	let pagefindElement = $state<HTMLElement | null>(null);
 
-	$effect(() => {
+	onMount(() => {
 		/** Pagefind assets are only generated on build. */
 		if (import.meta.env.DEV) {
 			return;
@@ -28,14 +29,14 @@
 			});
 
 		// eslint-disable-next-line @typescript-eslint/no-misused-promises
-		onIdle(async () => {
+		return onIdle(async () => {
 			// @ts-expect-error — Missing types for `@pagefind/default-ui` package.
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const { PagefindUI } = await import("@pagefind/default-ui");
 
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
 			const ui = new PagefindUI({
-				element: "[data-pagefind-ui]",
+				element: pagefindElement,
 				baseUrl: import.meta.env.BASE_URL,
 				bundlePath: `${import.meta.env.BASE_URL.replace(/\/$/, "")}/pagefind/`,
 				showImages: false,
@@ -90,7 +91,7 @@
 			</button>
 		</form>
 		<div class="relative mt-8">
-			<div data-pagefind-ui></div>
+			<div bind:this={pagefindElement}></div>
 		</div>
 	</div>
 </dialog>

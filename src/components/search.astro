@@ -11,7 +11,7 @@ const label = t("trigger");
 const closeLabel = t("close");
 ---
 
-<SearchDialog client:idle="svelte" {closeLabel} {label}>
+<SearchDialog client:idle="svelte" {closeLabel} {label} transition:persist>
 	<Fragment slot="search">
 		<Icon aria-hidden={true} class="size-4 shrink-0" name="lucide:search" />
 	</Fragment>
