@@ -37,7 +37,7 @@
 		"test:e2e:ui": "pnpm run test:e2e --ui",
 		"test:e2e:update-snapshots": "pnpm run test:e2e --update-snapshots",
 		"types:check": "astro check && svelte-check --no-tsconfig",
-		"types:prepare": "ENV_VALIDATION=\"disabled\" run-s i18n:prepare sync"
+		"types:prepare": "ENV_VALIDATION=\"disabled\" run-s i18n:prepare"
 	},
 	"dependencies": {
 		"@acdh-oeaw/keystatic-lib": "^0.8.0",
