@@ -114,6 +114,7 @@ const navigation = await client.singletons.navigation.get();
 					client:idle="svelte"
 				>
 					<Icon aria-hidden={true} class="size-5 shrink-0" name="lucide:menu" />
+					<span class="sr-only">{t("navigation.menu.open")}</span>
 				</MobileNavMenuToggle>
 			</div>
 		</nav>

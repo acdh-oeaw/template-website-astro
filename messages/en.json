@@ -60,9 +60,7 @@
 	},
 	"DefaultHeader": {
 		"navigation": {
-			"drawer": {
-				"close": "Close navigation menu",
-				"label": "Navigation menu",
+			"menu": {
 				"open": "Open navigation menu"
 			},
 			"items": {
