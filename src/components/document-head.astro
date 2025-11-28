@@ -1,0 +1,52 @@
+---
+import { Font } from "astro:assets";
+import { ClientRouter } from "astro:transitions";
+
+import { env } from "@/config/env.config";
+import AnalyticsScript from "@/lib/analytics/analytics-script.astro";
+import ColorSchemeScript from "@/lib/color-scheme/color-scheme-script.astro";
+import { createHref } from "@/lib/navigation/create-href";
+
+const matomoBaseUrl = env.PUBLIC_MATOMO_BASE_URL;
+const matomoId = env.PUBLIC_MATOMO_ID;
+const googleSiteVerification = env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+---
+
+<head>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<meta content="light dark" name="color-scheme" />
+
+	<link
+		href={createHref({ pathname: "/favicon.ico" })}
+		rel="icon"
+		sizes="32x32"
+		type="image/x-icon"
+	/>
+	<link href={createHref({ pathname: "/icon.svg" })} rel="icon" sizes="any" type="image/svg+xml" />
+	<link
+		href={createHref({ pathname: "/apple-icon.png" })}
+		rel="apple-touch-icon"
+		sizes="180x180"
+		type="image/png"
+	/>
+
+	<Font
+		cssVariable="--_font-body"
+		preload={[{ subset: "latin", style: "normal" }, { weight: "400" }]}
+	/>
+
+	<slot />
+
+	{
+		googleSiteVerification != null ? (
+			<meta content={googleSiteVerification} name="google-site-verification" />
+		) : null
+	}
+
+	<ColorSchemeScript />
+
+	{matomoBaseUrl && matomoId ? <AnalyticsScript baseUrl={matomoBaseUrl} id={matomoId} /> : null}
+
+	<ClientRouter />
+</head>

@@ -1,41 +1,75 @@
 ---
-import MainContent from "@/components/main-content.astro";
-import PageSection from "@/components/page-section.astro";
-import PageTitle from "@/components/page-title.astro";
-import { locales } from "@/config/i18n.config";
-import PageLayout from "@/layouts/page-layout.astro";
-import { createCollectionResource } from "@/lib/content/create-resource";
+import assert from "node:assert/strict";
+
+import type { GetStaticPathsResult } from "astro";
+import { Image } from "astro:assets";
+
+import TableOfContents from "@/components/content/table-of-contents.astro";
+import DefaultLayout from "@/components/default-layout.astro";
+import DocumentBody from "@/components/document-body.astro";
+import DocumentHead from "@/components/document-head.astro";
+import DocumentMetadata from "@/components/document-metadata.astro";
+import HtmlDocument from "@/components/html-document.astro";
+import { createClient } from "@/lib/content/create-client";
+import { getTranslations } from "@/lib/i18n/get-translations";
+import { getIntlLanguage, locales } from "@/lib/i18n/locales";
+import { localeToPrefix } from "@/lib/i18n/routing";
 
 export async function getStaticPaths() {
-	return (
+	const paths = (
 		await Promise.all(
-			locales.flatMap(async (locale) => {
-				const pages = await createCollectionResource("pages", locale).all();
+			locales.map(async (locale) => {
+				const client = await createClient(getIntlLanguage(locale));
 
-				return pages.map((page) => {
-					return { params: { id: page.id, locale }, props: { page } };
-				});
+				const ids = await client.collections.pages.ids();
+
+				return Promise.all(
+					ids.map(async (id) => {
+						const page = await client.collections.pages.get(id);
+
+						assert(page != null, `Failed to prerender page "${id}".`);
+
+						return { params: { id, locale: localeToPrefix[locale] }, props: { page } };
+					}),
+				);
 			}),
 		)
 	).flat();
+
+	return paths satisfies GetStaticPathsResult;
 }
 
-const { locale } = Astro.params;
+const { locale } = Astro.locals;
+const tr = await getTranslations(locale, "mdx");
 
 const { page } = Astro.props;
-
-const documentTitle = page.data.title;
-const { content, title } = page.data;
-const { default: Content } = await page.compile(content);
+const { image, lead, title } = page.metadata;
+const Content = page.content;
+const tableOfContents = page.tableOfContents;
 ---
 
-<PageLayout locale={locale} title={documentTitle}>
-	<MainContent>
-		<PageSection>
-			<PageTitle>{title}</PageTitle>
-			<div class="prose prose-sm">
-				<Content />
-			</div>
-		</PageSection>
-	</MainContent>
-</PageLayout>
+<HtmlDocument>
+	<DocumentHead>
+		<DocumentMetadata title={title} />
+	</DocumentHead>
+
+	<DocumentBody>
+		<DefaultLayout>
+			<section class="richtext max-w-(--breakpoint-md)">
+				<h1>{title}</h1>
+				<div class="lead">{lead}</div>
+				{
+					image != null ? (
+						<div>
+							<Image alt="" class="rounded-sm" layout="constrained" loading="eager" src={image} />
+						</div>
+					) : null
+				}
+				<TableOfContents tableOfContents={tableOfContents} title={tr("tableOfContents")} />
+				<div>
+					<Content />
+				</div>
+			</section>
+		</DefaultLayout>
+	</DocumentBody>
+</HtmlDocument>

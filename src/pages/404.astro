@@ -1,27 +1,25 @@
 ---
-import MainContent from "@/components/main-content.astro";
-import PageSection from "@/components/page-section.astro";
-import PageTitle from "@/components/page-title.astro";
-import { defaultLocale, type Locale } from "@/config/i18n.config";
-import PageLayout from "@/layouts/page-layout.astro";
-import { createI18n } from "@/lib/i18n";
+import DefaultLayout from "@/components/default-layout.astro";
+import DocumentBody from "@/components/document-body.astro";
+import DocumentHead from "@/components/document-head.astro";
+import DocumentMetadata from "@/components/document-metadata.astro";
+import HtmlDocument from "@/components/html-document.astro";
+import { getTranslations } from "@/lib/i18n/get-translations";
 
-/**
- * Prerenderer page works locally, but not on acdh-ch deployment.
- */
 export const prerender = false;
 
-const locale = (Astro.currentLocale ?? defaultLocale) as Locale;
-const { t } = await createI18n(locale);
-
-const documentTitle = t("NotFoundPage.meta.title");
-const title = t("NotFoundPage.title");
+const { locale } = Astro.locals;
+const t = await getTranslations(locale, "NotFoundPage");
 ---
 
-<PageLayout locale={locale} robots="noindex" title={documentTitle}>
-	<MainContent search="exclude">
-		<PageSection class="grid min-h-full place-items-center">
-			<PageTitle>{title}</PageTitle>
-		</PageSection>
-	</MainContent>
-</PageLayout>
+<HtmlDocument data-pagefind-ignore>
+	<DocumentHead>
+		<DocumentMetadata robots="noindex" title={t("meta.title")} />
+	</DocumentHead>
+
+	<DocumentBody>
+		<DefaultLayout class="grid place-content-center place-items-center text-center">
+			<h1 class="text-lg font-semibold text-text-strong">{t("title")}</h1>
+		</DefaultLayout>
+	</DocumentBody>
+</HtmlDocument>

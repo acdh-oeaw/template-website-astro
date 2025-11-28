@@ -1,12 +1,18 @@
 ---
-import type { Locale } from "@/config/i18n.config";
-import { createI18n } from "@/lib/i18n";
+interface Props {
+	class?: string;
+	href: `#${string}`;
+}
 
-const { t } = await createI18n(Astro.currentLocale as Locale | undefined);
-
-const label = t("SkipLink.skip-to-main-content");
+const { class: className, href } = Astro.props;
 ---
 
-<a class="absolute -translate-y-full px-3 py-1.5 focus:translate-y-0" href="#main-content">
-	{label}
+<a
+	class:list={[
+		"absolute -translate-y-3/2 m-4 inline-flex px-6 py-3 focus:translate-y-0 focus:outline-2 focus:outline-offset-0 bg-background-base text-text-strong rounded-xs",
+		className,
+	]}
+	href={href}
+>
+	<slot />
 </a>

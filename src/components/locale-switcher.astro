@@ -1,41 +1,68 @@
 ---
 import Link from "@/components/link.astro";
-import { defaultLocale, type Locale, locales } from "@/config/i18n.config";
-import { getUnprefixedPathname } from "@/lib/get-unprefixed-pathname";
-import { createI18n } from "@/lib/i18n";
+import { getTranslations } from "@/lib/i18n/get-translations";
+import { getUnprefixedPathname } from "@/lib/i18n/get-unprefixed-pathname";
+import { getIntlLanguage, type IntlLocale, locales } from "@/lib/i18n/locales";
 
-const currentLocale = (Astro.currentLocale as Locale | undefined) ?? defaultLocale;
+const { locale: currentLocale } = Astro.locals;
+const t = await getTranslations(currentLocale, "LocaleSwitcher");
 
-const { t } = await createI18n(currentLocale);
-
-const label = new Intl.DisplayNames(currentLocale, { type: "language" });
+const labels = Object.fromEntries(
+	locales.map((locale) => {
+		return [locale, new Intl.DisplayNames(locale, { type: "language" })];
+	}),
+) as Record<IntlLocale, Intl.DisplayNames>;
 
 const currentPathname = getUnprefixedPathname(Astro.url.pathname);
 ---
 
-<div class="flex items-center gap-x-2">
+<div class="flex items-center text-sm">
 	{
-		locales.map((locale) => {
+		locales.map((locale, index) => {
+			const language = getIntlLanguage(locale);
+
 			const isCurrent = locale === currentLocale;
+
+			const separator =
+				index !== 0 ? (
+					<span aria-hidden={true} class="cursor-default text-text-weak">
+						|
+					</span>
+				) : null;
 
 			if (isCurrent) {
 				return (
-					<span class="cursor-default font-medium">
-						<span aria-hidden="true">{locale.toUpperCase()}</span>
-						<span class="sr-only">
-							{t("LocaleSwitcher.current-locale", { locale: label.of(locale) })}
+					<Fragment>
+						{separator}
+
+						<span class="cursor-default p-2 font-medium text-text-weak underline underline-offset-4">
+							<span aria-hidden={true}>{language.toUpperCase()}</span>
+							<span class="sr-only">
+								{t("current-locale", { locale: labels[currentLocale].of(language)! })}
+							</span>
 						</span>
-					</span>
+					</Fragment>
 				);
 			}
 
 			return (
-				<Link href={currentPathname} locale={locale} reload={true}>
-					<span aria-hidden="true">{locale.toUpperCase()}</span>
-					<span class="sr-only">
-						{t("LocaleSwitcher.switch-locale-to", { locale: label.of(locale) })}
-					</span>
-				</Link>
+				<Fragment>
+					{separator}
+
+					<Link
+						class="touch-target rounded-xs p-2 text-text-weak focus-outline transition hover:text-text-strong focus-visible:text-text-strong focus-visible:outline-offset-4"
+						href={currentPathname}
+						hreflang={locale}
+						locale={locale}
+						reload={true}
+					>
+						<span aria-hidden={true}>{language.toUpperCase()}</span>
+						<span class="sr-only">
+							{t("switch-locale-to", { locale: labels[currentLocale].of(language)! })}
+							<span lang={locale}> ({labels[locale].of(language)})</span>
+						</span>
+					</Link>
+				</Fragment>
 			);
 		})
 	}

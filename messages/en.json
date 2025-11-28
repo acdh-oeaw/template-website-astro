@@ -1,0 +1,110 @@
+{
+	"mdx": {
+		"footnote-back-label": "Back to reference {reference}",
+		"footnotes": "Footnotes",
+		"tableOfContents": "Table of contents"
+	},
+	"ColorSchemeSwitcher": {
+		"color-schemes": {
+			"dark": "Dark",
+			"light": "Light",
+			"system": "System"
+		},
+		"change": "Change color scheme"
+	},
+	"ContactPage": {
+		"form": {
+			"email": "Email address",
+			"message": "Message",
+			"name": "Name",
+			"status": {
+				"invalid-input": "Invalid input.",
+				"success": "Successfully sent message.",
+				"unknown-error": "Could not send message."
+			},
+			"subject": "Subject",
+			"submit": "Send"
+		},
+		"meta": {
+			"title": "Contact"
+		},
+		"title": "Contact"
+	},
+	"DefaultFooter": {
+		"navigation": {
+			"items": {
+				"contact": "Contact",
+				"home": "Home",
+				"imprint": "Imprint"
+			},
+			"label": "Secondary"
+		},
+		"navigation-social-media": {
+			"items": {
+				"bluesky": "Bluesky",
+				"email": "Email",
+				"facebook": "Facebook",
+				"flickr": "Flickr",
+				"github": "GitHub",
+				"instagram": "Instagram",
+				"linkedin": "LinkedIn",
+				"mastodon": "Mastodon",
+				"orcid": "ORCID",
+				"rss": "RSS",
+				"twitter": "Twitter",
+				"website": "Website",
+				"youtube": "YouTube"
+			},
+			"label": "Social media"
+		}
+	},
+	"DefaultHeader": {
+		"navigation": {
+			"drawer": {
+				"close": "Close navigation menu",
+				"label": "Navigation menu",
+				"open": "Open navigation menu"
+			},
+			"items": {
+				"home": "Home"
+			},
+			"label": "Main"
+		}
+	},
+	"DefaultLayout": {
+		"skip-link": "Skip to main content"
+	},
+	"ErrorPage": {
+		"meta": {
+			"title": "Error"
+		},
+		"reset": "Try again",
+		"title": "Something went wrong"
+	},
+	"ImprintPage": {
+		"meta": {
+			"title": "Imprint"
+		},
+		"title": "Imprint"
+	},
+	"IndexPage": {
+		"meta": {
+			"title": "Home"
+		}
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Current language: {locale}",
+		"switch-locale": "Switch language",
+		"switch-locale-to": "Switch language to {locale}"
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Page not found"
+		},
+		"title": "Page not found"
+	},
+	"SearchDialog": {
+		"close": "Close dialog",
+		"trigger": "Search"
+	}
+}

@@ -1,34 +1,30 @@
 ---
-import { getFormDataValues, log } from "@acdh-oeaw/lib";
+import { log } from "@acdh-oeaw/lib";
+// import type { GetStaticPathsResult } from "astro";
 import * as v from "valibot";
 
-import TextAreaField from "@/components/form/text-area-field.astro";
-import TextInputField from "@/components/form/text-input-field.astro";
-import MainContent from "@/components/main-content.astro";
-import PageSection from "@/components/page-section.astro";
-import PageTitle from "@/components/page-title.astro";
-import { isValidLocale } from "@/config/i18n.config";
-import PageLayout from "@/layouts/page-layout.astro";
-import { createI18n } from "@/lib/i18n";
-import { sendEmail } from "@/lib/send-email";
+import DefaultLayout from "@/components/default-layout.astro";
+import DocumentBody from "@/components/document-body.astro";
+import DocumentHead from "@/components/document-head.astro";
+import DocumentMetadata from "@/components/document-metadata.astro";
+import HtmlDocument from "@/components/html-document.astro";
+import { sendEmail } from "@/lib/email/send-email";
+import { getTranslations } from "@/lib/i18n/get-translations";
+// import { locales } from "@/lib/i18n/locales";
+// import { localeToPrefix } from "@/lib/i18n/routing";
 
 export const prerender = false;
 
-const locale = Astro.currentLocale;
+// export function getStaticPaths() {
+// 	const paths = locales.map((locale) => {
+// 		return { params: { locale: localeToPrefix[locale] } };
+// 	});
 
-if (locale == null || !isValidLocale(locale)) {
-	return new Response(null, { status: 404, statusText: "Not found" });
-}
+// 	return paths satisfies GetStaticPathsResult;
+// }
 
-const { t } = await createI18n(locale);
-
-const documentTitle = t("ContactPage.meta.title");
-const title = t("ContactPage.title");
-
-const email = t("ContactForm.email");
-const subject = t("ContactForm.subject");
-const message = t("ContactForm.message");
-const submit = t("ContactForm.submit");
+const { locale } = Astro.locals;
+const t = await getTranslations(locale, "ContactPage");
 
 let status = { kind: "initial" } as
 	| { kind: "error"; message: string }
@@ -37,67 +33,114 @@ let status = { kind: "initial" } as
 
 if (Astro.request.method === "POST") {
 	try {
-		const data = await Astro.request.formData();
-		const formData = getFormDataValues(data);
+		const formData = await Astro.request.formData();
+
 		const schema = v.object({
 			name: v.pipe(v.string(), v.nonEmpty()),
 			email: v.pipe(v.string(), v.email()),
 			message: v.pipe(v.string(), v.nonEmpty()),
 			subject: v.pipe(v.string(), v.nonEmpty()),
 		});
-		const result = v.safeParse(schema, formData);
+
+		const result = v.safeParse(schema, {
+			name: formData.get("name"),
+			email: formData.get("email"),
+			message: formData.get("message"),
+			subject: formData.get("subject"),
+		});
+
 		if (!result.success) {
-			status = { kind: "error", message: t("ContactForm.status.invalid-input") };
+			status = { kind: "error", message: t("form.status.invalid-input") };
 		} else {
 			const { name, email, message, subject } = result.output;
+
 			await sendEmail({
 				from: `${name} <${email}>`,
 				subject,
 				text: message,
 				attachments: [],
 			});
-			status = { kind: "success", message: t("ContactForm.status.success") };
+
+			status = { kind: "success", message: t("form.status.success") };
 		}
 	} catch (error) {
-		if (error instanceof Error) {
-			log.error(error.message);
-		}
-		status = { kind: "error", message: t("ContactForm.status.unknown-error") };
+		log.error(error);
+		status = { kind: "error", message: t("form.status.unknown-error") };
 	}
 }
 ---
 
-<PageLayout locale={locale} title={documentTitle}>
-	<MainContent search="exclude">
-		<PageSection>
-			<PageTitle>{title}</PageTitle>
+<HtmlDocument>
+	<DocumentHead>
+		<DocumentMetadata title={t("meta.title")} />
+	</DocumentHead>
 
-			<form class="grid gap-y-6" data-astro-reload method="post">
-				<TextInputField label={email} name="email" required={true} type="email" />
+	<DocumentBody>
+		<DefaultLayout>
+			<section class="richtext max-w-(--breakpoint-md)">
+				<h1>{t("title")}</h1>
 
-				<TextInputField label={subject} name="subject" required={true} />
+				<form class="flex flex-col gap-y-6" data-astro-reload method="post">
+					<label class="flex flex-col gap-y-1">
+						<span class="text-sm font-medium">{t("form.name")}</span>
+						<input
+							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							name="name"
+							required={true}
+						/>
+					</label>
 
-				<TextAreaField label={message} name="message" required={true} rows={5} />
+					<label class="flex flex-col gap-y-1">
+						<span class="text-sm font-medium">{t("form.email")}</span>
+						<input
+							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							name="email"
+							required={true}
+							type="email"
+						/>
+					</label>
 
-				<button
-					class="rounded-md bg-neutral-950 px-4 py-2 font-semibold text-neutral-0 transition hover:bg-neutral-700 dark:bg-neutral-0 dark:text-neutral-950 dark:hover:bg-neutral-300"
-					type="submit"
-				>
-					{submit}
-				</button>
+					<label class="flex flex-col gap-y-1">
+						<span class="text-sm font-medium">{t("form.subject")}</span>
+						<input
+							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							name="subject"
+							required={true}
+						/>
+					</label>
 
-				<div
-					aria-live="polite"
-					aria-atomic="true"
-					class={status.kind === "error"
-						? "text-negative"
-						: status.kind === "success"
-							? "text-positive"
-							: undefined}
-				>
-					{status.kind !== "initial" ? status.message : null}
-				</div>
-			</form>
-		</PageSection>
-	</MainContent>
-</PageLayout>
+					<label class="flex flex-col gap-y-1">
+						<span class="text-sm font-medium">{t("form.message")}</span>
+						<textarea
+							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							name="message"
+							required={true}
+							rows={5}></textarea>
+					</label>
+
+					<div>
+						<button
+							class="relative inline-flex min-w-42 justify-center rounded-sm bg-background-inverse px-6 py-3.5 text-center text-sm font-semibold text-text-inverse-strong no-underline shadow-sm focus-outline transition hover:brightness-120 focus-visible:outline-offset-4 dark:hover:brightness-90"
+							type="submit"
+						>
+							{t("form.submit")}
+						</button>
+					</div>
+
+					<div
+						aria-atomic="true"
+						aria-live="polite"
+						class={status.kind === "error"
+							? "text-text-negative"
+							: status.kind === "success"
+								? "text-text-positive"
+								: undefined}
+						role="status"
+					>
+						{status.kind !== "initial" ? status.message : null}
+					</div>
+				</form>
+			</section>
+		</DefaultLayout>
+	</DocumentBody>
+</HtmlDocument>

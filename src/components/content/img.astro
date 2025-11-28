@@ -1,20 +1,18 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+import type { ImageMetadata } from "astro";
 import { Image } from "astro:assets";
 
-import { getImageImport } from "@/lib/get-image-import";
+interface Props {
+	alt?: string;
+	src: ImageMetadata;
+}
 
-interface Props extends HTMLAttributes<"img"> {}
-
-const { alt = "", src, width, height, ...rest } = Astro.props;
+const { alt = "", src } = Astro.props;
 ---
 
-{
-	src != null ? (
-		src.startsWith("/") ? (
-			<Image {...rest} alt={alt} src={getImageImport(src)} />
-		) : (
-			<img {...rest} alt={alt} height={height} src={src} width={width} />
-		)
-	) : null
-}
+<Image
+	alt={alt}
+	class="w-full overflow-hidden rounded-sm border border-stroke-weak"
+	layout="constrained"
+	src={src}
+/>

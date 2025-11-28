@@ -1,0 +1,8 @@
+---
+import { createColorSchemeScript } from "@/lib/color-scheme/color-scheme-script";
+---
+
+<script
+	is:inline
+	set:html={`(${String(createColorSchemeScript)})("uiColorScheme", "ui-color-scheme");`}
+/>

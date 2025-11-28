@@ -1,5 +1,5 @@
 ---
-import type { Toc } from "@/lib/content/with-table-of-contents";
+import type { TableOfContents as Toc } from "@acdh-oeaw/mdx-lib";
 
 interface Props {
 	headings: Toc;
@@ -9,18 +9,15 @@ interface Props {
 const { depth = 0, headings } = Astro.props;
 ---
 
-<ol
-	class="grid gap-y-1.5 text-neutral-700 dark:text-neutral-300"
-	style={{ marginLeft: String(depth * 8) + "px" }}
->
+<ol class="flex flex-col gap-y-1.5 text-text-weak" style={{ marginLeft: `${String(depth * 8)}px` }}>
 	{
 		headings.map((heading) => {
 			return (
-				<li class="grid justify-start gap-y-1.5">
+				<li class="flex flex-col gap-y-0.5">
 					{heading.id != null ? (
 						<a
-							class="inline-flex underline decoration-dotted transition hover:text-neutral-950 hover:decoration-solid dark:hover:text-neutral-0"
-							href={"#" + heading.id}
+							class="-mx-1 inline-flex rounded-xs px-1 underline decoration-dotted focus-outline transition hover:text-text-strong hover:decoration-solid focus-visible:text-text-strong"
+							href={`#${heading.id}`}
 						>
 							{heading.value}
 						</a>

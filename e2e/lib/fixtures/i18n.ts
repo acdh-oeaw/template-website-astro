@@ -1,49 +1,61 @@
-import { assert, get, template } from "@acdh-oeaw/lib";
 import type { Page } from "@playwright/test";
-import type { Get, Paths } from "type-fest";
+import { createFormatter, createTranslator } from "use-intl";
 
-import { defaultLocale, type IntlMessages } from "@/config/i18n.config";
-import type { createI18n as createIntl } from "@/lib/i18n";
+import type { SocialMediaKind } from "@/lib/content/options";
+import { defaultLocale, getIntlLanguage, type IntlLocale } from "@/lib/i18n/locales";
+import type { IntlMessages } from "@/lib/i18n/messages";
+import type metadata from "~/content/en/metadata/index.json";
+import type messages from "~/messages/en.json";
 
-export interface I18n extends Awaited<ReturnType<typeof createIntl>> {}
+export interface I18n {
+	t: ReturnType<typeof createTranslator<IntlMessages>>;
+	format: ReturnType<typeof createFormatter>;
+	messages: IntlMessages;
+}
 
 export async function createI18n(_page: Page, locale = defaultLocale): Promise<I18n> {
-	/**
-	 * FIXME: Copying `@/lib/i18n.ts` because `playwright` does not handle json imports without
-	 * import attribute, but `vite` fails to compile when they are added.
-	 *
-	 * @see https://github.com/microsoft/playwright/issues/23662
-	 */
-	// return createIntl(locale);
-
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const _messages = await import(`@/messages/${locale}.json`, { with: { type: "json" } });
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-	const metadata = await import(`~/content/${locale}/metadata/index.json`, {
-		with: { type: "json" },
-	});
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-	const messages = { metadata: metadata.default, ..._messages.default } as IntlMessages;
+	const messages = await getIntlMessages(locale);
 
 	return {
-		/** @see https://github.com/lukeed/rosetta/blob/master/src/index.js */
-		t<T extends Paths<IntlMessages>>(
-			// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-			this: void,
-			key: T,
-			params: Record<string, unknown> = {},
-		): Get<IntlMessages, T> {
-			const value = get(messages, key);
-
-			assert(value != null, `Missing translation for ${key}.`);
-
-			if (typeof value === "string") {
-				return template(value, params) as Get<IntlMessages, T>;
-			}
-
-			return value as Get<IntlMessages, T>;
-		},
+		t: createTranslator({ locale, messages }),
+		format: createFormatter({ locale }),
+		messages,
 	};
 }
 
 export type WithI18n<T> = T & { i18n: I18n };
+
+/**
+ * Copied from `@/lib/i18n/messages.ts` because `playwright` needs import attributes
+ * for json imports.
+ */
+
+type Messages = typeof messages;
+type Metadata = typeof metadata;
+
+async function getIntlMessages(locale: IntlLocale) {
+	const language = getIntlLanguage(locale);
+
+	const { default: _messages } = (await import(`~/messages/${language}.json`, {
+		with: { type: "json" },
+	})) as { default: Messages };
+	const { default: _metadata } = (await import(`~/content/${language}/metadata/index.json`, {
+		with: { type: "json" },
+	})) as { default: Metadata };
+
+	const _social: Record<string, string> = {};
+
+	for (const entry of _metadata.social) {
+		_social[entry.kind] = entry.href;
+	}
+
+	const messages = {
+		..._messages,
+		metadata: {
+			..._metadata,
+			social: _social as Record<SocialMediaKind, string>,
+		},
+	};
+
+	return messages;
+}

@@ -1,43 +1,91 @@
 ---
+import type { GetStaticPathsResult } from "astro";
 import { Image } from "astro:assets";
 
-import MainContent from "@/components/main-content.astro";
-import PageSection from "@/components/page-section.astro";
-import PageTitle from "@/components/page-title.astro";
-import { locales } from "@/config/i18n.config";
-import PageLayout from "@/layouts/page-layout.astro";
-import { createSingletonResource } from "@/lib/content/create-resource";
-import { getImageImport } from "@/lib/get-image-import";
-import { createI18n } from "@/lib/i18n";
+import ContentLink from "@/components/content/link.astro";
+import DefaultLayout from "@/components/default-layout.astro";
+import DocumentBody from "@/components/document-body.astro";
+import DocumentHead from "@/components/document-head.astro";
+import DocumentMetadata from "@/components/document-metadata.astro";
+import HtmlDocument from "@/components/html-document.astro";
+import { createClient } from "@/lib/content/create-client";
+import { getTranslations } from "@/lib/i18n/get-translations";
+import { getIntlLanguage, locales } from "@/lib/i18n/locales";
+import { localeToPrefix } from "@/lib/i18n/routing";
 
 export function getStaticPaths() {
-	return Promise.all(
-		locales.map(async (locale) => {
-			const page = await createSingletonResource("indexPage", locale).read();
+	const paths = locales.map((locale) => {
+		return { params: { locale: localeToPrefix[locale] } };
+	});
 
-			return { params: { locale }, props: { page } };
-		}),
-	);
+	return paths satisfies GetStaticPathsResult;
 }
 
-const { locale } = Astro.params;
+const { locale } = Astro.locals;
+const t = await getTranslations(locale, "IndexPage");
 
-const { page } = Astro.props;
+const client = await createClient(getIntlLanguage(locale));
 
-const { t } = await createI18n(locale);
-
-const documentTitle = t("IndexPage.meta.title");
-const { hero } = page.data;
+const page = await client.singletons.indexPage.get();
+const { image, lead, links, subtitle, title } = page.metadata;
+const Content = page.content;
 ---
 
-<PageLayout locale={locale} title={documentTitle}>
-	<MainContent>
-		<PageSection>
-			<div>
-				<Image alt="" fetchpriority="high" loading="eager" src={getImageImport(hero.image)} />
-				<PageTitle>{hero.title}</PageTitle>
-				<p>{hero.lead}</p>
-			</div>
-		</PageSection>
-	</MainContent>
-</PageLayout>
+<HtmlDocument>
+	<DocumentHead>
+		<DocumentMetadata title={t("meta.title")} />
+	</DocumentHead>
+
+	<DocumentBody>
+		<DefaultLayout>
+			<section
+				class="relative mb-8 w-full overflow-hidden rounded-sm border border-stroke-weak px-8 py-12 xs:pt-64 xs:pb-48"
+			>
+				<div class="absolute inset-0 -z-10 size-full">
+					<Image
+						alt=""
+						class="size-full object-cover dark:brightness-75"
+						layout="constrained"
+						loading="eager"
+						src={image}
+					/>
+				</div>
+
+				<div class="mx-auto flex max-w-(--breakpoint-md) flex-col items-center gap-y-6">
+					<h1 class="text-center font-heading text-3xl font-extrabold tracking-tight xs:text-6xl">
+						{title}
+					</h1>
+
+					<p class="text-center text-lg font-medium xs:text-xl">
+						{subtitle}
+					</p>
+
+					{
+						links.length > 0 ? (
+							<div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2.5">
+								{links.map((link) => {
+									return (
+										<ContentLink
+											class="relative inline-flex min-w-42 justify-center rounded-sm bg-background-inverse px-6 py-3.5 text-center text-sm font-semibold text-text-inverse-strong no-underline shadow-sm focus-outline transition hover:brightness-120 focus-visible:outline-offset-4 dark:hover:brightness-90"
+											item={link.link}
+										>
+											{link.label}
+										</ContentLink>
+									);
+								})}
+							</div>
+						) : null
+					}
+				</div>
+			</section>
+
+			<section class="mx-auto richtext w-full max-w-(--breakpoint-md)">
+				<div class="lead">{lead}</div>
+
+				<div>
+					<Content />
+				</div>
+			</section>
+		</DefaultLayout>
+	</DocumentBody>
+</HtmlDocument>

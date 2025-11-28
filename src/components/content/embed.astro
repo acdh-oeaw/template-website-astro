@@ -7,10 +7,12 @@ interface Props {
 const { src, title } = Astro.props;
 ---
 
-<figure>
+<figure class="flex flex-col">
 	<iframe
-		allowfullscreen
-		class="aspect-video w-full overflow-hidden rounded-md"
+		allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+		allowfullscreen={true}
+		class="aspect-video w-full overflow-hidden rounded-sm"
+		loading="lazy"
 		src={src}
 		title={title ?? "Iframe"}></iframe>
 	{

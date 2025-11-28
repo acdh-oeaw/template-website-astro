@@ -1,1 +1,1 @@
-export const subjectPrefix = "[acdh-ch website]";
+export const subjectPrefix = "[acdh website]";

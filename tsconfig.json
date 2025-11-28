@@ -1,20 +1,20 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
+	"$schema": "https://www.schemastore.org/tsconfig",
 	"extends": ["astro/tsconfigs/base", "@acdh-oeaw/tsconfig"],
 	"compilerOptions": {
 		"baseUrl": ".",
-		"jsx": "preserve",
-		"jsxImportSource": "solid-js",
+		"jsx": "react-jsx",
 		"paths": {
 			"@/*": ["./src/*"],
-			"~/*": ["./*"]
+			"~/*": ["./*"],
+			"@content/*": ["./.content/generated/*"]
 		},
-		"plugins": [
-			{
-				"name": "@astrojs/ts-plugin"
-			}
-		]
+		"plugins": [{ "name": "@astrojs/ts-plugin" }]
 	},
-	"include": ["./**/*"],
-	"exclude": ["dist", "node_modules"]
+	"include": ["./.astro/types.d.ts", "./**/*", "./src/types/**/*.d.ts"],
+	"exclude": [".content", "content", "dist", "node_modules", "public"],
+	"mdx": {
+		"checkMdx": false,
+		"plugins": ["remark-frontmatter", "remark-gfm"]
+	}
 }

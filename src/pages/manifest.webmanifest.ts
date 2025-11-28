@@ -1,17 +1,15 @@
-import { defaultLocale } from "@/config/i18n.config";
-import { createI18n } from "@/lib/i18n";
+import type { APIContext } from "astro";
 
-export async function GET() {
-	const locale = defaultLocale;
+import { getMetadata } from "@/lib/i18n/get-metadata";
 
-	const { t } = await createI18n(locale);
-
-	const metadata = t("metadata");
+export async function GET(context: APIContext): Promise<Response> {
+	const { locale } = context.locals;
+	const meta = await getMetadata(locale);
 
 	const manifest = {
-		name: metadata.manifest.name,
-		short_name: metadata.manifest["short-name"],
-		description: metadata.manifest.description,
+		name: meta.manifest.name,
+		short_name: meta.manifest["short-name"],
+		description: meta.manifest.description,
 		icons: [
 			{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" },
 			{ src: "/icon-maskable.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },

@@ -1,36 +1,47 @@
 ---
-import { request } from "@acdh-oeaw/lib";
+import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
+import type { GetStaticPathsResult } from "astro";
 
-import MainContent from "@/components/main-content.astro";
-import PageSection from "@/components/page-section.astro";
-import PageTitle from "@/components/page-title.astro";
-import { locales } from "@/config/i18n.config";
-import { createImprintUrl } from "@/config/imprint.config";
-import PageLayout from "@/layouts/page-layout.astro";
-import { createI18n } from "@/lib/i18n";
+import DefaultLayout from "@/components/default-layout.astro";
+import DocumentBody from "@/components/document-body.astro";
+import DocumentHead from "@/components/document-head.astro";
+import DocumentMetadata from "@/components/document-metadata.astro";
+import HtmlDocument from "@/components/html-document.astro";
+import { env } from "@/config/env.config";
+import { getTranslations } from "@/lib/i18n/get-translations";
+import { locales } from "@/lib/i18n/locales";
+import { localeToPrefix } from "@/lib/i18n/routing";
 
 export function getStaticPaths() {
-	return locales.map((locale) => {
-		return { params: { locale } };
+	const paths = locales.map((locale) => {
+		return { params: { locale: localeToPrefix[locale] } };
 	});
+
+	return paths satisfies GetStaticPathsResult;
 }
 
-const { locale } = Astro.params;
+const { locale } = Astro.locals;
+const t = await getTranslations(locale, "ImprintPage");
 
-const { t } = await createI18n(locale);
-
-const documentTitle = t("ImprintPage.meta.title");
-const title = t("ImprintPage.title");
-
-const imprintUrl = createImprintUrl(locale);
+const imprintUrl = createUrl({
+	baseUrl: env.PUBLIC_IMPRINT_SERVICE_BASE_URL,
+	pathname: `/${String(env.PUBLIC_REDMINE_ID)}`,
+	searchParams: createUrlSearchParams({ locale }),
+});
 const imprintHtml = await request(imprintUrl, { responseType: "text" });
 ---
 
-<PageLayout locale={locale} title={documentTitle}>
-	<MainContent search="exclude">
-		<PageSection>
-			<PageTitle>{title}</PageTitle>
-			<div class="prose prose-sm" set:html={imprintHtml} />
-		</PageSection>
-	</MainContent>
-</PageLayout>
+<HtmlDocument>
+	<DocumentHead>
+		<DocumentMetadata title={t("meta.title")} />
+	</DocumentHead>
+
+	<DocumentBody>
+		<DefaultLayout>
+			<section class="richtext max-w-(--breakpoint-md)">
+				<h1>{t("title")}</h1>
+				<div set:html={imprintHtml} />
+			</section>
+		</DefaultLayout>
+	</DocumentBody>
+</HtmlDocument>

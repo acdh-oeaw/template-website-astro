@@ -1,0 +1,96 @@
+---
+import type { WebSite, WithContext } from "schema-dts";
+
+import { getMetadata } from "@/lib/i18n/get-metadata";
+import { getUnprefixedPathname } from "@/lib/i18n/get-unprefixed-pathname";
+import { locales } from "@/lib/i18n/locales";
+import { localeToPrefix } from "@/lib/i18n/routing";
+import { createFullUrl } from "@/lib/navigation/create-full-url";
+import { createHref } from "@/lib/navigation/create-href";
+import { safeJsonLdReplacer } from "@/lib/utils/safe-json-ld-replacer";
+
+interface Props {
+	description?: string;
+	robots?: string;
+	title: string;
+}
+
+const { locale } = Astro.locals;
+const meta = await getMetadata(locale);
+
+const { description, robots, title } = Astro.props;
+
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const manifestUrl = createHref({ pathname: "/manifest.webmanifest" });
+const openGraphImageUrl = createFullUrl({ baseUrl: Astro.site, pathname: "/opengraph-image.png" });
+const sitemapUrl = createHref({ pathname: "/sitemap-index.xml" });
+const rssUrl = createFullUrl({ baseUrl: Astro.site, pathname: "/rss.xml" });
+
+const jsonLd: WithContext<WebSite> = {
+	"@context": "https://schema.org",
+	"@type": "WebSite",
+	name: meta.title,
+	description: meta.description,
+};
+
+const pathname = getUnprefixedPathname(Astro.url.pathname);
+---
+
+<title>{[title, meta.title].join(" | ")}</title>
+<meta content={description ?? meta.description} name="description" />
+
+{robots != null ? <meta content={robots} name="robots" /> : null}
+
+<link href={canonicalUrl} rel="canonical" />
+<link href={manifestUrl} rel="manifest" />
+
+{
+	locales.map((locale) => {
+		return (
+			<link
+				href={createFullUrl({
+					baseUrl: Astro.site,
+					pathname: `/${localeToPrefix[locale]}${pathname}`,
+				})}
+				hreflang={locale}
+				rel="alternate"
+			/>
+		);
+	})
+}
+{
+	pathname === "/" ? (
+		<link
+			href={createFullUrl({
+				baseUrl: Astro.site,
+				pathname: "/",
+			})}
+			hreflang="x-default"
+			rel="alternate"
+		/>
+	) : null
+}
+
+<link href={sitemapUrl} rel="sitemap" />
+<link href={rssUrl} rel="alternate" title={meta.title} type="application/rss+xml" />
+
+<meta content={title} property="og:title" />
+<meta content={description ?? meta.description} property="og:description" />
+<meta content={canonicalUrl} property="og:url" />
+<meta content={meta.title} property="og:site_name" />
+<meta content={locale} property="og:locale" />
+<meta content="image/png" property="og:image:type" />
+<meta content={openGraphImageUrl} property="og:image" />
+<meta content="1200" property="og:image:width" />
+<meta content="630" property="og:image:height" />
+<meta content="website" property="og:type" />
+
+<meta content="summary_large_image" name="twitter:card" />
+<meta content={meta.social.twitter} name="twitter:site" />
+<meta content={meta.social.twitter} name="twitter:creator" />
+
+<script
+	is:inline
+	set:html={JSON.stringify(jsonLd, safeJsonLdReplacer)}
+	type="application/ld+json"
+/>
