@@ -6,8 +6,8 @@ import nodeConfig from "@acdh-oeaw/eslint-config-node";
 import playwrightConfig from "@acdh-oeaw/eslint-config-playwright";
 import reactConfig from "@acdh-oeaw/eslint-config-react";
 import svelteConfig from "@acdh-oeaw/eslint-config-svelte";
-import tailwindConfig from "@acdh-oeaw/eslint-config-tailwindcss";
-import { defineConfig } from "eslint/config";
+import tailwindcssConfig from "@acdh-oeaw/eslint-config-tailwindcss";
+import { defineConfig, globalIgnores } from "eslint/config";
 import gitignore from "eslint-config-flat-gitignore";
 import checkFilePlugin from "eslint-plugin-check-file";
 import perfectionistPlugin from "eslint-plugin-perfectionist";
@@ -27,7 +27,7 @@ const svelteFiles = ["**/*.svelte", "**/*.svelte.ts"];
 
 export default defineConfig(
 	gitignore({ strict: false }),
-	{ ignores: ["content/**", "public/**"] },
+	globalIgnores(["content/**", "public/**"]),
 	{
 		extends: [baseConfig],
 		rules: {
@@ -130,14 +130,15 @@ export default defineConfig(
 			],
 		},
 	},
-	tailwindConfig,
 	{
+		name: "tailwindcss-config",
+		extends: [tailwindcssConfig],
 		rules: {
-			"tailwindcss/no-custom-classname": ["error", { whitelist: ["lead", "not-richtext"] }],
+			"better-tailwindcss/no-unknown-classes": ["error", { ignore: ["lead", "not-richtext"] }],
 		},
 		settings: {
-			tailwindcss: {
-				config: path.resolve("./src/styles/index.css"),
+			"better-tailwindcss": {
+				entryPoint: path.resolve("./src/styles/index.css"),
 			},
 		},
 	},

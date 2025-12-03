@@ -73,7 +73,7 @@ if (Astro.request.method === "POST") {
 					<label class="flex flex-col gap-y-1">
 						<span class="text-sm font-medium">{t("form.name")}</span>
 						<input
-							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							class="rounded-sm border border-stroke-strong px-4 py-1.5 focus-outline"
 							name="name"
 							required={true}
 						/>
@@ -82,7 +82,7 @@ if (Astro.request.method === "POST") {
 					<label class="flex flex-col gap-y-1">
 						<span class="text-sm font-medium">{t("form.email")}</span>
 						<input
-							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							class="rounded-sm border border-stroke-strong px-4 py-1.5 focus-outline"
 							name="email"
 							required={true}
 							type="email"
@@ -92,7 +92,7 @@ if (Astro.request.method === "POST") {
 					<label class="flex flex-col gap-y-1">
 						<span class="text-sm font-medium">{t("form.subject")}</span>
 						<input
-							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							class="rounded-sm border border-stroke-strong px-4 py-1.5 focus-outline"
 							name="subject"
 							required={true}
 						/>
@@ -101,7 +101,7 @@ if (Astro.request.method === "POST") {
 					<label class="flex flex-col gap-y-1">
 						<span class="text-sm font-medium">{t("form.message")}</span>
 						<textarea
-							class="rounded border border-stroke-strong px-4 py-1.5 focus-outline"
+							class="rounded-sm border border-stroke-strong px-4 py-1.5 focus-outline"
 							name="message"
 							required={true}
 							rows={5}></textarea>
