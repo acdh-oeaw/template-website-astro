@@ -1,6 +1,6 @@
 import { compile as compileMdx, evaluate as evaluateMdx, type ProcessorOptions } from "@mdx-js/mdx";
+import * as runtime from "astro/jsx-runtime";
 import type { MDXContent } from "mdx/types";
-import * as runtime from "react/jsx-runtime";
 import type { VFile } from "vfile";
 
 import { useMDXComponents } from "@/lib/content/mdx/components";
