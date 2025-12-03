@@ -61,7 +61,7 @@
 </script>
 
 <button
-	class="inline-flex rounded-xs items-center gap-x-2 p-2 text-text-weak hover:text-text-strong transition focus-outline focus-visible:text-text-strong focus-visible:outline-offset-4 disabled:opacity-50"
+	class="inline-flex items-center gap-x-2 rounded-xs p-2 text-text-weak focus-outline transition hover:text-text-strong focus-visible:text-text-strong focus-visible:outline-offset-4 disabled:opacity-50"
 	disabled={import.meta.env.DEV}
 	id={triggerId}
 	onclick={() => {
@@ -79,12 +79,12 @@
 <dialog
 	bind:this={dialogElement}
 	aria-labelledby={triggerId}
-	class="fixed mx-auto min-h-full w-full max-w-(--breakpoint-md) border border-stroke-weak bg-background-base backdrop:bg-black/50 backdrop:backdrop-blur-sm sm:mt-20 sm:max-h-[calc(100%-10rem)] sm:min-h-64 sm:rounded-sm sm:shadow-lg focus-visible:outline-hidden"
+	class="fixed mx-auto min-h-full w-full max-w-(--breakpoint-md) border border-stroke-weak bg-background-base backdrop:bg-black/50 backdrop:backdrop-blur-sm focus-visible:outline-hidden sm:mt-20 sm:max-h-[calc(100%-10rem)] sm:min-h-64 sm:rounded-sm sm:shadow-lg"
 >
-	<div class="flex flex-col size-full gap-y-4 px-8 py-6">
+	<div class="flex size-full flex-col gap-y-4 px-8 py-6">
 		<form method="dialog">
 			<button
-				class="touch-target absolute top-4 right-4 inline-block rounded-xs text-icon-neutral focus-outline transition hover:text-text-strong focus-visible:text-text-strong focus-visible:outline-offset-4>"
+				class="touch-target absolute top-4 right-4 inline-block rounded-xs text-icon-neutral focus-outline transition hover:text-text-strong focus-visible:text-text-strong focus-visible:outline-offset-4"
 			>
 				<XIcon />
 				<span class="sr-only">{closeLabel}</span>

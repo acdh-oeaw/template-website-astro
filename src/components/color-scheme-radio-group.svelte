@@ -38,7 +38,7 @@
 		{#each Object.entries(colorSchemes) as [value, label] (value)}
 			{@const Icon = icons[value as ColorScheme]}
 			<label
-				class="group shrink-0 touch-target"
+				class="group touch-target shrink-0"
 				data-checked={value === selectedValue || undefined}
 			>
 				<input
