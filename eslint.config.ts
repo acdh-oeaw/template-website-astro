@@ -6,7 +6,7 @@ import nodeConfig from "@acdh-oeaw/eslint-config-node";
 import playwrightConfig from "@acdh-oeaw/eslint-config-playwright";
 import reactConfig from "@acdh-oeaw/eslint-config-react";
 import svelteConfig from "@acdh-oeaw/eslint-config-svelte";
-import tailwindConfig from "@acdh-oeaw/eslint-config-tailwindcss";
+import tailwindcssConfig from "@acdh-oeaw/eslint-config-tailwindcss";
 import { defineConfig } from "eslint/config";
 import gitignore from "eslint-config-flat-gitignore";
 import checkFilePlugin from "eslint-plugin-check-file";
@@ -130,14 +130,15 @@ export default defineConfig(
 			],
 		},
 	},
-	tailwindConfig,
 	{
+		name: "tailwindcss-config",
+		extends: [tailwindcssConfig],
 		rules: {
-			"tailwindcss/no-custom-classname": ["error", { whitelist: ["lead", "not-richtext"] }],
+			"better-tailwindcss/no-unregistered-classes": ["error", { ignore: ["lead", "not-richtext"] }],
 		},
 		settings: {
-			tailwindcss: {
-				config: path.resolve("./src/styles/index.css"),
+			"better-tailwindcss": {
+				entryPoint: path.resolve("./styles/index.css"),
 			},
 		},
 	},

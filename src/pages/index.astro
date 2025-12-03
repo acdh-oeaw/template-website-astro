@@ -4,6 +4,7 @@ import Negotiator from "negotiator";
 
 import { defaultLocale, type IntlLocale, locales } from "@/lib/i18n/locales";
 import { localeToPrefix } from "@/lib/i18n/routing";
+import { withBasePath } from "@/lib/navigation/with-base-path";
 
 export const prerender = false;
 
@@ -24,5 +25,5 @@ function getPreferredLocale(): IntlLocale {
 const locale = getPreferredLocale();
 
 // eslint-disable-next-line unicorn/prefer-module
-return Astro.redirect(`/${localeToPrefix[locale]}`, 307);
+return Astro.redirect(withBasePath(`/${localeToPrefix[locale]}`), 307);
 ---
