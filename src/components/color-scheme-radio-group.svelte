@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type {} from "@acdh-oeaw/color-schemes";
 	import type { Snippet } from "svelte";
 
 	type ColorScheme = "system" | "dark" | "light";
