@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@acdh-oeaw/color-schemes':
+        specifier: ^0.0.2
+        version: 0.0.2
       '@acdh-oeaw/keystatic-lib':
         specifier: ^0.8.0
         version: 0.8.0(@keystar/ui@0.7.19(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(@keystatic/core@0.5.48(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(react@19.2.1)
@@ -292,6 +295,9 @@ packages:
     peerDependenciesMeta:
       graphql:
         optional: true
+
+  '@acdh-oeaw/color-schemes@0.0.2':
+    resolution: {integrity: sha512-gVjhap3LkpYNbUtnlsSS75tDMZJsVEchSmPMtPvE91ESRtWopA/k5lHg7HRlBdgIlPcsG2zKYAmx3qr1mD47gg==}
 
   '@acdh-oeaw/content-lib@0.1.4':
     resolution: {integrity: sha512-Gr7TpItcLIP+Ml+8ChjPOJbzjLBOdEwKWQ66cHfJKUWRyXmE4fvYkpcZ1H1IJks05A9cjAdV9ISYPT7eefm0gA==}
@@ -6639,6 +6645,8 @@ snapshots:
   '@0no-co/graphql.web@1.2.0(graphql@16.12.0)':
     optionalDependencies:
       graphql: 16.12.0
+
+  '@acdh-oeaw/color-schemes@0.0.2': {}
 
   '@acdh-oeaw/content-lib@0.1.4':
     dependencies:
