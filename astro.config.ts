@@ -1,5 +1,6 @@
 import * as path from "node:path";
 
+import { createUrl } from "@acdh-oeaw/lib";
 import mdx from "@astrojs/mdx";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
@@ -68,6 +69,11 @@ export default defineConfig({
 			exclude: ["**/keystatic/**"],
 		}),
 		sitemap({
+			filter(page) {
+				return (
+					page !== String(createUrl({ baseUrl: env.PUBLIC_APP_BASE_URL!, pathname: "/admin/" }))
+				);
+			},
 			i18n: {
 				locales: localeToPrefix,
 				defaultLocale,
@@ -79,7 +85,7 @@ export default defineConfig({
 		host: "127.0.0.1",
 		port: 3000,
 	},
-	site: env.PUBLIC_APP_BASE_URL,
+	site: env.PUBLIC_APP_BASE_URL!,
 	vite: {
 		plugins: [tailwindcss()],
 		resolve: {
