@@ -37,18 +37,7 @@ export default defineConfig({
 			iconDir: "./src/assets/icons",
 			/** @see https://www.astroicon.dev/reference/configuration/#include */
 			include: {
-				lucide: [
-					"chevron-down",
-					"globe",
-					"laptop",
-					"mail",
-					"menu",
-					"moon",
-					"rss",
-					"search",
-					"sun",
-					"x",
-				],
+				lucide: ["chevron-down", "globe", "laptop", "mail", "menu", "moon", "rss", "sun"],
 				simpleIcons: ["bluesky", "instagram", "linkedin", "mastodon", "twitter", "youtube"],
 			},
 			svgoOptions: {
