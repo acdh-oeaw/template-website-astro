@@ -40,7 +40,6 @@ export const createIndexPage = createSingleton("/index-page/", (paths, locale) =
 				validation: { isRequired: true },
 				multiline: true,
 			}),
-
 			links: fields.array(
 				fields.object({
 					label: fields.text({
