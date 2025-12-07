@@ -133,8 +133,8 @@ a working setup.
 >
 > by default, this will deploy a `node` server, which will serve pre-rendered pages, assets, and api
 > routes. if you prefer a truly static build, which uses `caddy` as a fileserver, use the
-> `Dockerfile.static` instead, and remove `output: "hybrid"` from `astro.config.ts`. you will also
-> need to change the `generate:search-index` script to `pagefind --site ./dist/`.
+> `Dockerfile.static` instead. you will also need to change the `generate:search-index` script to
+> `pagefind --site ./dist/`.
 
 ## production deployment checklist
 
