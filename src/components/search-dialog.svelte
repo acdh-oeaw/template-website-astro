@@ -52,7 +52,9 @@
 
 	const triggerId = "search-dialog-trigger";
 
+	// svelte-ignore state_referenced_locally
 	const SearchIcon = search;
+	// svelte-ignore state_referenced_locally
 	const XIcon = x;
 
 	onDestroy(() => {
