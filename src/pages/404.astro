@@ -6,8 +6,6 @@ import DocumentMetadata from "@/components/document-metadata.astro";
 import HtmlDocument from "@/components/html-document.astro";
 import { getTranslations } from "@/lib/i18n/get-translations";
 
-export const prerender = false;
-
 const { locale } = Astro.locals;
 const t = await getTranslations(locale, "NotFoundPage");
 ---

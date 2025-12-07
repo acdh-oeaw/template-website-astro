@@ -22,15 +22,6 @@ cp .env.local.example .env.local
 
 | environment variable                | required | default    | description                    |
 | ----------------------------------- | -------- | ---------- | ------------------------------ |
-| EMAIL_ADDRESS                       | true     |            | contact email address          |
-| EMAIL_SERVICE_API_BASE_URL          | false    |            | development email service api  |
-| EMAIL_SMTP_PASSWORD                 | false    |            |                                |
-| EMAIL_SMTP_PORT                     | true     |            | email server port              |
-| EMAIL_SMTP_SERVER                   | true     |            | email server hostname          |
-| EMAIL_SMTP_USERNAME                 | false    |            |                                |
-| KEYSTATIC_GITHUB_CLIENT_ID          | false    |            | github oauth2 client id        |
-| KEYSTATIC_GITHUB_CLIENT_SECRET      | false    |            | github oauth2 client secret    |
-| KEYSTATIC_SECRET                    | false    |            |                                |
 | PUBLIC_APP_BASE_PATH                | false    | "/"        | optional base path             |
 | PUBLIC_APP_BASE_URL                 | true     |            | deployment base url            |
 | PUBLIC_APP_BOTS                     | true     | "disabled" | indexing by web crawlers       |
@@ -39,10 +30,6 @@ cp .env.local.example .env.local
 | PUBLIC_APP_MATOMO_BASE_URL          | false    |            | acdh matomo analytics base url |
 | PUBLIC_APP_MATOMO_ID                | false    |            | acdh matomo analytics id       |
 | PUBLIC_APP_SERVICE_ID               | true     |            | acdh service id                |
-| PUBLIC_KEYSTATIC_GITHUB_APP_SLUG    | false    |            | github app for oauth2          |
-| PUBLIC_KEYSTATIC_GITHUB_REPO_NAME   | false    |            | github repository              |
-| PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER  | false    |            | github organisation            |
-| PUBLIC_KEYSTATIC_MODE               | false    | "local"    | set to "github" in production  |
 
 environment variables are validated in [`config/env.config.ts`](./config/env.config.ts). when adding
 new environment variables, don't forget to add them to [`.env.local.example`](./.env.local.example)

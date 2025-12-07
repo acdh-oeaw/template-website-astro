@@ -34,21 +34,6 @@ const result = createEnv({
 		private(environment) {
 			const schema = v.object({
 				CI: v.optional(v.pipe(v.unknown(), v.transform(Boolean), v.boolean())),
-				EMAIL_ADDRESS: v.pipe(v.string(), v.email()),
-				EMAIL_SERVICE_API_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
-				EMAIL_SMTP_PASSWORD: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				EMAIL_SMTP_PORT: v.pipe(
-					v.string(),
-					v.transform(Number),
-					v.number(),
-					v.integer(),
-					v.minValue(1),
-				),
-				EMAIL_SMTP_SERVER: v.pipe(v.string(), v.nonEmpty()),
-				EMAIL_SMTP_USERNAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				KEYSTATIC_GITHUB_CLIENT_ID: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				KEYSTATIC_GITHUB_CLIENT_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				KEYSTATIC_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
 			});
 
 			const result = v.safeParse(schema, environment);
@@ -87,10 +72,6 @@ const result = createEnv({
 					v.integer(),
 					v.minValue(1),
 				),
-				PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				PUBLIC_KEYSTATIC_GITHUB_REPO_NAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				PUBLIC_KEYSTATIC_MODE: v.optional(v.picklist(["github", "local"]), "local"),
 			});
 
 			const result = v.safeParse(schema, environment);

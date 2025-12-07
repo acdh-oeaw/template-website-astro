@@ -6,10 +6,7 @@ import {
 } from "@acdh-oeaw/keystatic-lib";
 import { fields, singleton } from "@keystatic/core";
 
-import { createLink } from "@/lib/content/keystatic/components/link";
 import { createLinkSchema } from "@/lib/content/keystatic/utils/create-link-schema";
-
-// import { createPreviewUrl } from "@/lib/content/keystatic/utils/create-preview-url";
 
 export const createIndexPage = createSingleton("/index-page/", (paths, locale) => {
 	const link = createLinkSchema(paths.downloadPath, locale);
@@ -19,7 +16,6 @@ export const createIndexPage = createSingleton("/index-page/", (paths, locale) =
 		path: paths.contentPath,
 		format: { contentField: "content" },
 		entryLayout: "form",
-		// previewUrl: createPreviewUrl(`/${locale}/`),
 		schema: {
 			title: fields.text({
 				label: "Title",
@@ -64,9 +60,7 @@ export const createIndexPage = createSingleton("/index-page/", (paths, locale) =
 					image: false,
 					table: false,
 				},
-				components: {
-					...createLink(paths, locale),
-				},
+				components: {},
 			}),
 		},
 	});
