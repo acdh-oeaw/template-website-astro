@@ -145,8 +145,6 @@ a working setup.
 - [ ] optionally, create a google search console property, and provide the verification token as
       `PUBLIC_GOOGLE_SITE_VERIFICATION`. once verfied, submit `sitemap.xml` in the search console
       settings.
-- [ ] ensure [`src/pages/[locale]/rss.xml.ts`](./src/pages/[locale]/rss.xml.ts) generates feed
-      entries.
 - [ ] set up keystatic cms by following [the official guide](https://keystatic.com/docs/github-mode)
       and provide the generated github app configuration via github (
       [secrets](https://github.com/acdh-oeaw/template-website-astro/settings/secrets/actions) and

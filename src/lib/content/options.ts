@@ -25,7 +25,6 @@ export const socialMediaKinds = [
 	{ label: "LinkedIn", value: "linkedin" },
 	{ label: "Mastodon", value: "mastodon" },
 	{ label: "ORCID", value: "orcid" },
-	{ label: "RSS Feed", value: "rss" },
 	{ label: "Twitter", value: "twitter" },
 	{ label: "Website", value: "website" },
 	{ label: "YouTube", value: "youtube" },

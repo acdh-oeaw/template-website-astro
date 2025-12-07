@@ -31,9 +31,6 @@ const openGraphImageUrl = createFullUrl({
 const sitemapUrl = createHref({
 	pathname: withBasePath(`/sitemap-index.xml`),
 });
-const rssUrl = createFullUrl({
-	pathname: withBasePath(`/${localeToPrefix[locale]}/rss.xml`),
-});
 
 const jsonLd: WithContext<WebSite> = {
 	"@context": "https://schema.org",
@@ -79,7 +76,6 @@ const pathname = getUnprefixedPathname(Astro.url.pathname);
 }
 
 <link href={sitemapUrl} rel="sitemap" />
-<link href={rssUrl} rel="alternate" title={meta.title} type="application/rss+xml" />
 
 <meta content={title} property="og:title" />
 <meta content={description ?? meta.description} property="og:description" />
