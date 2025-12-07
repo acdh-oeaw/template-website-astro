@@ -20,29 +20,16 @@ set required environment variables in `.env.local`. start by copying the example
 cp .env.local.example .env.local
 ```
 
-| environment variable               | required | default    | description                    |
-| ---------------------------------- | -------- | ---------- | ------------------------------ |
-| EMAIL_ADDRESS                      | true     |            | contact email address          |
-| EMAIL_SERVICE_API_BASE_URL         | false    |            | development email service api  |
-| EMAIL_SMTP_PASSWORD                | false    |            |                                |
-| EMAIL_SMTP_PORT                    | true     |            | email server port              |
-| EMAIL_SMTP_SERVER                  | true     |            | email server hostname          |
-| EMAIL_SMTP_USERNAME                | false    |            |                                |
-| KEYSTATIC_GITHUB_CLIENT_ID         | false    |            | github oauth2 client id        |
-| KEYSTATIC_GITHUB_CLIENT_SECRET     | false    |            | github oauth2 client secret    |
-| KEYSTATIC_SECRET                   | false    |            |                                |
-| PUBLIC_APP_BASE_PATH               | false    | "/"        | optional base path             |
-| PUBLIC_APP_BASE_URL                | true     |            | deployment url                 |
-| PUBLIC_BOTS                        | true     | "disabled" | allow web crawlers             |
-| PUBLIC_GOOGLE_SITE_VERIFICATION    | false    |            | google search console property |
-| PUBLIC_IMPRINT_SERVICE_BASE_URL    | true     |            | acdh imprint service           |
-| PUBLIC_MATOMO_BASE_URL             | false    |            | acdh matomo analytics base url |
-| PUBLIC_MATOMO_ID                   | false    |            | acdh matomo analytics site id  |
-| PUBLIC_KEYSTATIC_GITHUB_APP_SLUG   | false    |            | github app for oauth2          |
-| PUBLIC_KEYSTATIC_GITHUB_REPO_NAME  | false    |            | github repository              |
-| PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER | false    |            | github organisation            |
-| PUBLIC_KEYSTATIC_MODE              | false    | "local"    | set to "github" in production  |
-| PUBLIC_REDMINE_ID                  | true     |            | acdh service id                |
+| environment variable            | required | default    | description                    |
+| ------------------------------- | -------- | ---------- | ------------------------------ |
+| PUBLIC_APP_BASE_PATH            | false    | "/"        | optional base path             |
+| PUBLIC_APP_BASE_URL             | true     |            | deployment url                 |
+| PUBLIC_BOTS                     | true     | "disabled" | allow web crawlers             |
+| PUBLIC_GOOGLE_SITE_VERIFICATION | false    |            | google search console property |
+| PUBLIC_IMPRINT_SERVICE_BASE_URL | true     |            | acdh imprint service           |
+| PUBLIC_MATOMO_BASE_URL          | false    |            | acdh matomo analytics base url |
+| PUBLIC_MATOMO_ID                | false    |            | acdh matomo analytics site id  |
+| PUBLIC_REDMINE_ID               | true     |            | acdh service id                |
 
 environment variables are validated in [`config/env.config.ts`](./config/env.config.ts). when adding
 new environment variables, don't forget to add them to [`.env.local.example`](./.env.local.example)

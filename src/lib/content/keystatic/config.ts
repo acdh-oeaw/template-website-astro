@@ -1,9 +1,7 @@
 import { withI18nPrefix } from "@acdh-oeaw/keystatic-lib";
 import { config as createConfig } from "@keystatic/core";
 
-import { env } from "@/config/env.config";
 import { createPages } from "@/lib/content/keystatic/collections/pages";
-import { Logo } from "@/lib/content/keystatic/logo";
 import { createIndexPage } from "@/lib/content/keystatic/singletons/index-page";
 import { createMetadata } from "@/lib/content/keystatic/singletons/metadata";
 import { createNavigation } from "@/lib/content/keystatic/singletons/navigation";
@@ -23,24 +21,11 @@ export const config = createConfig({
 		[withI18nPrefix("navigation", "de")]: createNavigation("de"),
 		[withI18nPrefix("navigation", "en")]: createNavigation("en"),
 	},
-	storage:
-		env.PUBLIC_KEYSTATIC_MODE === "github" &&
-		env.PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER != null &&
-		env.PUBLIC_KEYSTATIC_GITHUB_REPO_NAME != null
-			? {
-					kind: "github",
-					repo: {
-						owner: env.PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER,
-						name: env.PUBLIC_KEYSTATIC_GITHUB_REPO_NAME,
-					},
-					branchPrefix: "content/",
-				}
-			: {
-					kind: "local",
-				},
+	storage: {
+		kind: "local",
+	},
 	ui: {
 		brand: {
-			mark: Logo,
 			name: "ACDH Website",
 		},
 		navigation: {

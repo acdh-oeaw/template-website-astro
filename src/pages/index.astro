@@ -1,29 +1,8 @@
 ---
-import { match } from "@formatjs/intl-localematcher";
-import Negotiator from "negotiator";
-
-import { defaultLocale, type IntlLocale, locales } from "@/lib/i18n/locales";
+import { defaultLocale } from "@/lib/i18n/locales";
 import { localeToPrefix } from "@/lib/i18n/routing";
 import { withBasePath } from "@/lib/navigation/with-base-path";
 
-export const prerender = false;
-
-const languages = new Negotiator({
-	headers: {
-		"accept-language": Astro.request.headers.get("accept-language") ?? undefined,
-	},
-}).languages();
-
-function getPreferredLocale(): IntlLocale {
-	try {
-		return match(languages, locales, defaultLocale) as IntlLocale;
-	} catch {
-		return defaultLocale;
-	}
-}
-
-const locale = getPreferredLocale();
-
 // eslint-disable-next-line unicorn/prefer-module
-return Astro.redirect(withBasePath(`/${localeToPrefix[locale]}`), 307);
+return Astro.redirect(withBasePath(`/${localeToPrefix[defaultLocale]}`), 307);
 ---

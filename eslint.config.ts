@@ -4,13 +4,11 @@ import baseConfig from "@acdh-oeaw/eslint-config";
 import astroConfig from "@acdh-oeaw/eslint-config-astro";
 import nodeConfig from "@acdh-oeaw/eslint-config-node";
 import playwrightConfig from "@acdh-oeaw/eslint-config-playwright";
-import reactConfig from "@acdh-oeaw/eslint-config-react";
 import svelteConfig from "@acdh-oeaw/eslint-config-svelte";
 import tailwindcssConfig from "@acdh-oeaw/eslint-config-tailwindcss";
 import { defineConfig, globalIgnores } from "eslint/config";
 import gitignore from "eslint-config-flat-gitignore";
 import checkFilePlugin from "eslint-plugin-check-file";
-import perfectionistPlugin from "eslint-plugin-perfectionist";
 import unicornPlugin from "eslint-plugin-unicorn";
 
 import svelteConfigFile from "./svelte.config.ts";
@@ -93,44 +91,6 @@ export default defineConfig(
 		},
 	},
 	{
-		files: [reactFiles],
-		ignores: [astroFiles, ...svelteFiles],
-		extends: [reactConfig],
-		rules: {
-			"@eslint-react/prefer-read-only-props": "error",
-			/** Avoid hardcoded, non-translated strings. */
-			"react/jsx-no-literals": [
-				"error",
-				{
-					allowedStrings: [
-						"&amp;",
-						"&apos;",
-						"&bull;",
-						"&copy;",
-						"&gt;",
-						"&lt;",
-						"&nbsp;",
-						"&quot;",
-						"&rarr;",
-						"&larr;",
-						"&mdash;",
-						"&ndash;",
-						".",
-						"!",
-						":",
-						";",
-						",",
-						"-",
-						"(",
-						")",
-						"|",
-						"/",
-					],
-				},
-			],
-		},
-	},
-	{
 		name: "tailwindcss-config",
 		extends: [tailwindcssConfig],
 		rules: {
@@ -167,26 +127,5 @@ export default defineConfig(
 		extends: [nodeConfig],
 		files: ["scripts/**/*.ts"],
 		name: "node-environment",
-	},
-	{
-		name: "stylistic",
-		plugins: {
-			perfectionist: perfectionistPlugin,
-		},
-		rules: {
-			"perfectionist/sort-jsx-props": [
-				"error",
-				{
-					customGroups: [
-						{
-							groupName: "reserved",
-							elementNamePattern: ["^key$", "^ref$"],
-						},
-					],
-					groups: ["reserved", "unknown"],
-					partitionByNewLine: true,
-				},
-			],
-		},
 	},
 );
