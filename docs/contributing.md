@@ -152,3 +152,12 @@ a working setup.
       and provide the generated github app configuration via github (
       [secrets](https://github.com/acdh-oeaw/template-website-astro/settings/secrets/actions) and
       [variables](https://github.com/acdh-oeaw/template-website-astro/settings/variables/actions)).
+
+## template variants
+
+- [variant/static](https://github.com/acdh-oeaw/template-website-astro/tree/variant/static) branch:
+  removes keystatic cms, contact form, and email service, serves site with caddy
+- [variant/without-rss](https://github.com/acdh-oeaw/template-website-astro/tree/variant/without-rss)
+  branch: removes rss feed.
+- [variant/without-site-search](https://github.com/acdh-oeaw/template-website-astro/tree/variant/without-site-search)
+  branch: removes site search with `pagefind`.
