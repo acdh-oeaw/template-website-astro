@@ -6,3 +6,10 @@ import { createColorSchemeScript } from "@acdh-oeaw/color-schemes";
 	is:inline
 	set:html={`(${String(createColorSchemeScript)})("uiColorScheme", "ui-color-scheme");`}
 />
+
+<script is:inline>
+	document.addEventListener("astro:before-swap", (event) => {
+		const document = event.newDocument;
+		window.__colorScheme?.apply(document);
+	});
+</script>

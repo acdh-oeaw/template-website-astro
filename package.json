@@ -40,7 +40,7 @@
 		"types:prepare": "ENV_VALIDATION=\"disabled\" run-s i18n:prepare sync"
 	},
 	"dependencies": {
-		"@acdh-oeaw/color-schemes": "^0.0.2",
+		"@acdh-oeaw/color-schemes": "^0.0.3",
 		"@acdh-oeaw/keystatic-lib": "^0.8.0",
 		"@acdh-oeaw/lib": "^0.3.5",
 		"@acdh-oeaw/mdx-lib": "^0.1.4",
