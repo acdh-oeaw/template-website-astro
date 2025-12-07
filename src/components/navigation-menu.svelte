@@ -92,6 +92,7 @@
 
 	const popoverId = `navigation-menu-${crypto.randomUUID()}`;
 
+	// svelte-ignore state_referenced_locally
 	const ChevronIcon = chevron;
 </script>
 
