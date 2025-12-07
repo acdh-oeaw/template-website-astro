@@ -17,7 +17,7 @@ const t = await getTranslations(locale, "ErrorPage");
 const { error } = Astro.props;
 ---
 
-<HtmlDocument data-pagefind-ignore>
+<HtmlDocument>
 	<DocumentHead>
 		<DocumentMetadata robots="noindex" title={t("meta.title")} />
 	</DocumentHead>

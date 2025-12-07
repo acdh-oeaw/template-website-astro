@@ -7,6 +7,6 @@ interface Props {
 const { class: className, id } = Astro.props;
 ---
 
-<main class:list={["outline-hidden", className]} data-pagefind-body id={id} tabindex={-1}>
+<main class:list={["outline-hidden", className]} id={id} tabindex={-1}>
 	<slot />
 </main>

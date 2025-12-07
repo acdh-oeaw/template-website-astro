@@ -12,7 +12,7 @@ const { locale } = Astro.locals;
 const t = await getTranslations(locale, "NotFoundPage");
 ---
 
-<HtmlDocument data-pagefind-ignore>
+<HtmlDocument>
 	<DocumentHead>
 		<DocumentMetadata robots="noindex" title={t("meta.title")} />
 	</DocumentHead>

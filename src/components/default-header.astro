@@ -7,7 +7,6 @@ import Logo from "@/components/logo.astro";
 import MobileNavMenu from "@/components/mobile-nav-menu.svelte";
 import MobileNavMenuToggle from "@/components/mobile-nav-menu-toggle.svelte";
 import NavigationMenu from "@/components/navigation-menu.svelte";
-import Search from "@/components/search.astro";
 import { createClient } from "@/lib/content/create-client";
 import { getTranslations } from "@/lib/i18n/get-translations";
 import { getIntlLanguage } from "@/lib/i18n/locales";
@@ -120,7 +119,6 @@ const navigation = await client.singletons.navigation.get();
 		</nav>
 
 		<div class="-mr-2 ml-auto hidden items-center gap-x-4 lg:flex">
-			<Search />
 			<LocaleSwitcher />
 		</div>
 	</div>
@@ -200,7 +198,6 @@ const navigation = await client.singletons.navigation.get();
 		</ul>
 
 		<div class="flex items-center justify-between">
-			<Search />
 			<LocaleSwitcher />
 		</div>
 	</MobileNavMenu>
