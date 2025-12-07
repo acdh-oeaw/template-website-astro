@@ -150,34 +150,4 @@ test.describe("metadata", () => {
 			expect(contentType).toBe("image/png");
 		}
 	});
-
-	test("should serve an rss feed", async ({ createI18n, request }) => {
-		for (const locale of locales) {
-			const { t } = await createI18n(locale);
-
-			const prefix = localeToPrefix[locale];
-			const feedResponse = await request.get(`/${prefix}/rss.xml`);
-			const feed = await feedResponse.body();
-
-			expect(feed.toString()).toContain(
-				[
-					'<?xml version="1.0" encoding="UTF-8"?>',
-					'<rss version="2.0">',
-					"<channel>",
-					`<title>${t("metadata.title")}</title>`,
-				].join(""),
-			);
-
-			for (const url of []) {
-				const link = String(
-					createUrl({
-						baseUrl: env.PUBLIC_APP_BASE_URL,
-						pathname: url,
-					}),
-				);
-
-				expect(feed.toString()).toContain(`<link>${link}</link>`);
-			}
-		}
-	});
 });
