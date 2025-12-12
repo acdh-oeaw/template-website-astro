@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 
-import { err, isErr, ok } from "@acdh-oeaw/lib";
+import { addTrailingSlash, err, isErr, ok, removeTrailingSlash } from "@acdh-oeaw/lib";
 import { createEnv, ValidationError } from "@acdh-oeaw/validate-env/astro";
 import * as v from "valibot";
 
@@ -66,15 +66,21 @@ const result = createEnv({
 		public(environment) {
 			const schema = v.object({
 				PUBLIC_APP_BASE_PATH: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				PUBLIC_APP_BASE_URL: v.pipe(v.string(), v.url()),
+				PUBLIC_APP_BASE_URL: v.pipe(v.string(), v.url(), v.transform(removeTrailingSlash)),
 				PUBLIC_BOTS: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
 				PUBLIC_GOOGLE_SITE_VERIFICATION: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				PUBLIC_IMPRINT_SERVICE_BASE_URL: v.pipe(v.string(), v.url()),
+				PUBLIC_IMPRINT_SERVICE_BASE_URL: v.pipe(
+					v.string(),
+					v.url(),
+					v.transform(removeTrailingSlash),
+				),
 				PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				PUBLIC_KEYSTATIC_GITHUB_REPO_NAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				PUBLIC_KEYSTATIC_MODE: v.optional(v.picklist(["github", "local"]), "local"),
-				PUBLIC_MATOMO_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
+				PUBLIC_MATOMO_BASE_URL: v.optional(
+					v.pipe(v.string(), v.url(), v.transform(addTrailingSlash)),
+				),
 				PUBLIC_MATOMO_ID: v.optional(
 					v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
 				),

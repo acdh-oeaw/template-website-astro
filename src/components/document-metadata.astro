@@ -7,6 +7,7 @@ import { locales } from "@/lib/i18n/locales";
 import { localeToPrefix } from "@/lib/i18n/routing";
 import { createFullUrl } from "@/lib/navigation/create-full-url";
 import { createHref } from "@/lib/navigation/create-href";
+import { withBasePath } from "@/lib/navigation/with-base-path";
 import { safeJsonLdReplacer } from "@/lib/utils/safe-json-ld-replacer";
 
 interface Props {
@@ -21,10 +22,18 @@ const meta = await getMetadata(locale);
 const { description, robots, title } = Astro.props;
 
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
-const manifestUrl = createHref({ pathname: "/manifest.webmanifest" });
-const openGraphImageUrl = createFullUrl({ baseUrl: Astro.site, pathname: "/opengraph-image.png" });
-const sitemapUrl = createHref({ pathname: "/sitemap-index.xml" });
-const rssUrl = createFullUrl({ baseUrl: Astro.site, pathname: "/rss.xml" });
+const manifestUrl = createHref({
+	pathname: withBasePath(`/manifest.webmanifest`),
+});
+const openGraphImageUrl = createFullUrl({
+	pathname: withBasePath(`/opengraph-image.png`),
+});
+const sitemapUrl = createHref({
+	pathname: withBasePath(`/sitemap-index.xml`),
+});
+const rssUrl = createFullUrl({
+	pathname: withBasePath(`/${localeToPrefix[locale]}/rss.xml`),
+});
 
 const jsonLd: WithContext<WebSite> = {
 	"@context": "https://schema.org",
@@ -49,8 +58,7 @@ const pathname = getUnprefixedPathname(Astro.url.pathname);
 		return (
 			<link
 				href={createFullUrl({
-					baseUrl: Astro.site,
-					pathname: `/${localeToPrefix[locale]}${pathname}`,
+					pathname: withBasePath(`/${localeToPrefix[locale]}${pathname}`),
 				})}
 				hreflang={locale}
 				rel="alternate"
@@ -62,8 +70,7 @@ const pathname = getUnprefixedPathname(Astro.url.pathname);
 	pathname === "/" ? (
 		<link
 			href={createFullUrl({
-				baseUrl: Astro.site,
-				pathname: "/",
+				pathname: withBasePath(`/${localeToPrefix[locale]}/`),
 			})}
 			hreflang="x-default"
 			rel="alternate"

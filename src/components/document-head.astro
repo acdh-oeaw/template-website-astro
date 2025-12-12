@@ -6,6 +6,7 @@ import { env } from "@/config/env.config";
 import AnalyticsScript from "@/lib/analytics/analytics-script.astro";
 import ColorSchemeScript from "@/lib/color-scheme/color-scheme-script.astro";
 import { createHref } from "@/lib/navigation/create-href";
+import { withBasePath } from "@/lib/navigation/with-base-path";
 
 const matomoBaseUrl = env.PUBLIC_MATOMO_BASE_URL;
 const matomoId = env.PUBLIC_MATOMO_ID;
@@ -18,14 +19,19 @@ const googleSiteVerification = env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 	<meta content="light dark" name="color-scheme" />
 
 	<link
-		href={createHref({ pathname: "/favicon.ico" })}
+		href={createHref({ pathname: withBasePath("/favicon.ico") })}
 		rel="icon"
 		sizes="32x32"
 		type="image/x-icon"
 	/>
-	<link href={createHref({ pathname: "/icon.svg" })} rel="icon" sizes="any" type="image/svg+xml" />
 	<link
-		href={createHref({ pathname: "/apple-icon.png" })}
+		href={createHref({ pathname: withBasePath("/icon.svg") })}
+		rel="icon"
+		sizes="any"
+		type="image/svg+xml"
+	/>
+	<link
+		href={createHref({ pathname: withBasePath("/apple-icon.png") })}
 		rel="apple-touch-icon"
 		sizes="180x180"
 		type="image/png"
