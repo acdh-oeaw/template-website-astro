@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 
-import { typographyConfig, withFootnotes } from "@acdh-oeaw/mdx-lib";
-import withGfm from "remark-gfm";
+import { typographyConfig, withFootnotes, withGfm } from "@acdh-oeaw/mdx-lib";
 import withTypographicQuotes from "remark-smartypants";
 import type { Pluggable } from "unified";
 

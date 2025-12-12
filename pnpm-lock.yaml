@@ -18,8 +18,8 @@ importers:
         specifier: ^0.3.5
         version: 0.3.7
       '@acdh-oeaw/mdx-lib':
-        specifier: ^0.1.4
-        version: 0.1.4
+        specifier: ^0.2.0
+        version: 0.2.0
       '@acdh-oeaw/style-variants':
         specifier: ^0.1.0
         version: 0.1.0
@@ -356,10 +356,6 @@ packages:
       '@keystatic/core': 0.x
       react: 19.x
 
-  '@acdh-oeaw/lib@0.1.12':
-    resolution: {integrity: sha512-yNAjUxcoqvEXX+YsqWqOqCOJeFg6oYL2Q+bVdhu6LEQU1MGpcMbo7haSTX12X8UYZjIU6oWpHrZfdKZZxRH23Q==}
-    engines: {node: '>=20', pnpm: '>=9'}
-
   '@acdh-oeaw/lib@0.3.4':
     resolution: {integrity: sha512-B3MIgLSnvC/DiqQPDaHPVvpOxZcrJYo2PaHKl0wZeBv1VV3Nc/CNjP0JeVxLYy8yAs2d2wGrywF1B21N+p9/iQ==}
     engines: {node: '>=22', pnpm: 10.x}
@@ -368,9 +364,9 @@ packages:
     resolution: {integrity: sha512-ayIAgoslwm60grK0H2g5D2rust5PS3+35gMqNILmQN3AT4Vr4MGepSTxu9nko8It8E8wcN+OG8DTkfiKz9vrPg==}
     engines: {node: '>=22'}
 
-  '@acdh-oeaw/mdx-lib@0.1.4':
-    resolution: {integrity: sha512-pEkDuErxA0/dk3eKO+pUTnCSoybxDiru53YtHs3Y/isksOAc4F2WRcZ9uo2oqeNzmvKxoD6hcYo4S6R+PJProg==}
-    engines: {node: '>=22', pnpm: 9.x}
+  '@acdh-oeaw/mdx-lib@0.2.0':
+    resolution: {integrity: sha512-fg45dZsghDsFLNdHMT/gNGakYHi56v4Kk6Uj+xLuEut55Mzuk0LayJy6xZa+EHvR4FhayFBMCOqos3mcjWNfPw==}
+    engines: {node: '>=22'}
 
   '@acdh-oeaw/prettier-config@2.0.1':
     resolution: {integrity: sha512-0M77qAD8Uhks+S6lPaKzq6ylwQJzjS33jE6uWKNM9dt7iJ1KHgsuZ3xVhWNmw5h/cUGYJvBi0V/ZSy65ow+9Ag==}
@@ -6741,15 +6737,13 @@ snapshots:
       '@types/mdx': 2.0.13
       react: 19.2.1
 
-  '@acdh-oeaw/lib@0.1.12': {}
-
   '@acdh-oeaw/lib@0.3.4': {}
 
   '@acdh-oeaw/lib@0.3.7': {}
 
-  '@acdh-oeaw/mdx-lib@0.1.4':
+  '@acdh-oeaw/mdx-lib@0.2.0':
     dependencies:
-      '@acdh-oeaw/lib': 0.1.12
+      '@acdh-oeaw/lib': 0.3.7
       '@mdx-js/mdx': 3.1.1
       '@types/estree': 1.0.8
       '@types/hast': 3.0.4
@@ -6760,7 +6754,16 @@ snapshots:
       hast-util-heading-rank: 3.0.0
       hast-util-to-string: 3.0.1
       image-size: 1.2.1
+      mdast-util-gfm-footnote: 2.1.0
+      mdast-util-gfm-strikethrough: 2.0.0
+      mdast-util-gfm-table: 2.0.0
+      mdast-util-gfm-task-list-item: 2.0.0
       mdast-util-mdx-jsx: 3.2.0
+      micromark-extension-gfm-footnote: 2.1.0
+      micromark-extension-gfm-strikethrough: 2.1.0
+      micromark-extension-gfm-table: 2.1.1
+      micromark-extension-gfm-task-list-item: 2.1.0
+      remark-gfm: 4.0.1
       unified: 11.0.5
       unist-util-visit: 5.0.0
       vfile: 6.0.3
