@@ -70,7 +70,7 @@ const pathname = getUnprefixedPathname(Astro.url.pathname);
 	pathname === "/" ? (
 		<link
 			href={createFullUrl({
-				pathname: withBasePath(`/${localeToPrefix[locale]}/`),
+				pathname: withBasePath("/"),
 			})}
 			hreflang="x-default"
 			rel="alternate"
