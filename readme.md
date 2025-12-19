@@ -17,9 +17,13 @@ see [docs/contributing.md](./docs/contributing.md).
 
 ## template variants
 
-- [variant/static](https://github.com/acdh-oeaw/template-website-astro/tree/variant/static) branch:
-  removes keystatic cms, contact form, and email service, serves site with caddy
-- [variant/without-rss](https://github.com/acdh-oeaw/template-website-astro/tree/variant/without-rss)
+- [`variant/static`](https://github.com/acdh-oeaw/template-website-astro/tree/variant/static)
+  branch: removes keystatic cms, contact form, and email service, serves site with caddy
+- [`variant/github-pages`](https://github.com/acdh-oeaw/template-website-astro/tree/variant/github-pages)
+  branch: generates a static build and deploys to github pages. requires enabling "github pages" in
+  the [repository settings](https://github.com/acdh-oeaw/template-website-astro/settings/pages)
+  (choose "github actions" as source, and "main" as branch).
+- [`variant/without-rss`](https://github.com/acdh-oeaw/template-website-astro/tree/variant/without-rss)
   branch: removes rss feed.
-- [variant/without-site-search](https://github.com/acdh-oeaw/template-website-astro/tree/variant/without-site-search)
+- [`variant/without-site-search`](https://github.com/acdh-oeaw/template-website-astro/tree/variant/without-site-search)
   branch: removes site search with `pagefind`.
