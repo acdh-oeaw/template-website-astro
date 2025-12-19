@@ -37,12 +37,6 @@ test.describe("metadata", () => {
 		await expect(page).toHaveTitle(
 			[en.t("NotFoundPage.meta.title"), en.messages.metadata.title].join(" | "),
 		);
-
-		const de = await createI18n("de-AT");
-		await page.goto("/de/unknown/");
-		await expect(page).toHaveTitle(
-			[de.t("NotFoundPage.meta.title"), de.messages.metadata.title].join(" | "),
-		);
 	});
 
 	test("should disallow indexing of not-found page", async ({ page }) => {

@@ -46,10 +46,6 @@ jobs:
         os: [ubuntu-24.04]
 
     env:
-      EMAIL_ADDRESS: "acdh@example.org"
-      EMAIL_SERVICE_API_BASE_URL: "http://localhost:8025"
-      EMAIL_SMTP_PORT: "1025"
-      EMAIL_SMTP_SERVER: "localhost"
       PUBLIC_APP_BASE_URL: "http://localhost:3000"
       PUBLIC_APP_IMPRINT_SERVICE_BASE_URL: "${{ vars.PUBLIC_APP_IMPRINT_SERVICE_BASE_URL }}"
       PUBLIC_APP_MATOMO_BASE_URL: "${{ vars.PUBLIC_APP_MATOMO_BASE_URL }}"
@@ -110,19 +106,11 @@ jobs:
         if: steps.cache-playwright-browsers.outputs.cache-hit == 'true'
         run: pnpm exec playwright install-deps
 
-      - name: Start email service
-        run: |
-          touch .env.local
-          pnpm run dev:services:email:up
-
       - name: Build app
         run: pnpm run build
 
       - name: Run e2e tests
         run: pnpm run test:e2e
-
-      - name: Stop email service
-        run: pnpm run dev:services:email:down
 
       - uses: actions/upload-artifact@v6
         if: ${{ !cancelled() }}
@@ -135,10 +123,13 @@ jobs:
     name: Build and deploy
     needs: [validate]
     # @see https://github.com/orgs/community/discussions/45058
-    if: ${{ github.event_name == 'push' && !failure() && !cancelled() }}
+    if:
+      ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && !failure() &&
+      !cancelled() }}
     uses: ./.github/workflows/build-deploy.yaml
     secrets: inherit
     # https://docs.github.com/en/actions/using-workflows/reusing-workflows#access-and-permissions
     permissions:
       contents: read
-      packages: write
+      id-token: write
+      pages: write

@@ -15,15 +15,6 @@ test.describe("i18n", () => {
 	});
 
 	test.describe("should redirect root route to preferred locale", () => {
-		test.use({ locale: "de-AT" });
-
-		test("with supported locale", async ({ page }) => {
-			await page.goto("/");
-			await expect(page).toHaveURL("/de");
-		});
-	});
-
-	test.describe("should redirect root route to preferred locale", () => {
 		test.use({ locale: "fr-CA" });
 
 		test("with unsupported locale", async ({ page }) => {
@@ -35,16 +26,6 @@ test.describe("i18n", () => {
 	test("should display not-found page for unknown locale", async ({ createI18n, page }) => {
 		const i18n = await createI18n(defaultLocale);
 		const response = await page.goto("/unknown");
-		expect(response?.status()).toBe(404);
-		await expect(page.getByRole("heading", { name: i18n.t("NotFoundPage.title") })).toBeVisible();
-	});
-
-	test("should display localised not-found page for unknown pathname", async ({
-		createI18n,
-		page,
-	}) => {
-		const i18n = await createI18n("de-AT");
-		const response = await page.goto("/de/unknown");
 		expect(response?.status()).toBe(404);
 		await expect(page.getByRole("heading", { name: i18n.t("NotFoundPage.title") })).toBeVisible();
 	});

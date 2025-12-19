@@ -1,9 +1,6 @@
 import * as path from "node:path";
 
-import { createUrl } from "@acdh-oeaw/lib";
 import mdx from "@astrojs/mdx";
-import node from "@astrojs/node";
-import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
@@ -18,9 +15,6 @@ import { localeToPrefix } from "./src/lib/i18n/routing";
 const env = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "");
 
 export default defineConfig({
-	adapter: node({
-		mode: "standalone",
-	}),
 	base: env.PUBLIC_APP_BASE_PATH,
 	experimental: {
 		fonts: [
@@ -62,18 +56,10 @@ export default defineConfig({
 		 * plugin.
 		 */
 		mdx(),
-		react({
-			include: ["**/keystatic/**"],
-		}),
 		svelte({
 			exclude: ["**/keystatic/**"],
 		}),
 		sitemap({
-			filter(page) {
-				return (
-					page !== String(createUrl({ baseUrl: env.PUBLIC_APP_BASE_URL!, pathname: "/admin/" }))
-				);
-			},
 			i18n: {
 				locales: localeToPrefix,
 				defaultLocale,
@@ -81,8 +67,6 @@ export default defineConfig({
 		}),
 	],
 	server: {
-		/** Required by `keystatic`. */
-		host: "127.0.0.1",
 		port: 3000,
 	},
 	site: env.PUBLIC_APP_BASE_URL!,

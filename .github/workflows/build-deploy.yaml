@@ -1,7 +1,7 @@
 name: Build and deploy
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}-build-deploy"
+  group: ${{ github.workflow }}-${{ github.ref }}-build-deploy
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 on:
@@ -9,136 +9,65 @@ on:
   workflow_dispatch:
 
 jobs:
-  env:
-    name: Generate environment variables
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Derive environment from git ref
-        id: environment
-        run: |
-          if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            ENVIRONMENT="production"
-            APP_NAME_SUFFIX=""
-          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
-            ENVIRONMENT="development"
-            APP_NAME_SUFFIX="-development"
-          elif [ "${{github.event_name}}" = "pull_request" ]; then
-            ENVIRONMENT="pr/${{ github.event.pull_request.number }}"
-            APP_NAME_SUFFIX="-pr-${{ github.event.pull_request.number }}"
-          else
-            exit 1
-          fi
-
-          echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_OUTPUT
-          echo "APP_NAME_SUFFIX=$APP_NAME_SUFFIX" >> $GITHUB_OUTPUT
-    outputs:
-      environment: "${{ steps.environment.outputs.ENVIRONMENT }}"
-      app_name: "website${{ steps.environment.outputs.APP_NAME_SUFFIX }}"
-      registry: "ghcr.io"
-      image: "${{ github.repository }}"
-
-  vars:
-    name: Generate public url
-    needs: [env]
-    runs-on: ubuntu-24.04
-    environment:
-      name: "${{ needs.env.outputs.environment }}"
-
-    steps:
-      - name: Generate public URL
-        id: public_url
-        run: |
-          if [ -z "${{ vars.PUBLIC_URL }}" ]; then
-            PUBLIC_URL="https://${{ needs.env.outputs.app_name }}.${{ vars.KUBE_INGRESS_BASE_DOMAIN }}"
-          else
-            PUBLIC_URL="${{ vars.PUBLIC_URL }}"
-          fi
-
-          echo "PUBLIC_URL=$PUBLIC_URL" >> $GITHUB_OUTPUT
-    outputs:
-      public_url: "${{ steps.public_url.outputs.PUBLIC_URL }}"
-
   build:
-    name: Build and push docker image
-    needs: [env, vars]
+    name: Build
     runs-on: ubuntu-24.04
-    permissions:
-      contents: read
-      packages: write
-    environment:
-      name: "${{ needs.env.outputs.environment }}"
+
+    env:
+      PUBLIC_APP_BASE_PATH: "/${{github.event.repository.name}}/"
+      PUBLIC_APP_BASE_URL: "https://${{ github.repository_owner }}.github.io"
+      PUBLIC_APP_BOTS: "${{ vars.PUBLIC_APP_BOTS }}"
+      PUBLIC_APP_GOOGLE_SITE_VERIFICATION: "${{ vars.PUBLIC_APP_GOOGLE_SITE_VERIFICATION }}"
+      PUBLIC_APP_IMPRINT_SERVICE_BASE_URL: "${{ vars.PUBLIC_APP_IMPRINT_SERVICE_BASE_URL }}"
+      PUBLIC_APP_MATOMO_BASE_URL: "${{ vars.PUBLIC_APP_MATOMO_BASE_URL }}"
+      PUBLIC_APP_MATOMO_ID: "${{ vars.PUBLIC_APP_MATOMO_ID }}"
+      PUBLIC_APP_SERVICE_ID: "${{ vars.SERVICE_ID }}"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Ensure astro build artefacts folder exists
-        run: mkdir -p node_modules/.astro
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Use node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          cache: "pnpm"
 
       - name: Cache astro build artefacts
         uses: actions/cache@v5
         with:
           path: node_modules/.astro/
-          key: ${{ runner.os }}-astro-24.x-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-astro-24.x
+          key: ${{ runner.os }}-astro-${{ matrix.node-version }}-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-astro-${{ matrix.node-version }}
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@v3
+      - name: Build app
+        run: pnpm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          registry: "${{ needs.env.outputs.registry }}"
-          username: "${{ github.actor }}"
-          password: "${{ secrets.GITHUB_TOKEN }}"
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: "${{ needs.env.outputs.registry }}/${{ needs.env.outputs.image }}"
-          tags: |
-            type=raw,value={{sha}}
-            type=ref,event=branch
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: "${{ steps.meta.outputs.tags }}"
-          labels: "${{ steps.meta.outputs.labels }}"
-          build-args: |
-            "PUBLIC_APP_BASE_PATH=${{ vars.PUBLIC_APP_BASE_PATH }}"
-            "PUBLIC_APP_BASE_URL=${{ needs.vars.outputs.public_url }}"
-            "PUBLIC_APP_BOTS=${{ vars.PUBLIC_APP_BOTS }}"
-            "PUBLIC_APP_GOOGLE_SITE_VERIFICATION=${{ vars.PUBLIC_APP_GOOGLE_SITE_VERIFICATION }}"
-            "PUBLIC_APP_IMPRINT_SERVICE_BASE_URL=${{ vars.PUBLIC_APP_IMPRINT_SERVICE_BASE_URL }}"
-            "PUBLIC_APP_MATOMO_BASE_URL=${{ vars.PUBLIC_APP_MATOMO_BASE_URL }}"
-            "PUBLIC_APP_MATOMO_ID=${{ vars.PUBLIC_APP_MATOMO_ID }}"
-            "PUBLIC_APP_SERVICE_ID=${{ vars.SERVICE_ID }}"
-            "PUBLIC_KEYSTATIC_GITHUB_APP_SLUG=${{ vars.PUBLIC_KEYSTATIC_GITHUB_APP_SLUG }}"
-            "PUBLIC_KEYSTATIC_GITHUB_REPO_NAME=${{ vars.PUBLIC_KEYSTATIC_GITHUB_REPO_NAME }}"
-            "PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER=${{ vars.PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER }}"
-            "PUBLIC_KEYSTATIC_MODE=${{ vars.PUBLIC_KEYSTATIC_MODE }}"
-          secrets: |
-            "KEYSTATIC_GITHUB_CLIENT_ID=${{ secrets.K8S_SECRET_KEYSTATIC_GITHUB_CLIENT_ID }}"
-            "KEYSTATIC_GITHUB_CLIENT_SECRET=${{ secrets.K8S_SECRET_KEYSTATIC_GITHUB_CLIENT_SECRET }}"
-            "KEYSTATIC_SECRET=${{ secrets.K8S_SECRET_KEYSTATIC_SECRET }}"
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          path: ./dist
 
   deploy:
-    name: Deploy docker image
-    needs: [env, vars, build]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
-    secrets: inherit
-    with:
-      environment: "${{ needs.env.outputs.environment }}"
-      DOCKER_TAG: "${{ needs.env.outputs.registry }}/${{ needs.env.outputs.image }}"
-      APP_NAME: "${{ needs.env.outputs.app_name }}"
-      APP_ROOT: "/"
-      SERVICE_ID: "${{ vars.SERVICE_ID }}"
-      PUBLIC_URL: "${{ needs.vars.outputs.public_url }}"
-      default_port: "3000"
+    name: Deploy
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      pages: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
