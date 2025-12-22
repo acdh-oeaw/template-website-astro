@@ -69,6 +69,10 @@ const result = createEnv({
 				PUBLIC_APP_BASE_URL: v.pipe(v.string(), v.url(), v.transform(removeTrailingSlash)),
 				PUBLIC_APP_BOTS: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
 				PUBLIC_APP_GOOGLE_SITE_VERIFICATION: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				PUBLIC_APP_IMPRINT_CUSTOM_CONFIG: v.optional(
+					v.picklist(["disabled", "enabled"]),
+					"enabled",
+				),
 				PUBLIC_APP_IMPRINT_SERVICE_BASE_URL: v.pipe(
 					v.string(),
 					v.url(),

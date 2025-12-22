@@ -26,7 +26,10 @@ const t = await getTranslations(locale, "ImprintPage");
 const imprintUrl = createUrl({
 	baseUrl: env.PUBLIC_APP_IMPRINT_SERVICE_BASE_URL,
 	pathname: `/${String(env.PUBLIC_APP_SERVICE_ID)}`,
-	searchParams: createUrlSearchParams({ locale }),
+	searchParams: createUrlSearchParams({
+		locale,
+		redmine: env.PUBLIC_APP_IMPRINT_CUSTOM_CONFIG,
+	}),
 });
 const imprintHtml = await request(imprintUrl, { responseType: "text" });
 ---
