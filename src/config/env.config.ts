@@ -46,9 +46,18 @@ const result = createEnv({
 				),
 				EMAIL_SMTP_SERVER: v.pipe(v.string(), v.nonEmpty()),
 				EMAIL_SMTP_USERNAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				IMGPROXY_BASE_URL: v.pipe(v.string(), v.url()),
+				IMGPROXY_KEY: v.pipe(v.string(), v.nonEmpty()),
+				IMGPROXY_SALT: v.pipe(v.string(), v.nonEmpty()),
 				KEYSTATIC_GITHUB_CLIENT_ID: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				KEYSTATIC_GITHUB_CLIENT_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				KEYSTATIC_SECRET: v.optional(v.pipe(v.string(), v.nonEmpty())),
+				S3_ACCESS_KEY: v.pipe(v.string(), v.nonEmpty()),
+				S3_BUCKET_NAME: v.pipe(v.string(), v.nonEmpty()),
+				S3_HOST: v.pipe(v.string(), v.nonEmpty()),
+				S3_PORT: v.pipe(v.string(), v.toNumber(), v.integer(), v.minValue(1)),
+				S3_PROTOCOL: v.optional(v.picklist(["http", "https"]), "https"),
+				S3_SECRET_KEY: v.pipe(v.string(), v.nonEmpty()),
 			});
 
 			const result = v.safeParse(schema, environment);

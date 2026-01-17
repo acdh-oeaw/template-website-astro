@@ -1,8 +1,5 @@
-import path from "node:path";
-
 import { createCollection } from "@acdh-oeaw/content-lib";
 import { withI18nPrefix } from "@acdh-oeaw/keystatic-lib";
-import type { ImageMetadata } from "astro";
 import type { MDXContent } from "mdx/types";
 import { VFile } from "vfile";
 
@@ -23,6 +20,7 @@ import {
 } from "@/lib/content/mdx/remark-plugins";
 import { createRemarkRehypeOptions } from "@/lib/content/mdx/remark-rehype-options";
 import { getIntlLanguage, type IntlLocale } from "@/lib/i18n/locales";
+import { client } from "@/lib/image-service/client";
 
 const publicPath = "../../../public/";
 
@@ -63,7 +61,12 @@ function createPagesCollection<TLocale extends IntlLocale>(locale: TLocale) {
 			const tableOfContents = output.data.tableOfContents ?? [];
 			const image =
 				_image != null
-					? context.createImportDeclaration<ImageMetadata>(path.join(publicPath, _image))
+					? {
+							width: _image.width,
+							height: _image.height,
+							src: client.urls.generateSignedImageUrl({ key: _image.key, options: { width: 800 } })
+								.url,
+						}
 					: null;
 
 			return {

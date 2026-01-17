@@ -1,15 +1,11 @@
-import {
-	createAssetOptions,
-	createCollection,
-	createContentFieldOptions,
-	createLabel,
-} from "@acdh-oeaw/keystatic-lib";
+import { createCollection, createContentFieldOptions, createLabel } from "@acdh-oeaw/keystatic-lib";
 import { collection, fields } from "@keystatic/core";
 
 import { createEmbed } from "@/lib/content/keystatic/components/embed";
 import { createFigure } from "@/lib/content/keystatic/components/figure";
 import { createFootnote } from "@/lib/content/keystatic/components/footnote";
 import { createLink } from "@/lib/content/keystatic/components/link";
+import { image } from "@/lib/content/keystatic/fields/image";
 
 // import { createPreviewUrl } from "@/lib/content/keystatic/utils/create-preview-url";
 
@@ -34,10 +30,9 @@ export const createPages = createCollection("/pages/", (paths, locale) => {
 				validation: { isRequired: true },
 				multiline: true,
 			}),
-			image: fields.image({
+			image: image({
 				label: "Image",
 				validation: { isRequired: false },
-				...createAssetOptions(paths.assetPath),
 			}),
 			content: fields.mdx({
 				label: "Content",
