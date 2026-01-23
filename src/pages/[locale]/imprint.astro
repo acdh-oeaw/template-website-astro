@@ -1,5 +1,5 @@
 ---
-import { createUrl, createUrlSearchParams, request } from "@acdh-oeaw/lib";
+import { createUrl, createUrlSearchParams, isErr, request } from "@acdh-oeaw/lib";
 import type { GetStaticPathsResult } from "astro";
 
 import DefaultLayout from "@/components/default-layout.astro";
@@ -23,7 +23,7 @@ export function getStaticPaths() {
 const { locale } = Astro.locals;
 const t = await getTranslations(locale, "ImprintPage");
 
-const imprintUrl = createUrl({
+const url = createUrl({
 	baseUrl: env.PUBLIC_APP_IMPRINT_SERVICE_BASE_URL,
 	pathname: `/${String(env.PUBLIC_APP_SERVICE_ID)}`,
 	searchParams: createUrlSearchParams({
@@ -31,7 +31,14 @@ const imprintUrl = createUrl({
 		redmine: env.PUBLIC_APP_IMPRINT_CUSTOM_CONFIG,
 	}),
 });
-const imprintHtml = await request(imprintUrl, { responseType: "text" });
+
+const result = await request(url, { responseType: "text" });
+
+if (isErr(result)) {
+	throw result.error;
+}
+
+const imprintHtml = result.value.data;
 ---
 
 <HtmlDocument>

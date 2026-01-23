@@ -2,7 +2,6 @@
 import assert from "node:assert/strict";
 
 import type { GetStaticPathsResult } from "astro";
-import { Image } from "astro:assets";
 
 import TableOfContents from "@/components/content/table-of-contents.astro";
 import DefaultLayout from "@/components/default-layout.astro";
@@ -61,7 +60,14 @@ const tableOfContents = page.tableOfContents;
 				{
 					image != null ? (
 						<div>
-							<Image alt="" class="rounded-sm" layout="constrained" loading="eager" src={image} />
+							<img
+								alt=""
+								class="rounded-sm"
+								height={image.height}
+								loading="eager"
+								src={image.src}
+								width={image.width}
+							/>
 						</div>
 					) : null
 				}
