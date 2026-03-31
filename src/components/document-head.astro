@@ -1,6 +1,7 @@
 ---
 import { Font } from "astro:assets";
 import { ClientRouter } from "astro:transitions";
+import LoadingIndicator from "astro-loading-indicator/component";
 
 import { env } from "@/config/env.config";
 import AnalyticsScript from "@/lib/analytics/analytics-script.astro";
@@ -55,4 +56,5 @@ const googleSiteVerification = env.PUBLIC_APP_GOOGLE_SITE_VERIFICATION;
 	{matomoBaseUrl && matomoId ? <AnalyticsScript baseUrl={matomoBaseUrl} id={matomoId} /> : null}
 
 	<ClientRouter />
+	<LoadingIndicator color="var(--color-background-inverse)" />
 </head>
