@@ -1138,37 +1138,26 @@
 		}
 
 		.richtext-base
-			:where(.richtext-base > ul > li > p:first-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-base > ul > li > p:first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-top: 1.25em;
 		}
 
 		.richtext-base
-			:where(.richtext-base > ul > li > p:last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-base > ul > li > p:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-bottom: 1.25em;
 		}
 
 		.richtext-base
-			:where(.richtext-base > ol > li > p:first-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-base > ol > li > p:first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-top: 1.25em;
 		}
 
 		.richtext-base
-			:where(.richtext-base > ol > li > p:last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-base > ol > li > p:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-bottom: 1.25em;
 		}
 
-		.richtext-base
-			:where(ul ul, ul ol, ol ul, ol ol):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+		.richtext-base :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-top: 0.75em;
 			margin-bottom: 0.75em;
 		}
@@ -1218,18 +1207,15 @@
 			padding-bottom: 0.5714286em;
 		}
 
-		.richtext-base
-			:where(thead th:first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
+		.richtext-base :where(thead th:first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			padding-inline-start: 0;
 		}
 
-		.richtext-base
-			:where(thead th:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
+		.richtext-base :where(thead th:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			padding-inline-end: 0;
 		}
 
-		.richtext-base
-			:where(tbody td, tfoot td):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
+		.richtext-base :where(tbody td, tfoot td):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			padding-inline: 0.5714286em;
 			padding-top: 0.5714286em;
 			padding-bottom: 0.5714286em;
@@ -1243,9 +1229,7 @@
 		}
 
 		.richtext-base
-			:where(tbody td:last-child, tfoot td:last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(tbody td:last-child, tfoot td:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			padding-inline-end: 0;
 		}
 
@@ -1266,16 +1250,12 @@
 		}
 
 		.richtext-base
-			:where(.richtext-base > :first-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-base > :first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-top: 0;
 		}
 
 		.richtext-base
-			:where(.richtext-base > :last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-base > :last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-bottom: 0;
 		}
 	}
@@ -1413,30 +1393,22 @@
 		}
 
 		.richtext-lg
-			:where(.richtext-lg > ul > li > p:first-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-lg > ul > li > p:first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-top: 1.3333333em;
 		}
 
 		.richtext-lg
-			:where(.richtext-lg > ul > li > p:last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-lg > ul > li > p:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-bottom: 1.3333333em;
 		}
 
 		.richtext-lg
-			:where(.richtext-lg > ol > li > p:first-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-lg > ol > li > p:first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-top: 1.3333333em;
 		}
 
 		.richtext-lg
-			:where(.richtext-lg > ol > li > p:last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(.richtext-lg > ol > li > p:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-bottom: 1.3333333em;
 		}
 
@@ -1512,9 +1484,7 @@
 		}
 
 		.richtext-lg
-			:where(tbody td:last-child, tfoot td:last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+			:where(tbody td:last-child, tfoot td:last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			padding-inline-end: 0;
 		}
 
@@ -1534,17 +1504,11 @@
 			line-height: 1.5;
 		}
 
-		.richtext-lg
-			:where(.richtext-lg > :first-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+		.richtext-lg :where(.richtext-lg > :first-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-top: 0;
 		}
 
-		.richtext-lg
-			:where(.richtext-lg > :last-child):not(
-				:where([class~="not-richtext"], [class~="not-richtext"] *)
-			) {
+		.richtext-lg :where(.richtext-lg > :last-child):not(:where([class~="not-richtext"], [class~="not-richtext"] *)) {
 			margin-bottom: 0;
 		}
 	}

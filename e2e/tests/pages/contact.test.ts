@@ -75,10 +75,7 @@ test.describe("contact page", () => {
 			await emailService.clear();
 		});
 
-		test("should send contact form submission via email", async ({
-			createContactPage,
-			createEmailService,
-		}) => {
+		test("should send contact form submission via email", async ({ createContactPage, createEmailService }) => {
 			const locale = defaultLocale;
 
 			const emailService = createEmailService();
@@ -97,10 +94,9 @@ test.describe("contact page", () => {
 			await contactPage.form.message.fill(message);
 			await contactPage.form.submit.click();
 
-			await expect(contactPage.page.getByRole("status")).toContainText(
-				i18n.t("ContactPage.form.status.success"),
-				{ timeout: 1000 },
-			);
+			await expect(contactPage.page.getByRole("status")).toContainText(i18n.t("ContactPage.form.status.success"), {
+				timeout: 1000,
+			});
 
 			await expect
 				.poll(

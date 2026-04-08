@@ -1,9 +1,4 @@
-import {
-	createAssetOptions,
-	createContentFieldOptions,
-	createLabel,
-	createSingleton,
-} from "@acdh-oeaw/keystatic-lib";
+import { createAssetOptions, createContentFieldOptions, createLabel, createSingleton } from "@acdh-oeaw/keystatic-lib";
 import { fields, singleton } from "@keystatic/core";
 
 import { createLink } from "@/lib/content/keystatic/components/link";

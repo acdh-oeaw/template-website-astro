@@ -3,11 +3,7 @@ import type en from "@content/en-navigation";
 import type { SingletonClient } from "@/lib/content/types";
 import { getLinkProps } from "@/lib/content/utils/get-link-props";
 import type { IntlLanguage } from "@/lib/i18n/locales";
-import type {
-	NavigationLink,
-	NavigationMenu,
-	NavigationSeparator,
-} from "@/lib/navigation/navigation";
+import type { NavigationLink, NavigationMenu, NavigationSeparator } from "@/lib/navigation/navigation";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function createClient(locale: IntlLanguage) {
@@ -92,5 +88,4 @@ export async function createClient(locale: IntlLanguage) {
 	return client;
 }
 
-export type IndexPage =
-	Awaited<ReturnType<typeof createClient>> extends SingletonClient<infer T> ? T : never;
+export type IndexPage = Awaited<ReturnType<typeof createClient>> extends SingletonClient<infer T> ? T : never;

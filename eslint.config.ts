@@ -7,11 +7,11 @@ import playwrightConfig from "@acdh-oeaw/eslint-config-playwright";
 import reactConfig from "@acdh-oeaw/eslint-config-react";
 import svelteConfig from "@acdh-oeaw/eslint-config-svelte";
 import tailwindcssConfig from "@acdh-oeaw/eslint-config-tailwindcss";
-import { defineConfig, globalIgnores } from "eslint/config";
 import gitignore from "eslint-config-flat-gitignore";
 import checkFilePlugin from "eslint-plugin-check-file";
 import perfectionistPlugin from "eslint-plugin-perfectionist";
 import unicornPlugin from "eslint-plugin-unicorn";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 import svelteConfigFile from "./svelte.config.ts";
 
@@ -41,10 +41,7 @@ export default defineConfig(
 			],
 			"object-shorthand": ["error", "always", { avoidExplicitReturnArrows: true }],
 			"preserve-caught-error": "error",
-			"@typescript-eslint/explicit-module-boundary-types": [
-				"error",
-				{ allowedNames: ["getStaticPaths"] },
-			],
+			"@typescript-eslint/explicit-module-boundary-types": ["error", { allowedNames: ["getStaticPaths"] }],
 			"@typescript-eslint/require-array-sort-compare": "error",
 			// "@typescript-eslint/strict-boolean-expressions": "error",
 		},

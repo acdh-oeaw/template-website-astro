@@ -39,10 +39,7 @@ test.describe("i18n", () => {
 		await expect(page.getByRole("heading", { name: i18n.t("NotFoundPage.title") })).toBeVisible();
 	});
 
-	test("should display localised not-found page for unknown pathname", async ({
-		createI18n,
-		page,
-	}) => {
+	test("should display localised not-found page for unknown pathname", async ({ createI18n, page }) => {
 		const i18n = await createI18n("de-AT");
 		const response = await page.goto("/de/unknown");
 		expect(response?.status()).toBe(404);
@@ -59,20 +56,14 @@ test.describe("i18n", () => {
 
 		await expect(page).toHaveURL("/de/imprint");
 		await expect(page.getByRole("heading", { name: de.t("ImprintPage.title") })).toBeVisible();
-		await expect(page).toHaveTitle(
-			[de.t("ImprintPage.title"), de.messages.metadata.title].join(" | "),
-		);
+		await expect(page).toHaveTitle([de.t("ImprintPage.title"), de.messages.metadata.title].join(" | "));
 
-		await page
-			.getByRole("link", { name: de.t("LocaleSwitcher.switch-locale-to", { locale: "Englisch" }) })
-			.click();
+		await page.getByRole("link", { name: de.t("LocaleSwitcher.switch-locale-to", { locale: "Englisch" }) }).click();
 		const en = await createI18n("en-GB");
 
 		await expect(page).toHaveURL("/en/imprint/");
 		await expect(page.getByRole("heading", { name: en.t("ImprintPage.title") })).toBeVisible();
-		await expect(page).toHaveTitle(
-			[en.t("ImprintPage.title"), en.messages.metadata.title].join(" | "),
-		);
+		await expect(page).toHaveTitle([en.t("ImprintPage.title"), en.messages.metadata.title].join(" | "));
 	});
 
 	test("should set `lang` attribute on `html` element", async ({ createIndexPage }) => {
@@ -83,10 +74,7 @@ test.describe("i18n", () => {
 		}
 	});
 
-	test("should set alternate links in link tags", async ({
-		createIndexPage,
-		createImprintPage,
-	}) => {
+	test("should set alternate links in link tags", async ({ createIndexPage, createImprintPage }) => {
 		function createAbsoluteUrl(pathname: string) {
 			return String(createUrl({ baseUrl: env.PUBLIC_APP_BASE_URL, pathname }));
 		}
@@ -95,13 +83,11 @@ test.describe("i18n", () => {
 			const { indexPage } = await createIndexPage(locale);
 			await indexPage.goto();
 
-			const links = await indexPage.page
-				.locator('link[rel="alternate"][hreflang]')
-				.evaluateAll((elements) => {
-					return elements.map((element) => {
-						return element.outerHTML;
-					});
+			const links = await indexPage.page.locator('link[rel="alternate"][hreflang]').evaluateAll((elements) => {
+				return elements.map((element) => {
+					return element.outerHTML;
 				});
+			});
 
 			expect(links).toEqual(
 				expect.arrayContaining([
@@ -116,13 +102,11 @@ test.describe("i18n", () => {
 			const { imprintPage } = await createImprintPage(locale);
 			await imprintPage.goto();
 
-			const links = await imprintPage.page
-				.locator('link[rel="alternate"][hreflang]')
-				.evaluateAll((elements) => {
-					return elements.map((element) => {
-						return element.outerHTML;
-					});
+			const links = await imprintPage.page.locator('link[rel="alternate"][hreflang]').evaluateAll((elements) => {
+				return elements.map((element) => {
+					return element.outerHTML;
 				});
+			});
 
 			expect(links).toEqual(
 				expect.arrayContaining([

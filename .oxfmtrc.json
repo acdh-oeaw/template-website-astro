@@ -1,0 +1,20 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"sortImports": {
+		"groups": [
+			["side_effect"],
+			["side_effect_style"],
+			["style"],
+			["builtin"],
+			["external"],
+			["internal", "subpath"],
+			["unknown"]
+		]
+	},
+	"sortPackageJson": {
+		"sortScripts": true
+	},
+	"ignorePatterns": ["*.mdx", "pnpm-workspace.yaml", "content/", "e2e/snapshots/", "public/"],
+	"printWidth": 120,
+	"useTabs": true
+}

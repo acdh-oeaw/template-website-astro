@@ -4,10 +4,7 @@ import { checkA11y, getViolations, injectAxe } from "axe-playwright";
 
 export interface AccessibilityScanner {
 	check: (params?: { selector?: ElementContext; skipFailures?: boolean }) => Promise<void>;
-	getViolations: (params?: {
-		options?: RunOptions;
-		selector?: ElementContext;
-	}) => Promise<Array<Result>>;
+	getViolations: (params?: { options?: RunOptions; selector?: ElementContext }) => Promise<Array<Result>>;
 }
 
 export async function createAccessibilityScanner(page: Page): Promise<AccessibilityScanner> {

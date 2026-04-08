@@ -10,11 +10,9 @@ async function generate() {
 
 		const content = await fs.readFile(messagesPath, { encoding: "utf-8" });
 
-		await fs.writeFile(
-			declarationPath,
-			`declare const messages: ${content.trim()};\nexport default messages;`,
-			{ encoding: "utf-8" },
-		);
+		await fs.writeFile(declarationPath, `declare const messages: ${content.trim()};\nexport default messages;`, {
+			encoding: "utf-8",
+		});
 	}
 
 	log.success("Successfully generated types for i18n messages.");

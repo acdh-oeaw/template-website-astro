@@ -40,9 +40,7 @@ export const test = base.extend<Fixtures>({
 				// 	return route.fulfill({ status: 200, body: "" });
 				// });
 
-				const baseUrl = String(
-					createUrl({ baseUrl: env.PUBLIC_APP_MATOMO_BASE_URL, pathname: "/matomo.php?**" }),
-				);
+				const baseUrl = String(createUrl({ baseUrl: env.PUBLIC_APP_MATOMO_BASE_URL, pathname: "/matomo.php?**" }));
 
 				await context.route(baseUrl, (route) => {
 					return route.fulfill({ status: 204, body: "" });

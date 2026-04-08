@@ -22,11 +22,7 @@ const result = createEnv({
 			const result = v.safeParse(schema, environment);
 
 			if (!result.success) {
-				return err(
-					new ValidationError(
-						`Invalid or missing environment variables.\n${v.summarize(result.issues)}`,
-					),
-				);
+				return err(new ValidationError(`Invalid or missing environment variables.\n${v.summarize(result.issues)}`));
 			}
 
 			return ok(result.output);
@@ -37,13 +33,7 @@ const result = createEnv({
 				EMAIL_ADDRESS: v.pipe(v.string(), v.email()),
 				EMAIL_SERVICE_API_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
 				EMAIL_SMTP_PASSWORD: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				EMAIL_SMTP_PORT: v.pipe(
-					v.string(),
-					v.transform(Number),
-					v.number(),
-					v.integer(),
-					v.minValue(1),
-				),
+				EMAIL_SMTP_PORT: v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
 				EMAIL_SMTP_SERVER: v.pipe(v.string(), v.nonEmpty()),
 				EMAIL_SMTP_USERNAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				KEYSTATIC_GITHUB_CLIENT_ID: v.optional(v.pipe(v.string(), v.nonEmpty())),
@@ -54,11 +44,7 @@ const result = createEnv({
 			const result = v.safeParse(schema, environment);
 
 			if (!result.success) {
-				return err(
-					new ValidationError(
-						`Invalid or missing environment variables.\n${v.summarize(result.issues)}`,
-					),
-				);
+				return err(new ValidationError(`Invalid or missing environment variables.\n${v.summarize(result.issues)}`));
 			}
 
 			return ok(result.output);
@@ -69,28 +55,13 @@ const result = createEnv({
 				PUBLIC_APP_BASE_URL: v.pipe(v.string(), v.url(), v.transform(removeTrailingSlash)),
 				PUBLIC_APP_BOTS: v.optional(v.picklist(["disabled", "enabled"]), "disabled"),
 				PUBLIC_APP_GOOGLE_SITE_VERIFICATION: v.optional(v.pipe(v.string(), v.nonEmpty())),
-				PUBLIC_APP_IMPRINT_CUSTOM_CONFIG: v.optional(
-					v.picklist(["disabled", "enabled"]),
-					"enabled",
-				),
-				PUBLIC_APP_IMPRINT_SERVICE_BASE_URL: v.pipe(
-					v.string(),
-					v.url(),
-					v.transform(removeTrailingSlash),
-				),
-				PUBLIC_APP_MATOMO_BASE_URL: v.optional(
-					v.pipe(v.string(), v.url(), v.transform(addTrailingSlash)),
-				),
+				PUBLIC_APP_IMPRINT_CUSTOM_CONFIG: v.optional(v.picklist(["disabled", "enabled"]), "enabled"),
+				PUBLIC_APP_IMPRINT_SERVICE_BASE_URL: v.pipe(v.string(), v.url(), v.transform(removeTrailingSlash)),
+				PUBLIC_APP_MATOMO_BASE_URL: v.optional(v.pipe(v.string(), v.url(), v.transform(addTrailingSlash))),
 				PUBLIC_APP_MATOMO_ID: v.optional(
 					v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
 				),
-				PUBLIC_APP_SERVICE_ID: v.pipe(
-					v.string(),
-					v.transform(Number),
-					v.number(),
-					v.integer(),
-					v.minValue(1),
-				),
+				PUBLIC_APP_SERVICE_ID: v.pipe(v.string(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
 				PUBLIC_KEYSTATIC_GITHUB_APP_SLUG: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				PUBLIC_KEYSTATIC_GITHUB_REPO_NAME: v.optional(v.pipe(v.string(), v.nonEmpty())),
 				PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER: v.optional(v.pipe(v.string(), v.nonEmpty())),
@@ -100,21 +71,14 @@ const result = createEnv({
 			const result = v.safeParse(schema, environment);
 
 			if (!result.success) {
-				return err(
-					new ValidationError(
-						`Invalid or missing environment variables.\n${v.summarize(result.issues)}`,
-					),
-				);
+				return err(new ValidationError(`Invalid or missing environment variables.\n${v.summarize(result.issues)}`));
 			}
 
 			return ok(result.output);
 		},
 	},
 	environment,
-	validation: v.parse(
-		v.optional(v.picklist(["disabled", "enabled", "public"]), "enabled"),
-		environment.ENV_VALIDATION,
-	),
+	validation: v.parse(v.optional(v.picklist(["disabled", "enabled", "public"]), "enabled"), environment.ENV_VALIDATION),
 });
 
 if (isErr(result)) {

@@ -1,9 +1,4 @@
-import {
-	createAssetOptions,
-	createCollection,
-	createContentFieldOptions,
-	createLabel,
-} from "@acdh-oeaw/keystatic-lib";
+import { createAssetOptions, createCollection, createContentFieldOptions, createLabel } from "@acdh-oeaw/keystatic-lib";
 import { collection, fields } from "@keystatic/core";
 
 import { createEmbed } from "@/lib/content/keystatic/components/embed";

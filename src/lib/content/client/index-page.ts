@@ -22,5 +22,4 @@ export async function createClient(locale: IntlLanguage) {
 	return client;
 }
 
-export type IndexPage =
-	Awaited<ReturnType<typeof createClient>> extends SingletonClient<infer T> ? T : never;
+export type IndexPage = Awaited<ReturnType<typeof createClient>> extends SingletonClient<infer T> ? T : never;

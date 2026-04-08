@@ -31,11 +31,7 @@ function createPagesCollection<TLocale extends IntlLocale>(locale: TLocale) {
 	const collection = withI18nPrefix("pages", language);
 
 	const compileOptions: CompileOptions = {
-		remarkPlugins: [
-			createGitHubMarkdownPlugin(),
-			createFootnotesPlugin(),
-			createTypographicQuotesPlugin(language),
-		],
+		remarkPlugins: [createGitHubMarkdownPlugin(), createFootnotesPlugin(), createTypographicQuotesPlugin(language)],
 		remarkRehypeOptions: createRemarkRehypeOptions(locale),
 		rehypePlugins: [
 			createCustomHeadingIdsPlugin(),
@@ -62,9 +58,7 @@ function createPagesCollection<TLocale extends IntlLocale>(locale: TLocale) {
 			const module = context.createJavaScriptImport<MDXContent>(String(output));
 			const tableOfContents = output.data.tableOfContents ?? [];
 			const image =
-				_image != null
-					? context.createImportDeclaration<ImageMetadata>(path.join(publicPath, _image))
-					: null;
+				_image != null ? context.createImportDeclaration<ImageMetadata>(path.join(publicPath, _image)) : null;
 
 			return {
 				id: item.id,

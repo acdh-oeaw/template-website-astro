@@ -27,9 +27,7 @@ export async function createClient(locale: IntlLanguage) {
 
 		return client;
 	} catch (error) {
-		log.error(
-			'Failed to create content client. Did you run "pnpm content:build" or "pnpm content:dev"?',
-		);
+		log.error('Failed to create content client. Did you run "pnpm content:build" or "pnpm content:dev"?');
 		throw error;
 	}
 }

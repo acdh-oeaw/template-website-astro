@@ -45,5 +45,4 @@ export async function createClient(locale: IntlLanguage) {
 	return client;
 }
 
-export type Page =
-	Awaited<ReturnType<typeof createClient>> extends CollectionClient<infer T> ? T : never;
+export type Page = Awaited<ReturnType<typeof createClient>> extends CollectionClient<infer T> ? T : never;

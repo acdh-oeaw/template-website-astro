@@ -7,8 +7,8 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig, fontProviders } from "astro/config";
 import icon from "astro-icon";
+import { defineConfig, fontProviders } from "astro/config";
 import { loadEnv } from "vite";
 
 import { defaultLocale } from "./src/lib/i18n/locales";
@@ -37,18 +37,7 @@ export default defineConfig({
 			iconDir: "./src/assets/icons",
 			/** @see https://www.astroicon.dev/reference/configuration/#include */
 			include: {
-				lucide: [
-					"chevron-down",
-					"globe",
-					"laptop",
-					"mail",
-					"menu",
-					"moon",
-					"rss",
-					"search",
-					"sun",
-					"x",
-				],
+				lucide: ["chevron-down", "globe", "laptop", "mail", "menu", "moon", "rss", "search", "sun", "x"],
 				simpleIcons: ["bluesky", "instagram", "linkedin", "mastodon", "twitter", "youtube"],
 			},
 			svgoOptions: {
@@ -70,9 +59,7 @@ export default defineConfig({
 		}),
 		sitemap({
 			filter(page) {
-				return (
-					page !== String(createUrl({ baseUrl: env.PUBLIC_APP_BASE_URL!, pathname: "/admin/" }))
-				);
+				return page !== String(createUrl({ baseUrl: env.PUBLIC_APP_BASE_URL!, pathname: "/admin/" }));
 			},
 			i18n: {
 				locales: localeToPrefix,

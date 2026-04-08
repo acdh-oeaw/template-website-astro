@@ -8,10 +8,7 @@ import { VFile } from "vfile";
 
 import { reader } from "@/lib/content/keystatic/reader";
 import { compile, type CompileOptions } from "@/lib/content/mdx/compile";
-import {
-	createGitHubMarkdownPlugin,
-	createTypographicQuotesPlugin,
-} from "@/lib/content/mdx/remark-plugins";
+import { createGitHubMarkdownPlugin, createTypographicQuotesPlugin } from "@/lib/content/mdx/remark-plugins";
 import { createRemarkRehypeOptions } from "@/lib/content/mdx/remark-rehype-options";
 import { getIntlLanguage, type IntlLocale } from "@/lib/i18n/locales";
 

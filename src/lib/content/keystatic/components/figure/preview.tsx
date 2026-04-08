@@ -25,11 +25,7 @@ export function FigurePreview(props: Readonly<FigurePreviewProps>): ReactNode {
 		<figure className={cn("grid gap-y-2", alignment === "center" ? "justify-center" : undefined)}>
 			<NotEditable>
 				{url != null ? (
-					<img
-						alt={alt}
-						className="w-full overflow-hidden rounded-xs border border-stroke-weak"
-						src={url}
-					/>
+					<img alt={alt} className="w-full overflow-hidden rounded-xs border border-stroke-weak" src={url} />
 				) : null}
 			</NotEditable>
 			<figcaption>{children}</figcaption>
