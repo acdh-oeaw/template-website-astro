@@ -7,8 +7,8 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import svelte from "@astrojs/svelte";
 import tailwindcss from "@tailwindcss/vite";
-import icon from "astro-icon";
 import { defineConfig, fontProviders } from "astro/config";
+import icon from "astro-icon";
 import { loadEnv } from "vite";
 
 import { defaultLocale } from "./src/lib/i18n/locales";
