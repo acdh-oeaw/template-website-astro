@@ -44,6 +44,10 @@ cp .env.local.example .env.local
 | PUBLIC_KEYSTATIC_GITHUB_REPO_OWNER  | false    |            | github organisation            |
 | PUBLIC_KEYSTATIC_MODE               | false    | "local"    | set to "github" in production  |
 
+in "local" mode, the keystatic cms (`/admin`, `/keystatic`, `/api/keystatic`) is only available in
+the development server, because the local-mode api is unauthenticated and writes directly to the
+file system. production builds only serve these routes when "github" mode is configured.
+
 environment variables are validated in [`config/env.config.ts`](./config/env.config.ts). when adding
 new environment variables, don't forget to add them to [`.env.local.example`](./.env.local.example)
 and [`config/env.config.ts`](./config/env.config.ts) as well.
