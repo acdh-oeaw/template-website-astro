@@ -7,9 +7,11 @@
 	interface Props {
 		colorSchemes: Record<ColorScheme, string>;
 		label: string;
-		dark: Snippet;
-		light: Snippet;
-		system: Snippet;
+		dark?: Snippet;
+		light?: Snippet;
+		system?: Snippet;
+		/** Unused. Astro types named-slot fragments as children. */
+		children?: Snippet;
 	}
 
 	const { colorSchemes, label, ...icons }: Props = $props();
@@ -37,7 +39,7 @@
 	<div class="sr-only" id={groupId}>{label}</div>
 	<div class="inline-flex gap-x-2.5">
 		{#each Object.entries(colorSchemes) as [value, label] (value)}
-			{@const Icon = icons[value as ColorScheme]}
+			{@const icon = icons[value as ColorScheme]}
 			<label
 				class="group touch-target shrink-0"
 				data-checked={value === selectedValue || undefined}
@@ -55,7 +57,7 @@
 				<span class="sr-only">
 					{label}
 				</span>
-				<Icon />
+				{@render icon?.()}
 			</label>
 		{/each}
 	</div>

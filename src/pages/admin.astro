@@ -1,7 +1,13 @@
 ---
+import { isKeystaticEnabled } from "@/lib/content/keystatic/is-keystatic-enabled";
 import { withBasePath } from "@/lib/navigation/with-base-path";
 
 export const prerender = false;
+
+if (!isKeystaticEnabled) {
+	// eslint-disable-next-line unicorn/prefer-module
+	return new Response(null, { status: 404 });
+}
 
 // eslint-disable-next-line unicorn/prefer-module
 return Astro.redirect(withBasePath("/keystatic"), 307);

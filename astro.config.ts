@@ -67,6 +67,15 @@ export default defineConfig({
 			},
 		}),
 	],
+	security: {
+		/**
+		 * Required so the `Host` header is trusted when constructing the request url, which is
+		 * needed for the origin check on form submissions.
+		 *
+		 * @see https://docs.astro.build/en/reference/configuration-reference/#securityalloweddomains
+		 */
+		allowedDomains: [{ hostname: new URL(env.PUBLIC_APP_BASE_URL!).hostname }],
+	},
 	server: {
 		/** Required by `keystatic`. */
 		host: "127.0.0.1",

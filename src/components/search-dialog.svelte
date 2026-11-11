@@ -6,10 +6,13 @@
 	interface Props {
 		closeLabel: string;
 		label: string;
-		search: Snippet;
-		x: Snippet;
+		search?: Snippet;
+		x?: Snippet;
+		/** Unused. Astro types named-slot fragments as children. */
+		children?: Snippet;
 	}
 
+	// eslint-disable-next-line svelte/no-unused-props
 	const { closeLabel, label, search, x }: Props = $props();
 
 	let dialogElement = $state<HTMLDialogElement | null>(null);
@@ -52,11 +55,6 @@
 
 	const triggerId = "search-dialog-trigger";
 
-	// svelte-ignore state_referenced_locally
-	const SearchIcon = search;
-	// svelte-ignore state_referenced_locally
-	const XIcon = x;
-
 	onDestroy(() => {
 		dialogElement?.close();
 	});
@@ -74,7 +72,7 @@
 		});
 	}}
 >
-	<SearchIcon />
+	{@render search?.()}
 	{label}
 </button>
 
@@ -88,7 +86,7 @@
 			<button
 				class="touch-target absolute top-4 right-4 inline-block rounded-xs text-icon-neutral focus-outline transition hover:text-text-strong focus-visible:text-text-strong focus-visible:outline-offset-4"
 			>
-				<XIcon />
+				{@render x?.()}
 				<span class="sr-only">{closeLabel}</span>
 			</button>
 		</form>

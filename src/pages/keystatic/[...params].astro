@@ -2,10 +2,16 @@
 import "@/styles/index.css";
 import "@/styles/cms.css";
 
+import { isKeystaticEnabled } from "@/lib/content/keystatic/is-keystatic-enabled";
 import { Keystatic } from "@/lib/content/keystatic/page";
 import { getMetadata } from "@/lib/i18n/get-metadata";
 
 export const prerender = false;
+
+if (!isKeystaticEnabled) {
+	// eslint-disable-next-line unicorn/prefer-module
+	return new Response(null, { status: 404 });
+}
 
 const locale = "en";
 const meta = await getMetadata("en-GB");

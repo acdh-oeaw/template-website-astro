@@ -136,7 +136,7 @@
 		"*.@(astro)": [
 			"eslint --fix --flag unstable_native_nodejs_ts_config",
 			"stylelint --cache --fix",
-			"oxfmt --write"
+			"oxfmt --no-error-on-unmatched-pattern --write"
 		],
 		"*.@(js|ts|tsx)": [
 			"eslint --fix --flag unstable_native_nodejs_ts_config",

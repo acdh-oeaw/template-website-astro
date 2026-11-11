@@ -60,7 +60,7 @@ const navigation = await client.singletons.navigation.get();
 									<li>
 										<NavigationMenu
 											className="group inline-flex items-center gap-x-2 rounded-xs p-2 font-medium text-text-weak focus-outline transition hover:text-text-strong focus-visible:text-text-strong focus-visible:outline-offset-4"
-											client:load="svelte"
+											client:load
 											label={item.label}
 										>
 											<Fragment slot="chevron">
@@ -111,7 +111,7 @@ const navigation = await client.singletons.navigation.get();
 			<div class="ml-auto flex items-center lg:hidden">
 				<MobileNavMenuToggle
 					className="flex rounded-xs p-2 font-medium text-text-weak focus-outline transition hover:text-text-strong focus-visible:text-text-strong focus-visible:outline-offset-4"
-					client:idle="svelte"
+					client:idle
 				>
 					<Icon aria-hidden={true} class="size-5 shrink-0" name="lucide:menu" />
 					<span class="sr-only">{t("navigation.menu.open")}</span>
@@ -125,7 +125,7 @@ const navigation = await client.singletons.navigation.get();
 		</div>
 	</div>
 
-	<MobileNavMenu className="flex flex-col gap-y-4 px-4 pb-6 lg:hidden" client:idle="svelte">
+	<MobileNavMenu className="flex flex-col gap-y-4 px-4 pb-6 lg:hidden" client:idle>
 		<ul class="flex flex-col" role="list">
 			{
 				Object.values(navigation).map((item) => {

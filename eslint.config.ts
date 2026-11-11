@@ -44,6 +44,8 @@ export default defineConfig(
 			"@typescript-eslint/explicit-module-boundary-types": ["error", { allowedNames: ["getStaticPaths"] }],
 			"@typescript-eslint/require-array-sort-compare": "error",
 			// "@typescript-eslint/strict-boolean-expressions": "error",
+			/** Imports are sorted by `oxfmt`. */
+			"simple-import-sort/imports": "off",
 		},
 	},
 	{
