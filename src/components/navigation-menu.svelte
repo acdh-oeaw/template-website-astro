@@ -3,7 +3,7 @@
 	import { onDestroy, type Snippet } from "svelte";
 
 	interface Props {
-		chevron: Snippet;
+		chevron?: Snippet;
 		children: Snippet;
 		className?: string;
 		label: string;
@@ -91,9 +91,6 @@
 	}
 
 	const popoverId = `navigation-menu-${crypto.randomUUID()}`;
-
-	// svelte-ignore state_referenced_locally
-	const ChevronIcon = chevron;
 </script>
 
 <button
@@ -121,7 +118,7 @@
 	}}
 >
 	{label}
-	<ChevronIcon />
+	{@render chevron?.()}
 </button>
 
 {#if isOpen}
