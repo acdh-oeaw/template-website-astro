@@ -75,7 +75,9 @@ USER node
 
 COPY --from=base --chown=node:node /app/node_modules ./node_modules
 # exclude assets which should have been optimized with `astro:assets`.
-COPY --from=build --chown=node:node --exclude=client/assets/content/assets/ /app/dist ./
+# note: `dist` must keep the path it had in the build stage, because the `astro:assets`
+# image endpoint reads source images from the build-time absolute path to `dist/client`.
+COPY --from=build --chown=node:node --exclude=client/assets/content/assets/ /app/dist ./dist
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
@@ -83,4 +85,4 @@ ENV PORT=3000
 
 EXPOSE 3000
 
-CMD [ "node", "./server/entry.mjs" ]
+CMD [ "node", "./dist/server/entry.mjs" ]
